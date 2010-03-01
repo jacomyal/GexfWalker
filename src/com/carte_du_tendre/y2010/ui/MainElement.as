@@ -22,12 +22,55 @@
 
 package com.carte_du_tendre.y2010.ui
 {
+	import com.carte_du_tendre.y2010.data.Graph;
+	import com.carte_du_tendre.y2010.loading.GexfLoader;
+	
+	import flash.display.Sprite;
 	import flash.display.Stage;
-
-	public class MainElement
+	
+	public class MainElement extends Sprite
 	{
-		public function MainElement(s:Stage)
-		{
+		private var _graph:Graph;
+		private var _gexfLoader:GexfLoader;
+		private var _gexfPath:String;
+		
+		public function MainElement(s:Stage){
+			
+			s.addChild(this);
+			
+			if(root.loaderInfo.parameters["gexfPath"]==undefined) _gexfPath = "D:/Text-Mining/dev/CarteDuTendre/GexfWalker/bin-debug/standard_graph.gexf";
+			else _gexfPath = root.loaderInfo.parameters["gexfPath"];
+			
+			_graph = new Graph();
+			_gexfLoader = new GexfLoader(_graph,_gexfPath);
+			
+			trace("MainElement.MainElement: Open file at "+_gexfPath)
+			_gexfLoader.openFile();
 		}
+		
+		public function get gexfPath():String{
+			return _gexfPath;
+		}
+		
+		public function set gexfPath(value:String):void{
+			_gexfPath = value;
+		}
+		
+		public function get gexfLoader():GexfLoader{
+			return _gexfLoader;
+		}
+		
+		public function set gexfLoader(value:GexfLoader):void{
+			_gexfLoader = value;
+		}
+		
+		public function get graph():Graph{
+			return _graph;
+		}
+		
+		public function set graph(value:Graph):void{
+			_graph = value;
+		}
+		
 	}
 }
