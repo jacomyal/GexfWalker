@@ -1,0 +1,26 @@
+-- GexfWalker --
+@author: Alexis Jacomy <alexis.jacomy@gmail.com>
+@project: La Carte du Tendre du Web / The Web Tenderness Map
+
+---
+I. INTRODUCTION
+
+This open source free web widget is developped as part of the Web Tenderness Map project (hosted at http://www.carte-du-tendre.com). This project aims to represent the current tenderness map as a websites network.
+
+If some applications are already available to explore and visualize graphs (as Gephi and GexfExplorer), there is not a lot of way to experience a local navigation of these graphs (in the style of a web browser).
+
+
+---
+II. RELATED LINKS
+
+ - Web Tenderness Map: http://carte-du-tendre.com/
+ ---
+ - GexfExplorer: http://github.com/jacomyal/GexfExplorer
+ - GexfWalker: http://github.com/jacomyal/GexfWalker
+ - GEXF Format: http://gexf.net/format/
+ - Gephi: http://www.gephi.org/
+
+
+
+---
+GexfWalker is still under construction...
