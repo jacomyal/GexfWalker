@@ -44,6 +44,8 @@ package com.carte_du_tendre.y2010.loading {
 	 */
 	public class GexfLoader extends EventDispatcher{
 		
+		public static const FILE_PARSED:String = "File totally parsed";
+		
 		private var _gexfPath:String;
 		private var _graph:Graph;
 		
@@ -151,12 +153,21 @@ package com.carte_du_tendre.y2010.loading {
 				nodesCounter++;
 			}
 			
-			trace("GexfLoader.parseXMLElement: "+nodesCounter+" nodes parsed.")
+			trace("GexfLoader.parseXMLElement: "+nodesCounter+" nodes parsed.");
 			
 			// ... and edges:
+			var edgesCounter:int = 0;
 			for each(xmlCursor in xmlEdges){
-				
+				graph.getNode(xmlCursor.@source).addOutLink(graph.getNode(xmlCursor.@target));
+				graph.getNode(xmlCursor.@target).addInLink(graph.getNode(xmlCursor.@source));
+				edgesCounter++;
 			}
+			
+			trace("GexfLoader.parseXMLElement: "+edgesCounter+" edges parsed.");
+			
+			// Finally, we just send an event to let MainElement start the GUI:
+			trace("GexfLoader.parseXMLElement: File totally parsed, sending FILE_PARSED event.");
+			dispatchEvent(new Event(FILE_PARSED));
 		}
 		
 		public function get fileRequest():URLRequest{

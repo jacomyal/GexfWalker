@@ -30,13 +30,13 @@ package com.carte_du_tendre.y2010.data
 			nodes = new Vector.<Node>();
 		}
 		
-		public function getNode(nodeId:Number):Node{
+		public function getNode(nodeGexfId:String):Node{
 			var i:int = 0;
 			var l:int = nodes.length;
 			var res:Node = null;
 			
 			while(i<l){
-				if(nodes[i].flex_id==nodeId){
+				if(nodes[i].gexf_id==nodeGexfId){
 					res = nodes[i];
 					break;
 				}

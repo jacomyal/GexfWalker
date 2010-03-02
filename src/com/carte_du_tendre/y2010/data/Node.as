@@ -34,6 +34,16 @@ package com.carte_du_tendre.y2010.data
 			_flex_id = newFlexId;
 			_gexf_id = newGexfId;
 			_label = newLabel;
+			_outNeighbours = new Vector.<Node>();
+			_inNeighbours = new Vector.<Node>();
+		}
+		
+		public function addInLink(node:Node):void{
+			_inNeighbours.push(node);
+		}
+		
+		public function addOutLink(node:Node):void{
+			_outNeighbours.push(node);
 		}
 		
 		public function get gexf_id():String{
