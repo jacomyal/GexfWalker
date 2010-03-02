@@ -20,10 +20,14 @@
 # THE SOFTWARE.
 */
 
-package com.carte_du_tendre.y2010.data
-{
-	public class Node
-	{
+package com.carte_du_tendre.y2010.data{
+	
+	import flash.display.Sprite;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+
+	public class Node extends Sprite{
+		
 		private var _flex_id:Number;
 		private var _gexf_id:String;
 		private var _label:String;
@@ -36,6 +40,8 @@ package com.carte_du_tendre.y2010.data
 			_label = newLabel;
 			_outNeighbours = new Vector.<Node>();
 			_inNeighbours = new Vector.<Node>();
+			
+			draw();
 		}
 		
 		public function addInLink(node:Node):void{
@@ -44,6 +50,24 @@ package com.carte_du_tendre.y2010.data
 		
 		public function addOutLink(node:Node):void{
 			_outNeighbours.push(node);
+		}
+		
+		private function draw():void{
+			var labelField:TextField = new TextField();
+			
+			with(labelField){
+				text = _label;
+				autoSize = TextFieldAutoSize.CENTER;
+				selectable = false;
+			}
+			
+			with(this.graphics){
+				beginFill(0x808080,1);
+				drawCircle(0,0,30);
+				endFill();
+			}
+			
+			addChild(labelField);
 		}
 		
 		public function get gexf_id():String{

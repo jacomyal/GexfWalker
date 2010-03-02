@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 */
 
-package com.carte_du_tendre.y2010.loading {
+package com.carte_du_tendre.y2010.loading{
 	
 	import com.carte_du_tendre.y2010.data.Graph;
 	import com.carte_du_tendre.y2010.data.Node;

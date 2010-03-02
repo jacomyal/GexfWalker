@@ -20,16 +20,26 @@
 # THE SOFTWARE.
 */
 
-package com.carte_du_tendre.y2010.data
-{
-	public class Graph
-	{
-		private var nodes:Vector.<Node>;
+package com.carte_du_tendre.y2010.data{
+	
+	public class Graph{
+		
+		private var _nodes:Vector.<Node>;
 		
 		public function Graph(){
 			nodes = new Vector.<Node>();
 		}
 		
+		public function get nodes():Vector.<Node>
+		{
+			return _nodes;
+		}
+
+		public function set nodes(value:Vector.<Node>):void
+		{
+			_nodes = value;
+		}
+
 		public function getNode(nodeGexfId:String):Node{
 			var i:int = 0;
 			var l:int = nodes.length;

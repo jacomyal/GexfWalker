@@ -20,21 +20,21 @@
 # THE SOFTWARE.
 */
 
-package com.carte_du_tendre.y2010.ui
-{
+package com.carte_du_tendre.y2010.ui{
+	
 	import com.carte_du_tendre.y2010.data.Graph;
-	import com.carte_du_tendre.y2010.data.Node;
 	import com.carte_du_tendre.y2010.loading.GexfLoader;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	
-	public class MainElement extends Sprite
-	{
+	public class MainElement extends Sprite{
+		
 		private var _graph:Graph;
 		private var _gexfPath:String;
 		private var _gexfLoader:GexfLoader;
+		private var _displayMainElement:DisplayMainElement;
 		
 		public function MainElement(s:Stage){
 			
@@ -46,12 +46,24 @@ package com.carte_du_tendre.y2010.ui
 			_graph = new Graph();
 			_gexfLoader = new GexfLoader(_graph,_gexfPath);
 			
-			trace("MainElement.MainElement: Open file at "+_gexfPath)
+			trace("MainElement.MainElement: Open file at "+_gexfPath);
 			_gexfLoader.addEventListener(GexfLoader.FILE_PARSED,launchGUI);
 			_gexfLoader.openFile();
 		}
+		
+		public function get displayMainElement():DisplayMainElement
+		{
+			return _displayMainElement;
+		}
+
+		public function set displayMainElement(value:DisplayMainElement):void
+		{
+			_displayMainElement = value;
+		}
+
 		private function launchGUI(evt:Event):void{
 			trace("MainElement.launchGUI: GexfLoader.FILE_PARSED event received.");
+			_displayMainElement = new DisplayMainElement(stage,_graph);
 		}
 
 		public function get gexfPath():String{
