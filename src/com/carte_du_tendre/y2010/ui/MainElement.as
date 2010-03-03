@@ -50,16 +50,6 @@ package com.carte_du_tendre.y2010.ui{
 			_gexfLoader.addEventListener(GexfLoader.FILE_PARSED,launchGUI);
 			_gexfLoader.openFile();
 		}
-		
-		public function get displayMainElement():DisplayMainElement
-		{
-			return _displayMainElement;
-		}
-
-		public function set displayMainElement(value:DisplayMainElement):void
-		{
-			_displayMainElement = value;
-		}
 
 		private function launchGUI(evt:Event):void{
 			trace("MainElement.launchGUI: GexfLoader.FILE_PARSED event received.");
@@ -88,6 +78,16 @@ package com.carte_du_tendre.y2010.ui{
 		
 		public function set graph(value:Graph):void{
 			_graph = value;
+		}
+		
+		public function get displayMainElement():DisplayMainElement
+		{
+			return _displayMainElement;
+		}
+		
+		public function set displayMainElement(value:DisplayMainElement):void
+		{
+			_displayMainElement = value;
 		}
 		
 	}

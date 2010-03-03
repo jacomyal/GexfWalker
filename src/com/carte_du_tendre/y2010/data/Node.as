@@ -25,7 +25,8 @@ package com.carte_du_tendre.y2010.data{
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-
+	import flash.text.TextFormat;
+	
 	public class Node extends Sprite{
 		
 		private var _flex_id:Number;
@@ -34,14 +35,57 @@ package com.carte_du_tendre.y2010.data{
 		private var _outNeighbours:Vector.<Node>;
 		private var _inNeighbours:Vector.<Node>;
 		
+		private var _labelField:TextField;
+		private var _upperCircle:Sprite;
+		
 		public function Node(newFlexId:int,newGexfId:String,newLabel:String){
 			_flex_id = newFlexId;
 			_gexf_id = newGexfId;
 			_label = newLabel;
+			
 			_outNeighbours = new Vector.<Node>();
 			_inNeighbours = new Vector.<Node>();
+			_labelField = new TextField();
+			_upperCircle = new Sprite();
+			
+			this.hitArea = _upperCircle;
 			
 			draw();
+		}
+		
+		private function draw():void{
+			var format:TextFormat = new TextFormat("Verdana",12);
+			var circleHitArea:Sprite = new Sprite;
+			
+			with(_labelField){
+				text = _label;
+				autoSize = TextFieldAutoSize.CENTER;
+				selectable = false;
+				setTextFormat(format);
+			}
+			
+			with(this.graphics){
+				beginFill(0xAAAAAA,1);
+				drawCircle(0,0,30);
+				endFill();
+			}
+			
+			with(_upperCircle.graphics){
+				beginFill(0x000000,0);
+				drawCircle(0,0,30);
+				endFill();
+			}
+		}
+		
+		public function moveTo(new_x:Number,new_y:Number):void{
+			x = new_x;
+			y = new_y;
+			
+			_upperCircle.x = new_x;
+			_upperCircle.y = new_y;
+			
+			_labelField.x = new_x - _labelField.width/2;
+			_labelField.y = new_y - _labelField.height/2;
 		}
 		
 		public function addInLink(node:Node):void{
@@ -50,24 +94,6 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function addOutLink(node:Node):void{
 			_outNeighbours.push(node);
-		}
-		
-		private function draw():void{
-			var labelField:TextField = new TextField();
-			
-			with(labelField){
-				text = _label;
-				autoSize = TextFieldAutoSize.CENTER;
-				selectable = false;
-			}
-			
-			with(this.graphics){
-				beginFill(0x808080,1);
-				drawCircle(0,0,30);
-				endFill();
-			}
-			
-			addChild(labelField);
 		}
 		
 		public function get gexf_id():String{
@@ -108,6 +134,22 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set inNeighbours(value:Vector.<Node>):void{
 			_inNeighbours = value;
+		}
+		
+		public function get upperCircle():Sprite{
+			return _upperCircle;
+		}
+		
+		public function set upperCircle(value:Sprite):void{
+			_upperCircle = value;
+		}
+		
+		public function get labelField():TextField{
+			return _labelField;
+		}
+		
+		public function set labelField(value:TextField):void{
+			_labelField = value;
 		}
 		
 	}
