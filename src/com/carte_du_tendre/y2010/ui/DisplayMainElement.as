@@ -24,12 +24,15 @@ package com.carte_du_tendre.y2010.ui{
 	
 	import com.carte_du_tendre.y2010.data.Graph;
 	import com.carte_du_tendre.y2010.data.Node;
+	import com.carte_du_tendre.y2010.display.DisplayNode;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.MouseEvent;
 	
 	public class DisplayMainElement extends Sprite{
 		
+		private var _currentDisplayedNodes:Vector.<DisplayNode>;
 		private var _currentSelectedNode:Node;
 		private var _graph:Graph;
 		
@@ -57,45 +60,56 @@ package com.carte_du_tendre.y2010.ui{
 			selectRandomNode();
 			drawNodes();
 		}
-		
+
 		private function drawNodes():void{
 			var i:int = 0;
-			var a:Array = new Array();
-			var l:int = stage.numChildren;
+			var graphicSelectedNode:DisplayNode = new DisplayNode(_currentSelectedNode);
+			
+			_currentDisplayedNodes = new Vector.<DisplayNode>();
+			_currentDisplayedNodes.push(graphicSelectedNode);
 			
 			//Remove from the scene every nodes:
-			for(i=0;i<l;i++){
-				if(stage.getChildAt(l-1-i) is Node){
-					stage.removeChildAt(l-1-i);
-				}
-			}
+			removeDisplayedNodes();
 			
 			//Add at the center of the screen the selected node:
-			_currentSelectedNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);;
-			addNodeAsChild(_currentSelectedNode);
+			graphicSelectedNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);;
+			addNodeAsChild(graphicSelectedNode);
 			
 			//Add all the neighbours:
 			var l1:int = _currentSelectedNode.outNeighbours.length;
 			var l2:int = _currentSelectedNode.inNeighbours.length;
+			
 			var nodeCursor:Node;
+			var displayNode:DisplayNode;
+			
 			var temp_x:Number;
 			var temp_y:Number;
 			var delay:Number = Math.random();
 			
 			for(i=0;i<l1;i++){
 				nodeCursor = _currentSelectedNode.outNeighbours[i];
+				displayNode = new DisplayNode(nodeCursor);
+				_currentDisplayedNodes.push(displayNode);
+				
 				temp_x = 100*Math.cos(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageWidth/2;
 				temp_y = 100*Math.sin(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageHeight/2;
-				nodeCursor.moveTo(temp_x,temp_y);
-				addNodeAsChild(nodeCursor);
+				displayNode.moveTo(temp_x,temp_y);
+				addNodeAsChild(displayNode);
+				
+				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 			}
 			
 			for(i=0;i<l2;i++){
 				nodeCursor = _currentSelectedNode.inNeighbours[i];
+				displayNode = new DisplayNode(nodeCursor);
+				_currentDisplayedNodes.push(displayNode);
+				
 				temp_x = 100*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageWidth/2;
 				temp_y = 100*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageHeight/2;
-				nodeCursor.moveTo(temp_x,temp_y);
-				addNodeAsChild(nodeCursor);
+				displayNode.moveTo(temp_x,temp_y);
+				addNodeAsChild(displayNode);
+				
+				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 			}
 		}
 		
@@ -105,16 +119,64 @@ package com.carte_du_tendre.y2010.ui{
 			_currentSelectedNode = _graph.nodes[index];
 		}
 		
-		private function addNodeAsChild(node:Node):void{
-			_nodesContainer.addChild(node);
-			_labelsContainer.addChild(node.labelField);
-			_nodesHitAreaContainer.addChild(node.upperCircle);
+		private function addNodeAsChild(displayNode:DisplayNode):void{
+			_nodesContainer.addChild(displayNode);
+			_labelsContainer.addChild(displayNode.labelField);
+			_nodesHitAreaContainer.addChild(displayNode.upperCircle);
 		}
 		
-		private function removeNodeAsChild(node:Node):void{
-			_nodesContainer.removeChild(node);
-			_labelsContainer.removeChild(node.labelField);
-			_nodesHitAreaContainer.removeChild(node.upperCircle);
+		private function removeNodeAsChild(displayNode:DisplayNode):void{
+			_nodesContainer.removeChild(displayNode);
+			_labelsContainer.removeChild(displayNode.labelField);
+			_nodesHitAreaContainer.removeChild(displayNode.upperCircle);
+		}
+		
+		public function whenClickANeighbour(e:MouseEvent):void{
+			var l:int = _currentDisplayedNodes.length;
+			var node:Node;
+			var i:int;
+			
+			for(i=0;i<l;i++){
+				if(_currentDisplayedNodes[i].upperCircle == e.target){
+					node = _currentDisplayedNodes[i].node;
+					break;
+				}
+			}
+			
+			trace("DisplayMainElement.whenClickANeighbour: New selected node.");
+			
+			_currentDisplayedNodes = new Vector.<DisplayNode>();
+			_currentSelectedNode = node;
+			drawNodes();
+		}
+		
+		private function removeDisplayedNodes():void{
+			var l:int;
+			var i:int;
+			
+			//Remove first the nodes themselves:
+			l = _nodesContainer.numChildren;
+			for(i=0;i<l;i++){
+				_nodesContainer.removeChildAt(l-1-i);
+			}
+			
+			//Remove secondly the edges:
+			l = _edgesContainer.numChildren;
+			for(i=0;i<l;i++){
+				_edgesContainer.removeChildAt(l-1-i);
+			}
+			
+			//Remove next the labels:
+			l = _labelsContainer.numChildren;
+			for(i=0;i<l;i++){
+				_labelsContainer.removeChildAt(l-1-i);
+			}
+			
+			//Remove finally the hit areas:
+			l = _nodesHitAreaContainer.numChildren;
+			for(i=0;i<l;i++){
+				_nodesHitAreaContainer.removeChildAt(l-1-i);
+			}
 		}
 		
 		public function get currentSelectedNode():Node{
@@ -155,6 +217,16 @@ package com.carte_du_tendre.y2010.ui{
 		
 		public function set nodesContainer(value:Sprite):void{
 			_nodesContainer = value;
+		}
+		
+		public function get currentDisplayedNodes():Vector.<DisplayNode>
+		{
+			return _currentDisplayedNodes;
+		}
+		
+		public function set currentDisplayedNodes(value:Vector.<DisplayNode>):void
+		{
+			_currentDisplayedNodes = value;
 		}
 		
 	}
