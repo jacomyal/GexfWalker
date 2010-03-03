@@ -7,8 +7,7 @@ I. INTRODUCTION
 
 This open source free web widget is developped as part of the Web Tenderness Map project (hosted at http://www.carte-du-tendre.com). This project aims to represent the current tenderness map as a websites network.
 
-If many applications are already available to explore and visualize graphs (as Gephi and GexfExplorer), there is not a lot of ways to experience a local navigation of these graphs (in the style of a web browser).
-
+If many applications are already available to explore and visualize graphs (as Gephi and GexfExplorer), there is not a lot of ways to experience a local navigation of these graphs (the best example I know is the noticeable Moritz Stefaner's Relation Browser at http://moritz.stefaner.eu/projects/relation-browser/). This tool is particularly accessible for the Gephi and GEXF users.
 
 ---
 II. RELATED LINKS
