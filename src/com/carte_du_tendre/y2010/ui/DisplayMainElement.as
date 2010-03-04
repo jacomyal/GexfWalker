@@ -25,10 +25,14 @@ package com.carte_du_tendre.y2010.ui{
 	import com.carte_du_tendre.y2010.data.Graph;
 	import com.carte_du_tendre.y2010.data.Node;
 	import com.carte_du_tendre.y2010.display.DisplayNode;
+	import com.dncompute.graphics.ArrowStyle;
+	import com.dncompute.graphics.GraphicsUtil;
 	
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	public class DisplayMainElement extends Sprite{
 		
@@ -71,6 +75,9 @@ package com.carte_du_tendre.y2010.ui{
 			//Remove from the scene every nodes:
 			removeDisplayedNodes();
 			
+			//Clear every edges:
+			_edgesContainer.graphics.clear();
+			
 			//Add at the center of the screen the selected node:
 			graphicSelectedNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);;
 			addNodeAsChild(graphicSelectedNode);
@@ -82,34 +89,82 @@ package com.carte_du_tendre.y2010.ui{
 			var nodeCursor:Node;
 			var displayNode:DisplayNode;
 			
-			var temp_x:Number;
-			var temp_y:Number;
+			var style:ArrowStyle = new ArrowStyle();
+			style.headLength = 5;
+			style.headWidth = 5;
+			style.shaftPosition = 0;
+			style.shaftThickness = 4;
+			style.edgeControlPosition = 0.5;
+			style.edgeControlSize = 0.5;
+			
+			var temp_x0:Number;
+			var temp_y0:Number;
+			var temp_x1:Number;
+			var temp_y1:Number;
+			var temp_x2:Number;
+			var temp_y2:Number;
 			var delay:Number = Math.random();
 			
+			//Out neighbors:
 			for(i=0;i<l1;i++){
 				nodeCursor = _currentSelectedNode.outNeighbours[i];
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x = 100*Math.cos(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageWidth/2;
-				temp_y = 100*Math.sin(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageHeight/2;
-				displayNode.moveTo(temp_x,temp_y);
+				temp_x0 = 100*Math.cos(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageWidth/2;
+				temp_y0 = 100*Math.sin(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageHeight/2;
+				displayNode.moveTo(temp_x0,temp_y0);
 				addNodeAsChild(displayNode);
 				
 				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
+				
+				//Draw the edge as an arrow:
+				temp_x1 = 3/10*stage.stageWidth/2 + 7/10*temp_x0;
+				temp_y1 = 3/10*stage.stageHeight/2 + 7/10*temp_y0;
+				
+				temp_x2 = 7/10*stage.stageWidth/2 + 3/10*temp_x0;
+				temp_y2 = 7/10*stage.stageHeight/2 + 3/10*temp_y0;
+				
+				_edgesContainer.graphics.lineStyle(1,0xAAAAAA);
+				_edgesContainer.graphics.beginFill(0xAAAAAA);
+				
+				GraphicsUtil.drawArrow(_edgesContainer.graphics,
+					new Point(temp_x2,temp_y2),new Point(temp_x1,temp_y1),
+					style
+				);
+				
+				_edgesContainer.graphics.endFill();
 			}
 			
+			//In neighbors:
 			for(i=0;i<l2;i++){
 				nodeCursor = _currentSelectedNode.inNeighbours[i];
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x = 100*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageWidth/2;
-				temp_y = 100*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageHeight/2;
-				displayNode.moveTo(temp_x,temp_y);
+				temp_x0 = 100*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageWidth/2;
+				temp_y0 = 100*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageHeight/2;
+				displayNode.moveTo(temp_x0,temp_y0);
 				addNodeAsChild(displayNode);
 				
 				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
+				
+				//Draw the edge as an arrow:
+				temp_x1 = 3/10*stage.stageWidth/2 + 7/10*temp_x0;
+				temp_y1 = 3/10*stage.stageHeight/2 + 7/10*temp_y0;
+				
+				temp_x2 = 7/10*stage.stageWidth/2 + 3/10*temp_x0;
+				temp_y2 = 7/10*stage.stageHeight/2 + 3/10*temp_y0;
+				
+				_edgesContainer.graphics.lineStyle(1,0xAAAAAA);
+				_edgesContainer.graphics.beginFill(0xAAAAAA);
+				
+				GraphicsUtil.drawArrow(_edgesContainer.graphics,
+					new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),
+					style
+				);
+				
+				_edgesContainer.graphics.endFill();
 			}
 		}
 		
