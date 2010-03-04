@@ -148,8 +148,12 @@ package com.carte_du_tendre.y2010.loading{
 			
 			// Now we can easily parse all nodes...
 			var nodesCounter:int = 0;
+			var node:Node;
 			for each(xmlCursor in xmlNodes){
-				graph.addNode(new Node(nodesCounter,xmlCursor.@id,xmlCursor.@label));
+				node = new Node(nodesCounter,xmlCursor.@id,xmlCursor.@label);
+				graph.addNode(node);
+				node.setSize(xmlCursor.children().normalize().@value);
+				node.setColor((xmlCursor.children().normalize().@b).toString(),(xmlCursor.children().normalize().@g).toString(),(xmlCursor.children().normalize().@r).toString());
 				nodesCounter++;
 			}
 			

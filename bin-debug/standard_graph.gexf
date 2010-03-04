@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
-<meta lastmodifieddate="2010-03-01+16:08">
+<meta lastmodifieddate="2010-03-04+13:27">
 <creator>Gephi 0.7</creator>
 </meta>
 <graph defaultedgetype="directed" idtype="string" type="static">
 <attributes class="node" mode="static">
 <attribute id="etat" title="etat" type="string"/>
-<attribute id="nb_pages_visitees" title="nb_pages_visitees" type="int"/>
+<attribute id="nb_pages_visitees" title="nb_pages_visitees" type="string"/>
 <attribute id="nb_pages_marquees" title="nb_pages_marquees" type="string"/>
 <attribute id="nodetype" title="nodetype" type="string"/>
 </attributes>
@@ -21,9 +21,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="193.16719" y="262.4618" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="77.26688" y="104.98472" z="0.0"/>
 </node>
 <node id="ncs2" label="http://webatlas.fr">
 <attvalues>
@@ -32,9 +32,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="49.098766" y="280.29214" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="19.639507" y="112.11686" z="0.0"/>
 </node>
 <node id="ncs3" label="http://rtgi.eu">
 <attvalues>
@@ -43,9 +43,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="290.27084" y="288.77216" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="116.10834" y="115.508865" z="0.0"/>
 </node>
 <node id="ncs4" label="http://www.ticm.msh-paris.fr">
 <attvalues>
@@ -54,9 +54,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="270.00183" y="326.98172" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="108.00073" y="130.7927" z="0.0"/>
 </node>
 <node id="ncs5" label="http://www.exalead.fr">
 <attvalues>
@@ -65,9 +65,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="203.27307" y="339.78146" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="81.30923" y="135.91258" z="0.0"/>
 </node>
 <node id="ncs6" label="http://www.iledefrance.fr">
 <attvalues>
@@ -76,9 +76,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="237.01775" y="341.40042" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="94.8071" y="136.56017" z="0.0"/>
 </node>
 <node id="ncs7" label="http://www.orange.com">
 <attvalues>
@@ -87,9 +87,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="164.33998" y="1.7089975" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="65.73599" y="0.683599" z="0.0"/>
 </node>
 <node id="ncs8" label="http://www.sciences-po.fr">
 <attvalues>
@@ -98,9 +98,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="62.5021" y="146.99474" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="25.000841" y="58.797894" z="0.0"/>
 </node>
 <node id="ncs9" label="http://www.mozilla-europe.org">
 <attvalues>
@@ -109,9 +109,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="282.9689" y="253.39207" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="113.18756" y="101.356834" z="0.0"/>
 </node>
 <node id="ncs10" label="http://joomla.org">
 <attvalues>
@@ -120,9 +120,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="253.70445" y="293.99106" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="101.48178" y="117.59643" z="0.0"/>
 </node>
 <node id="ncs11" label="http://www.siteground.com">
 <attvalues>
@@ -131,9 +131,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="260.9071" y="227.23093" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="104.36285" y="90.89237" z="0.0"/>
 </node>
 <node id="ncs12" label="http://fr.linkfluence.net">
 <attvalues>
@@ -142,9 +142,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="57.683567" y="-275.05136" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="23.073427" y="-110.020546" z="0.0"/>
 </node>
 <node id="ncs13" label="http://www.vimeo.com">
 <attvalues>
@@ -153,9 +153,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-61.987133" y="-26.58251" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-24.794853" y="-10.633004" z="0.0"/>
 </node>
 <node id="ncs14" label="http://twitter.com/linkfluence">
 <attvalues>
@@ -164,9 +164,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-43.548923" y="-366.07004" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-17.419569" y="-146.42802" z="0.0"/>
 </node>
 <node id="ncs15" label="http://us.linkfluence.net">
 <attvalues>
@@ -175,9 +175,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-12.243109" y="-391.84604" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-4.8972435" y="-156.73842" z="0.0"/>
 </node>
 <node id="ncs16" label="http://labs.linkfluence.net">
 <attvalues>
@@ -186,9 +186,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="91.92794" y="-187.40111" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="36.771175" y="-74.96044" z="0.0"/>
 </node>
 <node id="ncs17" label="http://wordpress-fr.net">
 <attvalues>
@@ -197,9 +197,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="132.19513" y="-343.78387" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="52.87805" y="-137.51355" z="0.0"/>
 </node>
 <node id="ncs18" label="http://www.pressesdesciencespo.fr">
 <attvalues>
@@ -208,9 +208,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="188.30826" y="-267.21027" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="75.3233" y="-106.88411" z="0.0"/>
 </node>
 <node id="ncs19" label="http://www.esomar.org">
 <attvalues>
@@ -219,9 +219,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="143.67514" y="-379.50436" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="57.47006" y="-151.80174" z="0.0"/>
 </node>
 <node id="ncs20" label="http://www.cairn.info">
 <attvalues>
@@ -230,9 +230,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="54.694443" y="-376.27127" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="21.877777" y="-150.50851" z="0.0"/>
 </node>
 <node id="ncs21" label="http://reseaux.revuesonline.com">
 <attvalues>
@@ -241,9 +241,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-29.453127" y="-223.25432" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-11.781251" y="-89.30173" z="0.0"/>
 </node>
 <node id="ncs22" label="http://www.lueffyworld.net">
 <attvalues>
@@ -252,9 +252,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="171.51843" y="-347.1619" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="68.607376" y="-138.86476" z="0.0"/>
 </node>
 <node id="ncs23" label="http://ieeexplore.ieee.org">
 <attvalues>
@@ -263,9 +263,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="69.10483" y="-410.0944" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="27.641932" y="-164.03777" z="0.0"/>
 </node>
 <node id="ncs24" label="http://www.neteco.com">
 <attvalues>
@@ -274,9 +274,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="13.9273405" y="-366.43173" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="5.570936" y="-146.5727" z="0.0"/>
 </node>
 <node id="ncs25" label="http://civicolive.com">
 <attvalues>
@@ -285,9 +285,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="11.501865" y="-194.6957" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="4.600746" y="-77.87828" z="0.0"/>
 </node>
 <node id="ncs26" label="http://blip.tv">
 <attvalues>
@@ -296,9 +296,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="133.64693" y="-206.21173" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="53.45877" y="-82.484695" z="0.0"/>
 </node>
 <node id="ncs27" label="http://www.centerforsocialmedia.org">
 <attvalues>
@@ -307,9 +307,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="166.09431" y="-225.80345" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="66.43773" y="-90.32138" z="0.0"/>
 </node>
 <node id="ncs28" label="http://www.crea.polytechnique.fr">
 <attvalues>
@@ -318,9 +318,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="26.9258" y="-406.87994" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="10.77032" y="-162.75198" z="0.0"/>
 </node>
 <node id="ncs29" label="http://gephi.org">
 <attvalues>
@@ -329,9 +329,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="-143.78732" y="231.73166" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="-57.51493" y="92.692665" z="0.0"/>
 </node>
 <node id="ncs30" label="http://ina.fr">
 <attvalues>
@@ -340,9 +340,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-63.03459" y="-329.38135" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-25.213837" y="-131.75255" z="0.0"/>
 </node>
 <node id="ncs31" label="http://www.liafa.jussieu.fr">
 <attvalues>
@@ -351,9 +351,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-19.473034" y="-339.81653" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-7.7892137" y="-135.92662" z="0.0"/>
 </node>
 <node id="ncs32" label="http://www.lip6.fr">
 <attvalues>
@@ -362,9 +362,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-69.78992" y="-285.2654" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-27.915968" y="-114.10616" z="0.0"/>
 </node>
 <node id="ncs33" label="http://construire.sciences-po.fr">
 <attvalues>
@@ -373,9 +373,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="237" g="237" r="57"/>
-<viz:position x="74.20427" y="-49.260593" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="255" g="161" r="82"/>
+<viz:position x="29.681707" y="-19.704237" z="0.0"/>
 </node>
 <node id="ncs34" label="http://www.syllabs.com">
 <attvalues>
@@ -384,9 +384,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="152.90454" y="-306.33893" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="61.161816" y="-122.535576" z="0.0"/>
 </node>
 <node id="ncs35" label="http://www.wikio.fr">
 <attvalues>
@@ -395,9 +395,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="187.9633" y="-308.52536" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="75.185326" y="-123.41015" z="0.0"/>
 </node>
 <node id="ncs36" label="http://www.publicis-consultants.com">
 <attvalues>
@@ -406,9 +406,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="108.788506" y="-401.0305" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="43.515404" y="-160.4122" z="0.0"/>
 </node>
 <node id="ncs37" label="http://www.teamq.de">
 <attvalues>
@@ -417,9 +417,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="154.20352" y="-260.52603" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="61.681408" y="-104.21041" z="0.0"/>
 </node>
 <node id="ncs38" label="http://www.reseau-entreprendre.org">
 <attvalues>
@@ -428,9 +428,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-37.28225" y="-299.53568" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-14.9129" y="-119.81427" z="0.0"/>
 </node>
 <node id="ncs39" label="http://www.cr-picardie.fr">
 <attvalues>
@@ -439,9 +439,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="96.73231" y="-367.6977" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="38.692924" y="-147.07909" z="0.0"/>
 </node>
 <node id="ncs40" label="http://www.oseo.fr">
 <attvalues>
@@ -450,9 +450,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-49.221054" y="-253.7687" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-19.688421" y="-101.507484" z="0.0"/>
 </node>
 <node id="ncs41" label="http://wiki.gephi.org">
 <attvalues>
@@ -461,9 +461,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-127.18136" y="322.32684" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-50.872543" y="128.93074" z="0.0"/>
 </node>
 <node id="ncs42" label="http://forum.gephi.org">
 <attvalues>
@@ -472,9 +472,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-172.36993" y="141.03874" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-68.947975" y="56.415497" z="0.0"/>
 </node>
 <node id="ncs43" label="https://bugs.launchpad.net">
 <attvalues>
@@ -483,9 +483,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-268.19257" y="276.99792" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-107.27703" y="110.79917" z="0.0"/>
 </node>
 <node id="ncs44" label="http://vimeo.com">
 <attvalues>
@@ -494,9 +494,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-177.28859" y="356.51672" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-70.915436" y="142.60669" z="0.0"/>
 </node>
 <node id="ncs45" label="http://www.aaai.org">
 <attvalues>
@@ -505,9 +505,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-215.58336" y="340.10904" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-86.233345" y="136.04362" z="0.0"/>
 </node>
 <node id="ncs46" label="http://www.linkedin.com">
 <attvalues>
@@ -516,9 +516,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-225.47168" y="188.8222" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-90.188675" y="75.528885" z="0.0"/>
 </node>
 <node id="ncs47" label="http://www.facebook.com">
 <attvalues>
@@ -527,9 +527,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-232.56013" y="268.8254" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-93.024055" y="107.53017" z="0.0"/>
 </node>
 <node id="ncs48" label="http://twitter.com/gephi">
 <attvalues>
@@ -538,9 +538,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-93.63627" y="335.6566" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-37.45451" y="134.26263" z="0.0"/>
 </node>
 <node id="ncs49" label="http://www.flickr.com">
 <attvalues>
@@ -549,9 +549,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-208.13188" y="148.05157" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-83.252754" y="59.22063" z="0.0"/>
 </node>
 <node id="ncs50" label="http://www.xiti.com">
 <attvalues>
@@ -560,9 +560,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-267.53152" y="196.8263" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-107.01261" y="78.73052" z="0.0"/>
 </node>
 <node id="ncs51" label="http://www.linkfluence.net">
 <attvalues>
@@ -571,9 +571,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-247.40321" y="312.23325" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-98.96129" y="124.8933" z="0.0"/>
 </node>
 <node id="ncs52" label="http://www.inist.fr">
 <attvalues>
@@ -582,9 +582,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-209.30368" y="302.24316" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-83.72147" y="120.89727" z="0.0"/>
 </node>
 <node id="ncs53" label="http://www.cnrs.fr">
 <attvalues>
@@ -593,9 +593,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-122.15142" y="149.04877" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-48.86057" y="59.619507" z="0.0"/>
 </node>
 <node id="ncs54" label="http://socghop.appspot.com">
 <attvalues>
@@ -604,9 +604,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-135.63708" y="356.87433" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-54.254833" y="142.74974" z="0.0"/>
 </node>
 <node id="ncs55" label="http://ticmigrations.fr">
 <attvalues>
@@ -615,9 +615,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-275.79364" y="237.52927" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-110.31746" y="95.01171" z="0.0"/>
 </node>
 <node id="ncs56" label="http://www.exalead.com">
 <attvalues>
@@ -626,9 +626,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-245.45169" y="159.87318" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-98.18068" y="63.949276" z="0.0"/>
 </node>
 <node id="ncs57" label="http://www.laborange.fr">
 <attvalues>
@@ -637,9 +637,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-61.035164" y="256.15216" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-24.414066" y="102.46087" z="0.0"/>
 </node>
 <node id="ncs58" label="http://www.iscpif.fr">
 <attvalues>
@@ -648,9 +648,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-239.98335" y="228.61328" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-95.99334" y="91.44531" z="0.0"/>
 </node>
 <node id="ncs59" label="http://en.lanetscouade.com">
 <attvalues>
@@ -659,9 +659,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-76.61412" y="301.11682" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-30.645649" y="120.44673" z="0.0"/>
 </node>
 <node id="ncs60" label="http://www.pledgie.com">
 <attvalues>
@@ -670,9 +670,9 @@
 <attvalue for="nb_pages_marquees" value="0"/>
 <attvalue for="nodetype" value="site"/>
 </attvalues>
-<viz:size value="10.0"/>
-<viz:color b="57" g="57" r="237"/>
-<viz:position x="-172.11212" y="321.8598" z="0.0"/>
+<viz:size value="4.0"/>
+<viz:color b="56" g="128" r="255"/>
+<viz:position x="-68.84485" y="128.74393" z="0.0"/>
 </node>
 </nodes>
 <edges count="64">
@@ -726,112 +726,112 @@
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="31" source="ncs12" target="ncs7" weight="0.4">
+<edge id="10" source="ncs12" target="ncs7" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="10" source="ncs12" target="ncs13" weight="0.4">
+<edge id="11" source="ncs12" target="ncs13" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="11" source="ncs12" target="ncs14" weight="0.4">
+<edge id="12" source="ncs12" target="ncs14" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="12" source="ncs12" target="ncs15" weight="0.4">
+<edge id="13" source="ncs12" target="ncs15" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="13" source="ncs12" target="ncs16" weight="0.4">
+<edge id="14" source="ncs12" target="ncs16" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="14" source="ncs12" target="ncs17" weight="0.4">
+<edge id="15" source="ncs12" target="ncs17" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="15" source="ncs12" target="ncs18" weight="0.4">
+<edge id="16" source="ncs12" target="ncs18" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="16" source="ncs12" target="ncs19" weight="0.4">
+<edge id="17" source="ncs12" target="ncs19" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="17" source="ncs12" target="ncs20" weight="0.4">
+<edge id="18" source="ncs12" target="ncs20" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="18" source="ncs12" target="ncs21" weight="0.4">
+<edge id="19" source="ncs12" target="ncs21" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="19" source="ncs12" target="ncs22" weight="0.4">
+<edge id="20" source="ncs12" target="ncs22" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="20" source="ncs12" target="ncs23" weight="0.4">
+<edge id="21" source="ncs12" target="ncs23" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="21" source="ncs12" target="ncs24" weight="0.4">
+<edge id="22" source="ncs12" target="ncs24" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="22" source="ncs12" target="ncs25" weight="0.4">
+<edge id="23" source="ncs12" target="ncs25" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="23" source="ncs12" target="ncs26" weight="0.4">
+<edge id="24" source="ncs12" target="ncs26" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="24" source="ncs12" target="ncs27" weight="0.4">
+<edge id="25" source="ncs12" target="ncs27" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="25" source="ncs12" target="ncs28" weight="0.4">
+<edge id="26" source="ncs12" target="ncs28" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="26" source="ncs12" target="ncs29" weight="0.4">
+<edge id="27" source="ncs12" target="ncs29" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="27" source="ncs12" target="ncs30" weight="0.4">
+<edge id="28" source="ncs12" target="ncs30" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="28" source="ncs12" target="ncs31" weight="0.4">
+<edge id="29" source="ncs12" target="ncs31" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="29" source="ncs12" target="ncs32" weight="0.4">
+<edge id="30" source="ncs12" target="ncs32" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="30" source="ncs12" target="ncs33" weight="0.4">
+<edge id="31" source="ncs12" target="ncs33" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
@@ -871,102 +871,102 @@
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="50" source="ncs29" target="ncs1" weight="0.4">
+<edge id="39" source="ncs29" target="ncs1" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="51" source="ncs29" target="ncs2" weight="0.4">
+<edge id="40" source="ncs29" target="ncs2" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="58" source="ncs29" target="ncs8" weight="0.4">
+<edge id="41" source="ncs29" target="ncs8" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="48" source="ncs29" target="ncs13" weight="0.4">
+<edge id="42" source="ncs29" target="ncs13" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="39" source="ncs29" target="ncs41" weight="0.4">
+<edge id="43" source="ncs29" target="ncs41" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="40" source="ncs29" target="ncs42" weight="0.4">
+<edge id="44" source="ncs29" target="ncs42" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="41" source="ncs29" target="ncs43" weight="0.4">
+<edge id="45" source="ncs29" target="ncs43" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="42" source="ncs29" target="ncs44" weight="0.4">
+<edge id="46" source="ncs29" target="ncs44" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="43" source="ncs29" target="ncs45" weight="0.4">
+<edge id="47" source="ncs29" target="ncs45" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="44" source="ncs29" target="ncs46" weight="0.4">
+<edge id="48" source="ncs29" target="ncs46" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="45" source="ncs29" target="ncs47" weight="0.4">
+<edge id="49" source="ncs29" target="ncs47" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="46" source="ncs29" target="ncs48" weight="0.4">
+<edge id="50" source="ncs29" target="ncs48" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="47" source="ncs29" target="ncs49" weight="0.4">
+<edge id="51" source="ncs29" target="ncs49" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="49" source="ncs29" target="ncs50" weight="0.4">
+<edge id="52" source="ncs29" target="ncs50" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="52" source="ncs29" target="ncs51" weight="0.4">
+<edge id="53" source="ncs29" target="ncs51" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="53" source="ncs29" target="ncs52" weight="0.4">
+<edge id="54" source="ncs29" target="ncs52" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="54" source="ncs29" target="ncs53" weight="0.4">
+<edge id="55" source="ncs29" target="ncs53" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="55" source="ncs29" target="ncs54" weight="0.4">
+<edge id="56" source="ncs29" target="ncs54" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="56" source="ncs29" target="ncs55" weight="0.4">
+<edge id="57" source="ncs29" target="ncs55" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>
 </edge>
-<edge id="57" source="ncs29" target="ncs56" weight="0.4">
+<edge id="58" source="ncs29" target="ncs56" weight="0.4">
 <attvalues>
 <attvalue for="hypertext" value="true"/>
 </attvalues>

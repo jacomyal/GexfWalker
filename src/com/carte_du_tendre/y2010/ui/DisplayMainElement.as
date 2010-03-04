@@ -37,7 +37,7 @@ package com.carte_du_tendre.y2010.ui{
 	
 	public class DisplayMainElement extends Sprite{
 		
-		public static const EDGES_SCALE:Number = 100;
+		public static const EDGES_SCALE:Number = 180;
 		
 		private var _currentDisplayedNodes:Vector.<DisplayNode>;
 		private var _currentSelectedDisplayNode:DisplayNode;
@@ -106,8 +106,8 @@ package com.carte_du_tendre.y2010.ui{
 			var displayNode:DisplayNode;
 			
 			var style:ArrowStyle = new ArrowStyle();
-			style.headLength = 5;
-			style.headWidth = 5;
+			style.headLength = 10;
+			style.headWidth = 10;
 			style.shaftPosition = 0;
 			style.shaftThickness = 4;
 			style.edgeControlPosition = 0.5;
@@ -141,8 +141,8 @@ package com.carte_du_tendre.y2010.ui{
 				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
 				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
 				
-				_edgesContainer.graphics.lineStyle(1,0xAAAAAA);
-				_edgesContainer.graphics.beginFill(0xAAAAAA);
+				_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
+				_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
 				
 				GraphicsUtil.drawArrow(_edgesContainer.graphics,
 					new Point(temp_x2,temp_y2),new Point(temp_x1,temp_y1),
@@ -167,14 +167,14 @@ package com.carte_du_tendre.y2010.ui{
 				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 				
 				//Draw the edge as an arrow:
-				temp_x1 = 3/10*stage.stageWidth/2 + 7/10*temp_x0;
-				temp_y1 = 3/10*stage.stageHeight/2 + 7/10*temp_y0;
+				temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
+				temp_y1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
 				
-				temp_x2 = 7/10*stage.stageWidth/2 + 3/10*temp_x0;
-				temp_y2 = 7/10*stage.stageHeight/2 + 3/10*temp_y0;
+				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
+				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
 				
-				_edgesContainer.graphics.lineStyle(1,0xAAAAAA);
-				_edgesContainer.graphics.beginFill(0xAAAAAA);
+				_edgesContainer.graphics.lineStyle(1,nodeCursor.color);
+				_edgesContainer.graphics.beginFill(nodeCursor.color);
 				
 				GraphicsUtil.drawArrow(_edgesContainer.graphics,
 					new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),

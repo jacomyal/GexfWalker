@@ -22,13 +22,12 @@
 
 package com.carte_du_tendre.y2010.data{
 	
-	import flash.display.Sprite;
-	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
+	
 	
 	public class Node{
 		
+		private var _size:Number;
+		private var _color:uint;
 		private var _flex_id:Number;
 		private var _gexf_id:String;
 		private var _label:String;
@@ -50,6 +49,60 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function addOutLink(node:Node):void{
 			_outNeighbours.push(node);
+		}
+		
+		public function setSize(newSize:Number):void{
+			_size = newSize;
+		}
+		
+		/**
+		 * Sets this node color, from three <code>Number</code> value (B, G, R) into a <code>uint</code> value.
+		 * 
+		 * @param B Blue value, between 0 and 255
+		 * @param G Green value, between 0 and 255
+		 * @param R Red value, between 0 and 255
+		 * @see #decaToHexa
+		 */
+		public function setColor(B:String,G:String,R:String):void{
+			var tempColor:String ="0x"+decaToHexa(R)+decaToHexa(G)+decaToHexa(B);
+			_color = new uint(tempColor);
+		}
+		
+		/**
+		 * Transforms a decimal value (int formated) into an hexadecimal value.
+		 * Is only useful with the other function, decaToHexa.
+		 * 
+		 * @param d int formated decimal value
+		 * @return Hexadecimal string translation of d
+		 * 
+		 * @author Ammon Lauritzen
+		 * @see http://goflashgo.wordpress.com/
+		 * @see #decaToHexa
+		 */
+		private function decaToHexaFromInt(d:int):String{
+			var c:Array = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'];
+			if(d>255) d = 255;
+			var l:int = d/16;
+			var r:int = d%16;
+			return c[l]+c[r];
+		}
+		
+		/**
+		 * Transforms a decimal value (string formated) into an hexadecimal value.
+		 * Really helpfull to adapt the RGB gexf color format in AS3 uint format.
+		 * 
+		 * @param dec String formated decimal value
+		 * @return Hexadecimal string translation of dec
+		 * 
+		 * @author Ammon Lauritzen
+		 * @see http://goflashgo.wordpress.com/
+		 */
+		private function decaToHexa(dec:String):String {
+			var hex:String = "";
+			var bytes:Array = dec.split(" ");
+			for( var i:int = 0; i <bytes.length; i++ )
+				hex += decaToHexaFromInt( int(bytes[i]) );
+			return hex;
 		}
 		
 		public function get gexf_id():String{
@@ -90,6 +143,22 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set inNeighbours(value:Vector.<Node>):void{
 			_inNeighbours = value;
+		}
+		
+		public function get color():uint{
+			return _color;
+		}
+		
+		public function set color(value:uint):void{
+			_color = value;
+		}
+		
+		public function get size():Number{
+			return _size;
+		}
+		
+		public function set size(value:Number):void{
+			_size = value;
 		}
 		
 	}
