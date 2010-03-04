@@ -25,11 +25,15 @@ package com.carte_du_tendre.y2010.data{
 	public class Graph{
 		
 		private var _nodes:Vector.<Node>;
+		private var _attributes:HashMap;
+		private var _metaData:HashMap;
 		
 		public function Graph(){
 			nodes = new Vector.<Node>();
+			_attributes = new HashMap();
+			_metaData = new HashMap();
 		}
-		
+
 		public function getNode(nodeGexfId:String):Node{
 			var i:int = 0;
 			var l:int = nodes.length;
@@ -46,6 +50,81 @@ package com.carte_du_tendre.y2010.data{
 			return res;
 		}
 		
+		/**
+		 * Returns key of parameter attribute.
+		 * 
+		 * @param s A string ID
+		 * @return An attribute ID
+		 */
+		public function getAttributeKey(s:String):String {
+			return _attributes.getKey(s);
+		}
+		
+		/**
+		 * Returns value of parameter attribute.
+		 * 
+		 * @param s A string ID
+		 * @return An attribute ID
+		 */
+		public function getAttribute(s:String):String {
+			return _attributes.getValue(s);
+		}
+		
+		/**
+		 * Returns true if attributes is null, false else.
+		 * 
+		 * @return The boolean result of this test.
+		 */
+		public function isAttributeHashNull():Boolean {
+			return (_attributes==null);
+		}
+		
+		/**
+		 * Returns key of parameter meta data.
+		 * 
+		 * @param s A string ID
+		 * @return An attribute ID
+		 */
+		public function getMetaDataKey(s:String):String {
+			return _metaData.getKey(s);
+		}
+		
+		/**
+		 * Returns value of parameter meta data.
+		 * 
+		 * @param s A string ID
+		 * @return An attribute ID
+		 */
+		public function getMetaData(s:String):String {
+			return _metaData.getValue(s);
+		}
+		
+		/**
+		 * Returns true if meta data hash is null, false else.
+		 * 
+		 * @return The boolean result of this test.
+		 */
+		public function isMetaDataHashNull():Boolean {
+			return (_metaData==null);
+		}
+		
+		/**
+		 * Sets an attribute.
+		 * 
+		 * @param attributeID The ID of this attribute.
+		 * @param attributeName The name of the attribute.
+		 */
+		public function setAttribute(attributeID:String,attributeName:String):void{
+			attributes.put(attributeID,attributeName);
+		}
+		
+		/**
+		 * Sets attributes as null.
+		 */
+		public function setAttributesNull():void{
+			attributes = null;
+		}
+		
 		public function addNode(node:Node):void{
 			nodes.push(node);
 		}
@@ -56,6 +135,26 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set nodes(value:Vector.<Node>):void{
 			_nodes = value;
+		}
+		
+		public function get attributes():HashMap
+		{
+			return _attributes;
+		}
+		
+		public function set attributes(value:HashMap):void
+		{
+			_attributes = value;
+		}
+		
+		public function get metaData():HashMap
+		{
+			return _metaData;
+		}
+		
+		public function set metaData(value:HashMap):void
+		{
+			_metaData = value;
 		}
 	}
 }

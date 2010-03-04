@@ -33,6 +33,7 @@ package com.carte_du_tendre.y2010.data{
 		private var _label:String;
 		private var _outNeighbours:Vector.<Node>;
 		private var _inNeighbours:Vector.<Node>;
+		private var _attributes:HashMap;
 		
 		public function Node(newFlexId:int,newGexfId:String,newLabel:String){
 			_flex_id = newFlexId;
@@ -41,14 +42,35 @@ package com.carte_du_tendre.y2010.data{
 			
 			_outNeighbours = new Vector.<Node>();
 			_inNeighbours = new Vector.<Node>();
+			
+			_attributes = new HashMap();
 		}
-		
+
 		public function addInLink(node:Node):void{
 			_inNeighbours.push(node);
 		}
 		
 		public function addOutLink(node:Node):void{
 			_outNeighbours.push(node);
+		}
+		
+		/**
+		 * Pushes an attribute.
+		 * 
+		 * @param attribute The ID of the attribute.
+		 * @param attributeID The value of this attribute.
+		 */
+		public function setAttribute(attributeID:String,attributeValue:String):void{
+			_attributes.put(attributeID,attributeValue);
+		}
+		
+		/**
+		 * Returns this node attributes.
+		 * 
+		 * @return This node attributes hash tab
+		 */
+		public function getAttributes():HashMap{
+			return _attributes;
 		}
 		
 		public function setSize(newSize:Number):void{
@@ -159,6 +181,16 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set size(value:Number):void{
 			_size = value;
+		}
+		
+		public function get attributes():HashMap
+		{
+			return _attributes;
+		}
+		
+		public function set attributes(value:HashMap):void
+		{
+			_attributes = value;
 		}
 		
 	}

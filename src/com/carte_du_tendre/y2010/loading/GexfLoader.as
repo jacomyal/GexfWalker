@@ -146,15 +146,43 @@ package com.carte_du_tendre.y2010.loading{
 				}
 			}
 			
-			// Now we can easily parse all nodes...
+			// Now we can easily parse all attributes...
+			if(xmlNodesAttributes!=null){
+				var attributesCounter:int = 0;
+				for each(xmlCursor in xmlNodesAttributes){
+					if(xmlCursor.name().localName=="attribute"){
+						trace("GexfLoader.parseXMLElement: New attribute id: " + xmlCursor.@id + ", title: " + xmlCursor.@title);
+						_graph.setAttribute(xmlCursor.@id,xmlCursor.@title);
+						attributesCounter++;
+					}
+				}
+			}
+			
+			// ..., node...
 			var nodesCounter:int = 0;
 			var node:Node;
+			var xmlSubCursor:XML;
+			var xmlNodesAttributesValues:XMLList;
+			
 			for each(xmlCursor in xmlNodes){
 				node = new Node(nodesCounter,xmlCursor.@id,xmlCursor.@label);
 				graph.addNode(node);
 				node.setSize(xmlCursor.children().normalize().@value);
 				node.setColor((xmlCursor.children().normalize().@b).toString(),(xmlCursor.children().normalize().@g).toString(),(xmlCursor.children().normalize().@r).toString());
 				nodesCounter++;
+				
+				for each(xmlSubCursor in xmlCursor.children()){
+					if(xmlSubCursor.name().localName=='attvalues'){
+						xmlNodesAttributesValues = xmlSubCursor.children();
+					}
+				}
+				
+				for each(xmlSubCursor in xmlNodesAttributesValues){
+					if(xmlSubCursor.name().localName=='attvalue'){
+						node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
+						trace("prooouuuutt");
+					}
+				}
 			}
 			
 			trace("GexfLoader.parseXMLElement: "+nodesCounter+" nodes parsed.");

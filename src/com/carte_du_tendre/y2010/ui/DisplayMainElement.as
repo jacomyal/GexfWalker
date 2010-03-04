@@ -24,6 +24,7 @@ package com.carte_du_tendre.y2010.ui{
 	
 	import com.carte_du_tendre.y2010.data.Graph;
 	import com.carte_du_tendre.y2010.data.Node;
+	import com.carte_du_tendre.y2010.display.DisplayAttributes;
 	import com.carte_du_tendre.y2010.display.DisplayNode;
 	import com.dncompute.graphics.ArrowStyle;
 	import com.dncompute.graphics.GraphicsUtil;
@@ -39,22 +40,25 @@ package com.carte_du_tendre.y2010.ui{
 		
 		public static const EDGES_SCALE:Number = 180;
 		
+		private var _currentSelectionDisplayAttributes:DisplayAttributes;
 		private var _currentDisplayedNodes:Vector.<DisplayNode>;
 		private var _currentSelectedDisplayNode:DisplayNode;
 		private var _currentSelectedNode:Node;
 		private var _graph:Graph;
 		
-		private var _randomAngleDelay:Number;
+		private var _angleDelay:Number;
 		private var _edgesContainer:Sprite;
 		private var _nodesContainer:Sprite;
 		private var _labelsContainer:Sprite;
+		private var _attributesContainer:Sprite;
 		private var _nodesHitAreaContainer:Sprite;
 		
 		public function DisplayMainElement(newStage:Stage,newGraph:Graph){
 			newStage.addChild(this);
 			_graph = newGraph;
-			_randomAngleDelay = Math.random();
+			_angleDelay = -Math.random()/10;
 			
+			_attributesContainer = new Sprite();
 			_edgesContainer = new Sprite();
 			_nodesContainer = new Sprite();
 			_labelsContainer = new Sprite();
@@ -62,6 +66,7 @@ package com.carte_du_tendre.y2010.ui{
 			
 			_labelsContainer.alpha = 0;
 			
+			addChild(_attributesContainer);
 			addChild(_edgesContainer);
 			addChild(_nodesContainer);
 			addChild(_labelsContainer);
@@ -120,14 +125,21 @@ package com.carte_du_tendre.y2010.ui{
 			var temp_x2:Number;
 			var temp_y2:Number;
 			
+			//Attributes of the selected node:
+			temp_x0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.cos(2*Math.PI*_angleDelay) + stage.stageWidth/2;
+			temp_y0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.sin(2*Math.PI*_angleDelay) + stage.stageHeight/2;
+			if(_attributesContainer.numChildren>=1) _attributesContainer.removeChildAt(0);
+			_attributesContainer.alpha = 1;
+			_currentSelectionDisplayAttributes = new DisplayAttributes(_currentSelectedNode,_graph,_attributesContainer,temp_x0,temp_y0);
+			
 			//Out neighbors:
 			for(i=0;i<l1;i++){
 				nodeCursor = _currentSelectedNode.outNeighbours[i];
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*(i/(l1+l2)+_randomAngleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*(i/(l1+l2)+_randomAngleDelay)) + stage.stageHeight/2;
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((i+1)/(l1+l2+1)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((i+1)/(l1+l2+1)+_angleDelay)) + stage.stageHeight/2;
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
 				displayNode.moveToSlowly(temp_x0,temp_y0);
@@ -158,8 +170,8 @@ package com.carte_du_tendre.y2010.ui{
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+_randomAngleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+_randomAngleDelay)) + stage.stageHeight/2;
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1+i+1)/(l1+l2+1)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1+i+1)/(l1+l2+1)+_angleDelay)) + stage.stageHeight/2;
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
 				displayNode.moveToSlowly(temp_x0,temp_y0);
@@ -253,6 +265,8 @@ package com.carte_du_tendre.y2010.ui{
 		private function transitionFirstStep(e:Event):void{
 			if(_edgesContainer.alpha>0.01){
 				_edgesContainer.alpha -= 0.1;
+				_labelsContainer.alpha -= 0.1;
+				_attributesContainer.alpha -= 0.1;
 			}else{
 				removeEventListener(Event.ENTER_FRAME,transitionFirstStep);
 				addEventListener(Event.ENTER_FRAME,transitionSecondStep);
@@ -260,15 +274,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function transitionSecondStep(e:Event):void{
-			if(_labelsContainer.alpha>0.01){
-				_labelsContainer.alpha -= 0.1;
-			}else{
-				removeEventListener(Event.ENTER_FRAME,transitionSecondStep);
-				addEventListener(Event.ENTER_FRAME,transitionThirdStep);
-			}
-		}
-		
-		private function transitionThirdStep(e:Event):void{
 			var d:Number = 0;
 			var x_to:Number;
 			var y_to:Number;
@@ -284,8 +289,8 @@ package com.carte_du_tendre.y2010.ui{
 			}
 			
 			if(d<l+1){
-				removeEventListener(Event.ENTER_FRAME,transitionThirdStep);
-				_randomAngleDelay = Math.random();
+				removeEventListener(Event.ENTER_FRAME,transitionSecondStep);
+				_angleDelay = -Math.random()/10;
 				drawNodes();
 				
 				trace("DisplayMainElement.transitionThirdStep: Third step over.");
@@ -377,12 +382,20 @@ package com.carte_du_tendre.y2010.ui{
 			_currentSelectedDisplayNode = value;
 		}
 		
-		public function get randomAngleDelay():Number{
-			return _randomAngleDelay;
+		public function get angleDelay():Number{
+			return _angleDelay;
 		}
 		
-		public function set randomAngleDelay(value:Number):void{
-			_randomAngleDelay = value;
+		public function set angleDelay(value:Number):void{
+			_angleDelay = value;
+		}
+		
+		public function get currentSelectionDisplayAttributes():DisplayAttributes{
+			return _currentSelectionDisplayAttributes;
+		}
+		
+		public function set currentSelectionDisplayAttributes(value:DisplayAttributes):void{
+			_currentSelectionDisplayAttributes = value;
 		}
 		
 	}
