@@ -32,6 +32,8 @@ package com.carte_du_tendre.y2010.display{
 	
 	public class DisplayNode extends Sprite{
 		
+		public static const NODES_SCALE:Number = 30;
+		
 		private var _labelField:TextField;
 		private var _upperCircle:Sprite;
 		private var _node:Node;
@@ -61,13 +63,13 @@ package com.carte_du_tendre.y2010.display{
 			
 			with(this.graphics){
 				beginFill(0xAAAAAA,1);
-				drawCircle(0,0,30);
+				drawCircle(0,0,NODES_SCALE);
 				endFill();
 			}
 			
 			with(_upperCircle.graphics){
 				beginFill(0x000000,0);
-				drawCircle(0,0,30);
+				drawCircle(0,0,NODES_SCALE);
 				endFill();
 			}
 		}
