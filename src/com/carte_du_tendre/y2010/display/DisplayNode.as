@@ -25,6 +25,7 @@ package com.carte_du_tendre.y2010.display{
 	import com.carte_du_tendre.y2010.data.Node;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -34,10 +35,12 @@ package com.carte_du_tendre.y2010.display{
 		private var _labelField:TextField;
 		private var _upperCircle:Sprite;
 		private var _node:Node;
+		private var _goal:Array; // goal := (x_goal,y_goal)
 		
 		public function DisplayNode(node:Node){
 			_labelField = new TextField();
 			_upperCircle = new Sprite();
+			_goal = new Array();
 			_node = node;
 			
 			this.hitArea = _upperCircle;
@@ -66,6 +69,23 @@ package com.carte_du_tendre.y2010.display{
 				beginFill(0x000000,0);
 				drawCircle(0,0,30);
 				endFill();
+			}
+		}
+		
+		public function moveToSlowly(new_x:Number,new_y:Number):void{
+			_goal[0] = new_x;
+			_goal[1] = new_y;
+			
+			addEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
+		}
+		
+		private function slowDisplacementHandler(e:Event):void{
+			var d:Number = Math.pow(this.x-_goal[0],2)+Math.pow(this.y-_goal[1],2);
+			
+			if(d<0.5){
+				removeEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
+			}else{
+				moveTo(2/3*this.x + _goal[0]/3, 2/3*this.y + _goal[1]/3);
 			}
 		}
 		
@@ -104,6 +124,16 @@ package com.carte_du_tendre.y2010.display{
 		public function set node(value:Node):void
 		{
 			_node = value;
+		}
+		
+		public function get goal():Array
+		{
+			return _goal;
+		}
+		
+		public function set goal(value:Array):void
+		{
+			_goal = value;
 		}
 	}
 }

@@ -28,18 +28,21 @@ package com.carte_du_tendre.y2010.ui{
 	import com.dncompute.graphics.ArrowStyle;
 	import com.dncompute.graphics.GraphicsUtil;
 	
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
 	
 	public class DisplayMainElement extends Sprite{
 		
 		private var _currentDisplayedNodes:Vector.<DisplayNode>;
+		private var _currentSelectedDisplayNode:DisplayNode;
 		private var _currentSelectedNode:Node;
 		private var _graph:Graph;
 		
+		private var _randomAngleDelay:Number;
 		private var _edgesContainer:Sprite;
 		private var _nodesContainer:Sprite;
 		private var _labelsContainer:Sprite;
@@ -48,11 +51,14 @@ package com.carte_du_tendre.y2010.ui{
 		public function DisplayMainElement(newStage:Stage,newGraph:Graph){
 			newStage.addChild(this);
 			_graph = newGraph;
+			_randomAngleDelay = Math.random();
 			
 			_edgesContainer = new Sprite();
 			_nodesContainer = new Sprite();
 			_labelsContainer = new Sprite();
 			_nodesHitAreaContainer = new Sprite();
+			
+			_labelsContainer.alpha = 0;
 			
 			addChild(_edgesContainer);
 			addChild(_nodesContainer);
@@ -64,13 +70,19 @@ package com.carte_du_tendre.y2010.ui{
 			selectRandomNode();
 			drawNodes();
 		}
-
+		
 		private function drawNodes():void{
 			var i:int = 0;
-			var graphicSelectedNode:DisplayNode = new DisplayNode(_currentSelectedNode);
+			
+			if(_currentSelectedDisplayNode!=null){
+				_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
+			}
+			
+			
+			_currentSelectedDisplayNode = new DisplayNode(_currentSelectedNode);
 			
 			_currentDisplayedNodes = new Vector.<DisplayNode>();
-			_currentDisplayedNodes.push(graphicSelectedNode);
+			_currentDisplayedNodes.push(_currentSelectedDisplayNode);
 			
 			//Remove from the scene every nodes:
 			removeDisplayedNodes();
@@ -78,9 +90,12 @@ package com.carte_du_tendre.y2010.ui{
 			//Clear every edges:
 			_edgesContainer.graphics.clear();
 			
+			removeLabelFieldFromStage();
+			
 			//Add at the center of the screen the selected node:
-			graphicSelectedNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);;
-			addNodeAsChild(graphicSelectedNode);
+			_currentSelectedDisplayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);;
+			addNodeAsChild(_currentSelectedDisplayNode);
+			stage.addChild(_currentSelectedDisplayNode.labelField);
 			
 			//Add all the neighbours:
 			var l1:int = _currentSelectedNode.outNeighbours.length;
@@ -103,7 +118,6 @@ package com.carte_du_tendre.y2010.ui{
 			var temp_y1:Number;
 			var temp_x2:Number;
 			var temp_y2:Number;
-			var delay:Number = Math.random();
 			
 			//Out neighbors:
 			for(i=0;i<l1;i++){
@@ -111,10 +125,11 @@ package com.carte_du_tendre.y2010.ui{
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = 100*Math.cos(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageWidth/2;
-				temp_y0 = 100*Math.sin(2*Math.PI*(i/(l1+l2)+delay)) + stage.stageHeight/2;
-				displayNode.moveTo(temp_x0,temp_y0);
+				temp_x0 = 100*Math.cos(2*Math.PI*(i/(l1+l2)+_randomAngleDelay)) + stage.stageWidth/2;
+				temp_y0 = 100*Math.sin(2*Math.PI*(i/(l1+l2)+_randomAngleDelay)) + stage.stageHeight/2;
+				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
+				displayNode.moveToSlowly(temp_x0,temp_y0);
 				
 				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 				
@@ -142,10 +157,11 @@ package com.carte_du_tendre.y2010.ui{
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = 100*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageWidth/2;
-				temp_y0 = 100*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+delay)) + stage.stageHeight/2;
-				displayNode.moveTo(temp_x0,temp_y0);
+				temp_x0 = 100*Math.cos(2*Math.PI*((l1+i)/(l1+l2)+_randomAngleDelay)) + stage.stageWidth/2;
+				temp_y0 = 100*Math.sin(2*Math.PI*((l1+i)/(l1+l2)+_randomAngleDelay)) + stage.stageHeight/2;
+				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
+				displayNode.moveToSlowly(temp_x0,temp_y0);
 				
 				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 				
@@ -165,6 +181,17 @@ package com.carte_du_tendre.y2010.ui{
 				);
 				
 				_edgesContainer.graphics.endFill();
+			}
+			
+			addEventListener(Event.ENTER_FRAME,increaseAlpha);
+		}
+		
+		private function increaseAlpha(e:Event):void{
+			if(_labelsContainer.alpha<0.99||_edgesContainer.alpha<0.99){
+				_labelsContainer.alpha = Math.min(1,_labelsContainer.alpha+0.1);
+				_edgesContainer.alpha = Math.min(1,_edgesContainer.alpha+0.1);
+			}else{
+				removeEventListener(Event.ENTER_FRAME,increaseAlpha);
 			}
 		}
 		
@@ -186,6 +213,17 @@ package com.carte_du_tendre.y2010.ui{
 			_nodesHitAreaContainer.removeChild(displayNode.upperCircle);
 		}
 		
+		private function removeLabelFieldFromStage():void{
+			var l:int = stage.numChildren;
+			var i:int;
+			
+			for(i=0;i<l;i++){
+				if(stage.getChildAt(l-1-i) is TextField){
+					stage.removeChildAt(l-1-i);
+				}
+			}
+		}
+		
 		public function whenClickANeighbour(e:MouseEvent):void{
 			var l:int = _currentDisplayedNodes.length;
 			var node:Node;
@@ -194,15 +232,59 @@ package com.carte_du_tendre.y2010.ui{
 			for(i=0;i<l;i++){
 				if(_currentDisplayedNodes[i].upperCircle == e.target){
 					node = _currentDisplayedNodes[i].node;
+					stage.addChild(_currentDisplayedNodes[i].labelField);
 					break;
 				}
 			}
 			
 			trace("DisplayMainElement.whenClickANeighbour: New selected node.");
 			
-			_currentDisplayedNodes = new Vector.<DisplayNode>();
 			_currentSelectedNode = node;
-			drawNodes();
+			
+			//drawNodes();
+			addEventListener(Event.ENTER_FRAME,transitionFirstStep);
+		}
+		
+		private function transitionFirstStep(e:Event):void{
+			if(_edgesContainer.alpha>0.01){
+				_edgesContainer.alpha -= 0.1;
+			}else{
+				removeEventListener(Event.ENTER_FRAME,transitionFirstStep);
+				addEventListener(Event.ENTER_FRAME,transitionSecondStep);
+			}
+		}
+		
+		private function transitionSecondStep(e:Event):void{
+			if(_labelsContainer.alpha>0.01){
+				_labelsContainer.alpha -= 0.1;
+			}else{
+				removeEventListener(Event.ENTER_FRAME,transitionSecondStep);
+				addEventListener(Event.ENTER_FRAME,transitionThirdStep);
+			}
+		}
+		
+		private function transitionThirdStep(e:Event):void{
+			var d:Number = 0;
+			var x_to:Number;
+			var y_to:Number;
+			var l:Number = _currentDisplayedNodes.length;
+			
+			for each(var displayNode:DisplayNode in _currentDisplayedNodes){
+				x_to = displayNode.x*2/3 + stage.stageWidth/6;
+				y_to = displayNode.y*2/3 + stage.stageHeight/6;
+				
+				displayNode.moveTo(x_to,y_to);
+				
+				d += Math.pow(x_to-stage.stageWidth/2,2) + Math.pow(y_to-stage.stageHeight/2,2);
+			}
+			
+			if(d<l+1){
+				removeEventListener(Event.ENTER_FRAME,transitionThirdStep);
+				_randomAngleDelay = Math.random();
+				drawNodes();
+				
+				trace("DisplayMainElement.transitionThirdStep: Third step over.");
+			}
 		}
 		
 		private function removeDisplayedNodes():void{
@@ -274,14 +356,28 @@ package com.carte_du_tendre.y2010.ui{
 			_nodesContainer = value;
 		}
 		
-		public function get currentDisplayedNodes():Vector.<DisplayNode>
-		{
+		public function get currentDisplayedNodes():Vector.<DisplayNode>{
 			return _currentDisplayedNodes;
 		}
 		
-		public function set currentDisplayedNodes(value:Vector.<DisplayNode>):void
-		{
+		public function set currentDisplayedNodes(value:Vector.<DisplayNode>):void{
 			_currentDisplayedNodes = value;
+		}
+		
+		public function get currentSelectedDisplayNode():DisplayNode{
+			return _currentSelectedDisplayNode;
+		}
+		
+		public function set currentSelectedDisplayNode(value:DisplayNode):void{
+			_currentSelectedDisplayNode = value;
+		}
+		
+		public function get randomAngleDelay():Number{
+			return _randomAngleDelay;
+		}
+		
+		public function set randomAngleDelay(value:Number):void{
+			_randomAngleDelay = value;
 		}
 		
 	}
