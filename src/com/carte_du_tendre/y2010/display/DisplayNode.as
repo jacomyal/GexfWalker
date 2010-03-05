@@ -26,6 +26,7 @@ package com.carte_du_tendre.y2010.display{
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
@@ -100,6 +101,61 @@ package com.carte_du_tendre.y2010.display{
 			
 			_labelField.x = new_x - _labelField.width/2;
 			_labelField.y = new_y - _labelField.height/2;
+		}
+		
+		public function whenMouseOver():void{
+			with(this.graphics){
+				clear();
+				lineStyle(NODES_SCALE/4,brightenColor(_node.color,40));
+				beginFill(_node.color,1);
+				drawCircle(0,0,NODES_SCALE);
+				endFill();
+			}
+		}
+			
+		public function whenMouseOut():void{
+			with(this.graphics){
+				clear();
+				beginFill(_node.color,1);
+				drawCircle(0,0,NODES_SCALE);
+				endFill();
+			}
+		}
+		
+		/**
+		 * Makes a uint color become brigther or darker, depending of the parameter.
+		 * If the <code>perc</code> parameter is above 50, it will brighten the color.
+		 * If the parameter is below 50, it will darken it.
+		 * 
+		 * @param color Original color value, such as 0x88AACC.
+		 * @param perc Value between 0 and 100 to modify original color.
+		 * @return New color value (still such as 0x113355)
+		 * 
+		 * @author Martin Legris
+		 * @see http://blog.martinlegris.com
+		 */
+		protected function brightenColor(color:Number, perc:Number):Number{
+			var factor:Number;
+			var blueOffset:Number = color % 256;
+			var greenOffset:Number = ( color >> 8 ) % 256;
+			var redOffset:Number = ( color >> 16 ) % 256;
+			
+			if(perc > 50 && perc <= 100) {
+				factor = ( ( perc-50 ) / 50 );
+				
+				redOffset += ( 255 - redOffset ) * factor;
+				blueOffset += ( 255 - blueOffset ) * factor;
+				greenOffset += ( 255 - greenOffset ) * factor;
+			}
+			else if( perc < 50 && perc >= 0 ){
+				factor = ( ( 50 - perc ) / 50 );
+				
+				redOffset -= redOffset * factor;
+				blueOffset -= blueOffset * factor;
+				greenOffset -= greenOffset * factor;
+			}
+			
+			return (redOffset<<16|greenOffset<<8|blueOffset);
 		}
 		
 		public function get upperCircle():Sprite{

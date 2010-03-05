@@ -30,7 +30,6 @@ package com.carte_du_tendre.y2010.display{
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.text.TextFormat;
 	import flash.utils.Dictionary;
 	
 	public class DisplayAttributes extends Sprite{
@@ -41,8 +40,7 @@ package com.carte_du_tendre.y2010.display{
 		private var _goal:Array;
 		
 		public function DisplayAttributes(node:Node,graph:Graph,container:DisplayObjectContainer,new_x:Number,new_y:Number){
-			var new_text:String = "";
-			var format:TextFormat = new TextFormat("Verdana",12);
+			var new_text:String = '<font face="Verdana" size="12">';
 			var newContent:Dictionary = node.getAttributes().getMap();
 			
 			_goal = [new_x,new_y];
@@ -51,15 +49,22 @@ package com.carte_du_tendre.y2010.display{
 			_currentState = [this.stage.stageWidth/2,this.stage.stageHeight/2];
 			
 			for(var key:* in newContent){
-				new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+node.getAttributes().getValue(key)+"<br/></p>\n";
+				if(node.getAttributes().getValue(key).length>=8){
+					if((node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
+						new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+"<a href='"+node.getAttributes().getValue(key)+" '>"+'<font color="#444488">'+node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
+					}
+				}else{
+					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+node.getAttributes().getValue(key)+"<br/></p>\n";
+				}
 			}
+			
+			new_text += "</font>";
 			
 			_attributesField = new TextField();
 			with(_attributesField){
 				htmlText = new_text;
 				autoSize = TextFieldAutoSize.LEFT;
-				selectable = false;
-				setTextFormat(format);
+				selectable = true;
 			}
 			
 			this.graphics.lineStyle(1,0x000000);
@@ -67,16 +72,6 @@ package com.carte_du_tendre.y2010.display{
 			
 			trace("DisplayAttributes.DisplayAttributes: Launch drawing process.");
 			addEventListener(Event.ENTER_FRAME,drawFirstStep);
-		}
-
-		public function get framesCounter():int
-		{
-			return _framesCounter;
-		}
-
-		public function set framesCounter(value:int):void
-		{
-			_framesCounter = value;
 		}
 
 		private function drawFirstStep(e:Event):void{
@@ -122,7 +117,6 @@ package com.carte_du_tendre.y2010.display{
 				_attributesField.alpha = 1-(1-_attributesField.alpha)/2;
 			}else{
 				removeEventListener(Event.ENTER_FRAME,drawThirdStep);
-				trace("pouet");
 			}
 		}
 		
@@ -148,6 +142,14 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set currentState(value:Array):void{
 			_currentState = value;
+		}
+		
+		public function get framesCounter():int{
+			return _framesCounter;
+		}
+		
+		public function set framesCounter(value:int):void{
+			_framesCounter = value;
 		}
 	}
 }

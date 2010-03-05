@@ -80,6 +80,7 @@ package com.carte_du_tendre.y2010.ui{
 		
 		private function drawNodes():void{
 			var i:int = 0;
+			var j:int = 0;
 			
 			if(_currentSelectedDisplayNode!=null){
 				_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
@@ -106,6 +107,9 @@ package com.carte_du_tendre.y2010.ui{
 			//Add all the neighbours:
 			var l1:int = _currentSelectedNode.outNeighbours.length;
 			var l2:int = _currentSelectedNode.inNeighbours.length;
+			var l3:int = 0; //number of common neighbors
+			var a_in:Array = [];
+			var a_out:Array = [];
 			
 			var nodeCursor:Node;
 			var displayNode:DisplayNode;
@@ -124,27 +128,56 @@ package com.carte_du_tendre.y2010.ui{
 			var temp_y1:Number;
 			var temp_x2:Number;
 			var temp_y2:Number;
+			var temp_x3:Number;
+			var temp_y3:Number;
 			
 			//Attributes of the selected node:
-			temp_x0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.cos(2*Math.PI*_angleDelay) + stage.stageWidth/2;
-			temp_y0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.sin(2*Math.PI*_angleDelay) + stage.stageHeight/2;
-			if(_attributesContainer.numChildren>=1) _attributesContainer.removeChildAt(0);
-			_attributesContainer.alpha = 1;
-			_currentSelectionDisplayAttributes = new DisplayAttributes(_currentSelectedNode,_graph,_attributesContainer,temp_x0,temp_y0);
+			var a:int = 0;
+			if(root.loaderInfo.parameters["attributes"]!="false"){
+				temp_x0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.cos(2*Math.PI*_angleDelay) + stage.stageWidth/2;
+				temp_y0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.sin(2*Math.PI*_angleDelay) + stage.stageHeight/2;
+				if(_attributesContainer.numChildren>=1) _attributesContainer.removeChildAt(0);
+				_attributesContainer.alpha = 1;
+				_currentSelectionDisplayAttributes = new DisplayAttributes(_currentSelectedNode,_graph,_attributesContainer,temp_x0,temp_y0);
+				a = 1;
+			}
+			
+			//In and Out Neighbors (recensing):
+			for(i=0;i<l1;i++){
+				for(j=0;j<l2;j++){
+					if(_currentSelectedNode.outNeighbours[i].flex_id == _currentSelectedNode.inNeighbours[j].flex_id){
+						nodeCursor = _currentSelectedNode.outNeighbours[i];
+						displayNode = new DisplayNode(nodeCursor);
+						_currentDisplayedNodes.push(displayNode);
+						
+						l3++;
+					}
+				}
+			}
 			
 			//Out neighbors:
 			for(i=0;i<l1;i++){
+				a_out = [];
+				for(j=0;j<l3;j++){
+					if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.outNeighbours[i].flex_id){
+						a_out.push(i);
+					}
+				}
+				
+				trace("out "+a_out.indexOf(i)+"   "+_currentSelectedNode.outNeighbours[i].gexf_id);
+				if(a_out.indexOf(i)>=0){
+					continue;
+				}
+				
 				nodeCursor = _currentSelectedNode.outNeighbours[i];
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((i+1)/(l1+l2+1)+_angleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((i+1)/(l1+l2+1)+_angleDelay)) + stage.stageHeight/2;
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
 				displayNode.moveToSlowly(temp_x0,temp_y0);
-				
-				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 				
 				//Draw the edge as an arrow:
 				temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
@@ -166,17 +199,27 @@ package com.carte_du_tendre.y2010.ui{
 			
 			//In neighbors:
 			for(i=0;i<l2;i++){
+				a_in = [];
+				for(j=0;j<l3;j++){
+					if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.inNeighbours[i].flex_id){
+						a_in.push(i);
+					}
+				}
+				
+				trace("in "+a_in.indexOf(i)+"   "+_currentSelectedNode.inNeighbours[i].gexf_id);
+				if(a_in.indexOf(i)>=0){
+					continue;
+				}
+				
 				nodeCursor = _currentSelectedNode.inNeighbours[i];
 				displayNode = new DisplayNode(nodeCursor);
 				_currentDisplayedNodes.push(displayNode);
 				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1+i+1)/(l1+l2+1)+_angleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1+i+1)/(l1+l2+1)+_angleDelay)) + stage.stageHeight/2;
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1-l3+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1-l3+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
 				displayNode.moveToSlowly(temp_x0,temp_y0);
-				
-				displayNode.upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 				
 				//Draw the edge as an arrow:
 				temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
@@ -196,15 +239,81 @@ package com.carte_du_tendre.y2010.ui{
 				_edgesContainer.graphics.endFill();
 			}
 			
+			//In and Out neighbors (drawing):
+			for(i=0;i<l3;i++){
+				displayNode = _currentDisplayedNodes[i+1];
+				
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
+				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
+				addNodeAsChild(displayNode);
+				displayNode.moveToSlowly(temp_x0,temp_y0);
+				
+				//Draw the edge as an arrow:
+				temp_x1 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
+				temp_y1 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2;
+				
+				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
+				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
+				
+				temp_x3 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
+				temp_y3 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
+				
+				temp_x0 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
+				temp_y0 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2
+				
+				_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
+				_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
+				
+				GraphicsUtil.drawArrow(_edgesContainer.graphics,
+					new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),
+					style
+				);
+				
+				_edgesContainer.graphics.lineStyle(1,displayNode.node.color);
+				_edgesContainer.graphics.beginFill(displayNode.node.color);
+				
+				GraphicsUtil.drawArrow(_edgesContainer.graphics,
+					new Point(temp_x0,temp_y0),new Point(temp_x3,temp_y3),
+					style
+				);
+				
+				_edgesContainer.graphics.endFill();
+			}
+			
 			addEventListener(Event.ENTER_FRAME,increaseAlpha);
 		}
 		
 		private function increaseAlpha(e:Event):void{
 			if(_labelsContainer.alpha<0.99||_edgesContainer.alpha<0.99){
-				_labelsContainer.alpha = Math.min(1,_labelsContainer.alpha+0.1);
-				_edgesContainer.alpha = Math.min(1,_edgesContainer.alpha+0.1);
+				_labelsContainer.alpha = Math.min(1,_labelsContainer.alpha+0.05);
+				_edgesContainer.alpha = Math.min(1,_edgesContainer.alpha+0.05);
 			}else{
 				removeEventListener(Event.ENTER_FRAME,increaseAlpha);
+				var l:int = _currentDisplayedNodes.length - 1;
+				for(var i:int=0;i<l;i++){
+					_currentDisplayedNodes[i+1].upperCircle.addEventListener(MouseEvent.MOUSE_OVER,onMouseOverNodeHandler);
+					_currentDisplayedNodes[i+1].upperCircle.addEventListener(MouseEvent.MOUSE_OUT,onMouseOutNodeHandler);
+					_currentDisplayedNodes[i+1].upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
+				}
+			}
+		}
+		
+		private function onMouseOverNodeHandler(e:MouseEvent):void{
+			for each(var displayNode:DisplayNode in _currentDisplayedNodes){
+				if(displayNode.upperCircle == (e.target as Sprite)){
+					displayNode.whenMouseOver();
+					break;
+				}
+			}
+		}
+		
+		private function onMouseOutNodeHandler(e:MouseEvent):void{
+			for each(var displayNode:DisplayNode in _currentDisplayedNodes){
+				if(displayNode.upperCircle == (e.target as Sprite)){
+					displayNode.whenMouseOut();
+					break;
+				}
 			}
 		}
 		
@@ -254,7 +363,7 @@ package com.carte_du_tendre.y2010.ui{
 				}
 			}
 			
-			trace("DisplayMainElement.whenClickANeighbour: New selected node.");
+			trace("DisplayMainElement.whenClickANeighbour: New selected node "+node.label);
 			
 			_currentSelectedNode = node;
 			

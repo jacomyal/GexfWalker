@@ -180,7 +180,6 @@ package com.carte_du_tendre.y2010.loading{
 				for each(xmlSubCursor in xmlNodesAttributesValues){
 					if(xmlSubCursor.name().localName=='attvalue'){
 						node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
-						trace("prooouuuutt");
 					}
 				}
 			}
