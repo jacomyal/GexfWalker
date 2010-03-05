@@ -55,6 +55,7 @@ package com.carte_du_tendre.y2010.ui{
 		private function launchGUI(evt:Event):void{
 			trace("MainElement.launchGUI: GexfLoader.FILE_PARSED event received.");
 			_displayMainElement = new DisplayMainElement(stage,_graph);
+			_controlPanel = new ControlPanel(_graph.metaData,this);
 		}
 
 		public function get gexfPath():String{

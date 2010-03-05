@@ -26,16 +26,16 @@ package com.carte_du_tendre.y2010.data{
 		
 		private var _nodes:Vector.<Node>;
 		private var _attributes:HashMap;
-		private var _metaData:HashMap;
+		private var _metaData:String;
 		
 		private var _isAttributesHashNull:Boolean;
 		private var _isMetaDataHashNull:Boolean;
 		
 		public function Graph(){
-			nodes = new Vector.<Node>();
+			_nodes = new Vector.<Node>();
 			_attributes = new HashMap();
-			_metaData = new HashMap();
 			
+			_metaData = "";
 			_isAttributesHashNull = true;
 			_isMetaDataHashNull = true;
 		}
@@ -77,26 +77,6 @@ package com.carte_du_tendre.y2010.data{
 		}
 		
 		/**
-		 * Returns key of parameter meta data.
-		 * 
-		 * @param s A string ID
-		 * @return An attribute ID
-		 */
-		public function getMetaDataKey(s:String):String {
-			return _metaData.getKey(s);
-		}
-		
-		/**
-		 * Returns value of parameter meta data.
-		 * 
-		 * @param s A string ID
-		 * @return An attribute ID
-		 */
-		public function getMetaData(s:String):String {
-			return _metaData.getValue(s);
-		}
-		
-		/**
 		 * Sets an attribute.
 		 * 
 		 * @param attributeID The ID of this attribute.
@@ -112,29 +92,14 @@ package com.carte_du_tendre.y2010.data{
 		}
 		
 		/**
-		 * Sets an attribute.
-		 * 
-		 * @param attributeID The ID of this attribute.
-		 * @param attributeName The name of the attribute.
-		 */
-		public function setMetaData(metaDataID:String,metaDataName:String):void{
-			if(_isMetaDataHashNull){
-				_metaData = new HashMap();
-				_isMetaDataHashNull = false;
-			}
-			
-			_metaData.put(metaDataID,metaDataName);
-		}
-		
-		/**
 		 * Sets attributes as null.
 		 */
 		public function setAttributesNull():void{
-			attributes = null;
+			_attributes = null;
 		}
 		
 		public function addNode(node:Node):void{
-			nodes.push(node);
+			_nodes.push(node);
 		}
 		
 		public function get nodes():Vector.<Node>{
@@ -155,12 +120,12 @@ package com.carte_du_tendre.y2010.data{
 			_attributes = value;
 		}
 		
-		public function get metaData():HashMap
+		public function get metaData():String
 		{
 			return _metaData;
 		}
 		
-		public function set metaData(value:HashMap):void
+		public function set metaData(value:String):void
 		{
 			_metaData = value;
 		}

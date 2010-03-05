@@ -146,7 +146,23 @@ package com.carte_du_tendre.y2010.loading{
 				}
 			}
 			
-			// Now we can easily parse all attributes...
+			// Now we can easily parse all metadata...
+			if(xmlMeta!=null){
+				var meta:String = '<font face="Verdana" size="12"><b>Graph information:</b>\n';
+				for each(xmlCursor in xmlMeta){
+					if((xmlCursor.text().substr(0,7)=="http://")){
+						meta += "<p><b>"+xmlCursor.name().localName+":</b> "+"<a href='"+xmlCursor.text()+" '>"+'<font color="#444488">'+xmlCursor.text()+"</font></a><br/></p>\n";
+					}else{
+						meta += "<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"<br/></p>\n";
+					}
+					
+					meta += '</font>';
+				}
+				
+				_graph.metaData = meta;
+			}
+			
+			// ..., attributes...
 			if(xmlNodesAttributes!=null){
 				var attributesCounter:int = 0;
 				for each(xmlCursor in xmlNodesAttributes){
@@ -158,7 +174,7 @@ package com.carte_du_tendre.y2010.loading{
 				}
 			}
 			
-			// ..., node...
+			// ..., nodes...
 			var nodesCounter:int = 0;
 			var node:Node;
 			var xmlSubCursor:XML;

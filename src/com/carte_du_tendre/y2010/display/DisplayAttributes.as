@@ -40,7 +40,7 @@ package com.carte_du_tendre.y2010.display{
 		private var _goal:Array;
 		
 		public function DisplayAttributes(node:Node,graph:Graph,container:DisplayObjectContainer,new_x:Number,new_y:Number){
-			var new_text:String = '<font face="Verdana" size="12">';
+			var new_text:String = '<font face="Verdana" size="12"><b>Attributes:</b>\n';
 			var newContent:Dictionary = node.getAttributes().getMap();
 			
 			_goal = [new_x,new_y];
@@ -69,6 +69,9 @@ package com.carte_du_tendre.y2010.display{
 			
 			this.graphics.lineStyle(1,0x000000);
 			this.graphics.moveTo(_currentState[0],_currentState[1]);
+			_currentState[0] = _goal[0]/8 + _currentState[0]*7/8;
+			_currentState[1] = _goal[1]/8 + _currentState[1]*7/8;
+			this.graphics.moveTo(_currentState[0],_currentState[1]);
 			
 			trace("DisplayAttributes.DisplayAttributes: Launch drawing process.");
 			addEventListener(Event.ENTER_FRAME,drawFirstStep);
@@ -81,7 +84,8 @@ package com.carte_du_tendre.y2010.display{
 			
 			this.graphics.lineTo(_currentState[0],_currentState[1]);
 			
-			if(d<1){
+			if(d<5){
+				this.graphics.lineTo(_goal[0],_goal[1]);
 				removeEventListener(Event.ENTER_FRAME,drawFirstStep);
 				_attributesField.x = _currentState[0]+5;
 				_attributesField.y = _currentState[1]+5;

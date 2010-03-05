@@ -174,23 +174,19 @@ package com.carte_du_tendre.y2010.display{
 			_labelField = value;
 		}
 		
-		public function get node():Node
-		{
+		public function get node():Node{
 			return _node;
 		}
 		
-		public function set node(value:Node):void
-		{
+		public function set node(value:Node):void{
 			_node = value;
 		}
 		
-		public function get goal():Array
-		{
+		public function get goal():Array{
 			return _goal;
 		}
 		
-		public function set goal(value:Array):void
-		{
+		public function set goal(value:Array):void{
 			_goal = value;
 		}
 	}

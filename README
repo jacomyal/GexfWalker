@@ -24,6 +24,16 @@ II. RELATED LINKS
 ---
 III. FUNCTIONALITIES
 
+- Already implemented:
+  GexfWalker considers yet every graph as oriented (it will be changed soon). It displays the selected node at the center of the scene, with around it its neighbours, with arrows for edges.
+  It doesn't display the self edges, but displays the reciprocal edges.
+  If a node contains some attributes and if these attributes are valid, then the attributes are displayed (As attributes are displayed as html string, so if you use html in your attributes, you can change the display, the colors. Here are the specifications of AS3 TextField.htmlText: http://livedocs.adobe.com/flash/9.0/ActionScriptLangRefV3/flash/text/TextField.html#htmlText). And if an attribute starts with the string 'http://', then it will be clickable (Ctrl+Click to open it in another tab).
+
+- To be done:
+ - Undirected graphs
+ - Node size and edge size
+ - Edges between the neighbors
+ - Other kind of display when neighbors are too many (like some different circles)
 
 ---
 IV. HOW TO USE IT
