@@ -11,11 +11,6 @@
 </attributes>
 <nodes count="4">
 <node id="0" label="Gephi">
-<attvalues>
-<attvalue for="0" value="http://gephi.org"/>
-<attvalue for="1" value="1.0"/>
-<attvalue for="2" value="true"/>
-</attvalues>
 <viz:size value="10.0"/>
 <viz:color b="97" g="111" r="255"/>
 <viz:position x="282.5484" y="200.18726" z="0.0"/>
@@ -44,7 +39,7 @@
 <attvalues>
 <attvalue for="0" value="http://barabasilab.com"/>
 <attvalue for="1" value="1.0"/>
-<attvalue for="2" value="false"/>
+<attvalue for="2" value="false false false false"/>
 </attvalues>
 <viz:size value="10.0"/>
 <viz:color b="255" g="172" r="92"/>

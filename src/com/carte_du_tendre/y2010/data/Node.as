@@ -33,7 +33,9 @@ package com.carte_du_tendre.y2010.data{
 		private var _label:String;
 		private var _outNeighbours:Vector.<Node>;
 		private var _inNeighbours:Vector.<Node>;
+		
 		private var _attributes:HashMap;
+		private var _isHashNull:Boolean;
 		
 		public function Node(newFlexId:int,newGexfId:String,newLabel:String){
 			_flex_id = newFlexId;
@@ -43,7 +45,7 @@ package com.carte_du_tendre.y2010.data{
 			_outNeighbours = new Vector.<Node>();
 			_inNeighbours = new Vector.<Node>();
 			
-			_attributes = new HashMap();
+			_isHashNull = true;
 		}
 
 		public function addInLink(node:Node):void{
@@ -61,6 +63,11 @@ package com.carte_du_tendre.y2010.data{
 		 * @param attributeID The value of this attribute.
 		 */
 		public function setAttribute(attributeID:String,attributeValue:String):void{
+			if(_isHashNull){
+				_attributes = new HashMap();
+				_isHashNull = false;
+			}
+			
 			_attributes.put(attributeID,attributeValue);
 		}
 		
@@ -183,14 +190,20 @@ package com.carte_du_tendre.y2010.data{
 			_size = value;
 		}
 		
-		public function get attributes():HashMap
-		{
+		public function get attributes():HashMap{
 			return _attributes;
 		}
 		
-		public function set attributes(value:HashMap):void
-		{
+		public function set attributes(value:HashMap):void{
 			_attributes = value;
+		}
+		
+		public function get isHashNull():Boolean{
+			return _isHashNull;
+		}
+		
+		public function set isHashNull(value:Boolean):void{
+			_isHashNull = value;
 		}
 		
 	}

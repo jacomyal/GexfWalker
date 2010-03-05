@@ -37,7 +37,7 @@ package com.carte_du_tendre.y2010.ui{
 		private var _displayMainElement:DisplayMainElement;
 		
 		public function MainElement(s:Stage){
-			
+
 			s.addChild(this);
 			
 			if(root.loaderInfo.parameters["gexfPath"]==undefined) _gexfPath = "D:/Text-Mining/dev/CarteDuTendre/GexfWalker/bin-debug/standard_graph.gexf";

@@ -179,7 +179,11 @@ package com.carte_du_tendre.y2010.loading{
 				
 				for each(xmlSubCursor in xmlNodesAttributesValues){
 					if(xmlSubCursor.name().localName=='attvalue'){
-						node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
+						if((xmlSubCursor.attribute("for")!=undefined)&&(xmlSubCursor.@value!=undefined)){
+							node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
+						}else if((xmlSubCursor.@id!=undefined)&&(xmlSubCursor.@value!=undefined)){
+							node.setAttribute(xmlSubCursor.@id,xmlSubCursor.@value);
+						}
 					}
 				}
 			}

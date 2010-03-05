@@ -133,7 +133,7 @@ package com.carte_du_tendre.y2010.ui{
 			
 			//Attributes of the selected node:
 			var a:int = 0;
-			if(root.loaderInfo.parameters["attributes"]!="false"){
+			if((_graph.isAttributesHashNull!=true)&&(_currentSelectedNode.isHashNull!=true)){
 				temp_x0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.cos(2*Math.PI*_angleDelay) + stage.stageWidth/2;
 				temp_y0 = (EDGES_SCALE+4*DisplayNode.NODES_SCALE)*Math.sin(2*Math.PI*_angleDelay) + stage.stageHeight/2;
 				if(_attributesContainer.numChildren>=1) _attributesContainer.removeChildAt(0);
@@ -144,114 +144,118 @@ package com.carte_du_tendre.y2010.ui{
 			
 			//In and Out Neighbors (recensing):
 			for(i=0;i<l1;i++){
-				for(j=0;j<l2;j++){
-					if(_currentSelectedNode.outNeighbours[i].flex_id == _currentSelectedNode.inNeighbours[j].flex_id){
-						nodeCursor = _currentSelectedNode.outNeighbours[i];
-						displayNode = new DisplayNode(nodeCursor);
-						_currentDisplayedNodes.push(displayNode);
-						
-						l3++;
+				if(_currentSelectedNode.outNeighbours[i].flex_id!=_currentSelectedNode.flex_id){
+					for(j=0;j<l2;j++){
+						if(_currentSelectedNode.outNeighbours[i].flex_id == _currentSelectedNode.inNeighbours[j].flex_id){
+							nodeCursor = _currentSelectedNode.outNeighbours[i];
+							displayNode = new DisplayNode(nodeCursor);
+							_currentDisplayedNodes.push(displayNode);
+							
+							l3++;
+						}
 					}
 				}
 			}
 			
-			//Out neighbors:
+			//Out neighbors (drawing):
 			for(i=0;i<l1;i++){
-				a_out = [];
-				for(j=0;j<l3;j++){
-					if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.outNeighbours[i].flex_id){
-						a_out.push(i);
+				if(_currentSelectedNode.outNeighbours[i].flex_id!=_currentSelectedNode.flex_id){
+					for(j=0;j<l3;j++){
+						if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.outNeighbours[i].flex_id){
+							a_out.push(i);
+						}
 					}
+					
+					trace("out "+a_out.indexOf(i)+"   "+_currentSelectedNode.outNeighbours[i].gexf_id);
+					if(a_out.indexOf(i)>=0){
+						continue;
+					}
+					
+					nodeCursor = _currentSelectedNode.outNeighbours[i];
+					displayNode = new DisplayNode(nodeCursor);
+					_currentDisplayedNodes.push(displayNode);
+					
+					temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((i-a_out.length+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+					temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((i-a_out.length+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
+					displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
+					addNodeAsChild(displayNode);
+					displayNode.moveToSlowly(temp_x0,temp_y0);
+					
+					//Draw the edge as an arrow:
+					temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
+					temp_y1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
+					
+					temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
+					temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
+					
+					_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
+					_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
+					
+					GraphicsUtil.drawArrow(_edgesContainer.graphics,
+						new Point(temp_x2,temp_y2),new Point(temp_x1,temp_y1),
+						style
+					);
+					
+					_edgesContainer.graphics.endFill();
 				}
-				
-				trace("out "+a_out.indexOf(i)+"   "+_currentSelectedNode.outNeighbours[i].gexf_id);
-				if(a_out.indexOf(i)>=0){
-					continue;
-				}
-				
-				nodeCursor = _currentSelectedNode.outNeighbours[i];
-				displayNode = new DisplayNode(nodeCursor);
-				_currentDisplayedNodes.push(displayNode);
-				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
-				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
-				addNodeAsChild(displayNode);
-				displayNode.moveToSlowly(temp_x0,temp_y0);
-				
-				//Draw the edge as an arrow:
-				temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
-				temp_y1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
-				
-				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
-				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
-				
-				_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
-				_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
-				
-				GraphicsUtil.drawArrow(_edgesContainer.graphics,
-					new Point(temp_x2,temp_y2),new Point(temp_x1,temp_y1),
-					style
-				);
-				
-				_edgesContainer.graphics.endFill();
 			}
 			
-			//In neighbors:
+			//In neighbors (drawing):
 			for(i=0;i<l2;i++){
-				a_in = [];
-				for(j=0;j<l3;j++){
-					if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.inNeighbours[i].flex_id){
-						a_in.push(i);
+				if(_currentSelectedNode.inNeighbours[i].flex_id!=_currentSelectedNode.flex_id){
+					for(j=0;j<l3;j++){
+						if(_currentDisplayedNodes[j+1].node.flex_id == _currentSelectedNode.inNeighbours[i].flex_id){
+							a_in.push(i);
+						}
 					}
+					
+					trace("in "+a_in.indexOf(i)+"   "+_currentSelectedNode.inNeighbours[i].gexf_id);
+					if(a_in.indexOf(i)>=0){
+						continue;
+					}
+					
+					nodeCursor = _currentSelectedNode.inNeighbours[i];
+					displayNode = new DisplayNode(nodeCursor);
+					_currentDisplayedNodes.push(displayNode);
+					
+					temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1-l3-a_in.length+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+					temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1-l3-a_in.length+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
+					displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
+					addNodeAsChild(displayNode);
+					displayNode.moveToSlowly(temp_x0,temp_y0);
+					
+					//Draw the edge as an arrow:
+					temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
+					temp_y1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
+					
+					temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
+					temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
+					
+					_edgesContainer.graphics.lineStyle(1,nodeCursor.color);
+					_edgesContainer.graphics.beginFill(nodeCursor.color);
+					
+					GraphicsUtil.drawArrow(_edgesContainer.graphics,
+						new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),
+						style
+					);
+					
+					_edgesContainer.graphics.endFill();
 				}
-				
-				trace("in "+a_in.indexOf(i)+"   "+_currentSelectedNode.inNeighbours[i].gexf_id);
-				if(a_in.indexOf(i)>=0){
-					continue;
-				}
-				
-				nodeCursor = _currentSelectedNode.inNeighbours[i];
-				displayNode = new DisplayNode(nodeCursor);
-				_currentDisplayedNodes.push(displayNode);
-				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1-l3+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1-l3+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
-				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
-				addNodeAsChild(displayNode);
-				displayNode.moveToSlowly(temp_x0,temp_y0);
-				
-				//Draw the edge as an arrow:
-				temp_x1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
-				temp_y1 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
-				
-				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
-				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
-				
-				_edgesContainer.graphics.lineStyle(1,nodeCursor.color);
-				_edgesContainer.graphics.beginFill(nodeCursor.color);
-				
-				GraphicsUtil.drawArrow(_edgesContainer.graphics,
-					new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),
-					style
-				);
-				
-				_edgesContainer.graphics.endFill();
 			}
 			
 			//In and Out neighbors (drawing):
 			for(i=0;i<l3;i++){
 				displayNode = _currentDisplayedNodes[i+1];
 				
-				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
-				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
+				temp_x0 = EDGES_SCALE*Math.cos(2*Math.PI*((l1-2*l3+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageWidth/2;
+				temp_y0 = EDGES_SCALE*Math.sin(2*Math.PI*((l1-2*l3+l2+i+1)/(l1+l2-l3+a)+_angleDelay)) + stage.stageHeight/2;
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
 				displayNode.moveToSlowly(temp_x0,temp_y0);
-				
+
 				//Draw the edge as an arrow:
-				temp_x1 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
-				temp_y1 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2;
+				temp_x1 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
+				temp_y1 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2;
 				
 				temp_x2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageWidth/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_x0;
 				temp_y2 = (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*stage.stageHeight/2 + DisplayNode.NODES_SCALE/EDGES_SCALE*temp_y0;
@@ -259,19 +263,19 @@ package com.carte_du_tendre.y2010.ui{
 				temp_x3 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageWidth/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_x0;
 				temp_y3 = DisplayNode.NODES_SCALE/EDGES_SCALE*stage.stageHeight/2 + (EDGES_SCALE-DisplayNode.NODES_SCALE)/EDGES_SCALE*temp_y0;
 				
-				temp_x0 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
-				temp_y0 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2
+				temp_x0 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
+				temp_y0 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2
 				
-				_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
-				_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
+				_edgesContainer.graphics.lineStyle(1,displayNode.node.color);
+				_edgesContainer.graphics.beginFill(displayNode.node.color);
 				
 				GraphicsUtil.drawArrow(_edgesContainer.graphics,
 					new Point(temp_x1,temp_y1),new Point(temp_x2,temp_y2),
 					style
 				);
 				
-				_edgesContainer.graphics.lineStyle(1,displayNode.node.color);
-				_edgesContainer.graphics.beginFill(displayNode.node.color);
+				_edgesContainer.graphics.lineStyle(1,_currentSelectedNode.color);
+				_edgesContainer.graphics.beginFill(_currentSelectedNode.color);
 				
 				GraphicsUtil.drawArrow(_edgesContainer.graphics,
 					new Point(temp_x0,temp_y0),new Point(temp_x3,temp_y3),
@@ -351,13 +355,12 @@ package com.carte_du_tendre.y2010.ui{
 			var node:Node;
 			var i:int;
 			
-			if(_currentSelectedDisplayNode!=null){
-				_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
-			}
+			_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
 			
 			for(i=0;i<l;i++){
 				if(_currentDisplayedNodes[i].upperCircle == e.target){
 					node = _currentDisplayedNodes[i].node;
+					_nodesContainer.addChild(_currentDisplayedNodes[i]);
 					stage.addChild(_currentDisplayedNodes[i].labelField);
 					break;
 				}
@@ -367,7 +370,6 @@ package com.carte_du_tendre.y2010.ui{
 			
 			_currentSelectedNode = node;
 			
-			//drawNodes();
 			addEventListener(Event.ENTER_FRAME,transitionFirstStep);
 		}
 		
@@ -401,8 +403,6 @@ package com.carte_du_tendre.y2010.ui{
 				removeEventListener(Event.ENTER_FRAME,transitionSecondStep);
 				_angleDelay = -Math.random()/10;
 				drawNodes();
-				
-				trace("DisplayMainElement.transitionThirdStep: Third step over.");
 			}
 		}
 		

@@ -49,8 +49,8 @@ package com.carte_du_tendre.y2010.display{
 			_currentState = [this.stage.stageWidth/2,this.stage.stageHeight/2];
 			
 			for(var key:* in newContent){
-				if(node.getAttributes().getValue(key).length>=8){
-					if((node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
+				if((node.getAttributes().getValue(key).substr(0,7)=="http://")){
+					if((graph.getAttribute(key).toLowerCase()=="url")){
 						new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+"<a href='"+node.getAttributes().getValue(key)+" '>"+'<font color="#444488">'+node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
 					}
 				}else{
@@ -76,8 +76,8 @@ package com.carte_du_tendre.y2010.display{
 
 		private function drawFirstStep(e:Event):void{
 			var d:Number = Math.pow(_goal[0]-_currentState[0],2)+Math.pow(_goal[1]-_currentState[1],2);
-			_currentState[0] = _goal[0]/3 + _currentState[0]*2/3;
-			_currentState[1] = _goal[1]/3 + _currentState[1]*2/3;
+			_currentState[0] = _goal[0]/4 + _currentState[0]*3/4;
+			_currentState[1] = _goal[1]/4 + _currentState[1]*3/4;
 			
 			this.graphics.lineTo(_currentState[0],_currentState[1]);
 			

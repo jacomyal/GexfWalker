@@ -28,10 +28,16 @@ package com.carte_du_tendre.y2010.data{
 		private var _attributes:HashMap;
 		private var _metaData:HashMap;
 		
+		private var _isAttributesHashNull:Boolean;
+		private var _isMetaDataHashNull:Boolean;
+		
 		public function Graph(){
 			nodes = new Vector.<Node>();
 			_attributes = new HashMap();
 			_metaData = new HashMap();
+			
+			_isAttributesHashNull = true;
+			_isMetaDataHashNull = true;
 		}
 
 		public function getNode(nodeGexfId:String):Node{
@@ -71,15 +77,6 @@ package com.carte_du_tendre.y2010.data{
 		}
 		
 		/**
-		 * Returns true if attributes is null, false else.
-		 * 
-		 * @return The boolean result of this test.
-		 */
-		public function isAttributeHashNull():Boolean {
-			return (_attributes==null);
-		}
-		
-		/**
 		 * Returns key of parameter meta data.
 		 * 
 		 * @param s A string ID
@@ -100,12 +97,18 @@ package com.carte_du_tendre.y2010.data{
 		}
 		
 		/**
-		 * Returns true if meta data hash is null, false else.
+		 * Sets an attribute.
 		 * 
-		 * @return The boolean result of this test.
+		 * @param attributeID The ID of this attribute.
+		 * @param attributeName The name of the attribute.
 		 */
-		public function isMetaDataHashNull():Boolean {
-			return (_metaData==null);
+		public function setAttribute(attributeID:String,attributeName:String):void{
+			if(_isAttributesHashNull){
+				_attributes = new HashMap();
+				_isAttributesHashNull = false;
+			}
+			
+			_attributes.put(attributeID,attributeName);
 		}
 		
 		/**
@@ -114,8 +117,13 @@ package com.carte_du_tendre.y2010.data{
 		 * @param attributeID The ID of this attribute.
 		 * @param attributeName The name of the attribute.
 		 */
-		public function setAttribute(attributeID:String,attributeName:String):void{
-			attributes.put(attributeID,attributeName);
+		public function setMetaData(metaDataID:String,metaDataName:String):void{
+			if(_isMetaDataHashNull){
+				_metaData = new HashMap();
+				_isMetaDataHashNull = false;
+			}
+			
+			_metaData.put(metaDataID,metaDataName);
 		}
 		
 		/**
@@ -155,6 +163,26 @@ package com.carte_du_tendre.y2010.data{
 		public function set metaData(value:HashMap):void
 		{
 			_metaData = value;
+		}
+		
+		public function get isMetaDataHashNull():Boolean
+		{
+			return _isMetaDataHashNull;
+		}
+		
+		public function set isMetaDataHashNull(value:Boolean):void
+		{
+			_isMetaDataHashNull = value;
+		}
+		
+		public function get isAttributesHashNull():Boolean
+		{
+			return _isAttributesHashNull;
+		}
+		
+		public function set isAttributesHashNull(value:Boolean):void
+		{
+			_isAttributesHashNull = value;
 		}
 	}
 }
