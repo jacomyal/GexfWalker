@@ -34,6 +34,7 @@ package com.carte_du_tendre.y2010.ui{
 		private var _graph:Graph;
 		private var _gexfPath:String;
 		private var _gexfLoader:GexfLoader;
+		private var _controlPanel:ControlPanel;
 		private var _displayMainElement:DisplayMainElement;
 		
 		public function MainElement(s:Stage){
@@ -80,14 +81,20 @@ package com.carte_du_tendre.y2010.ui{
 			_graph = value;
 		}
 		
-		public function get displayMainElement():DisplayMainElement
-		{
+		public function get displayMainElement():DisplayMainElement{
 			return _displayMainElement;
 		}
 		
-		public function set displayMainElement(value:DisplayMainElement):void
-		{
+		public function set displayMainElement(value:DisplayMainElement):void{
 			_displayMainElement = value;
+		}
+		
+		public function get controlPanel():ControlPanel{
+			return _controlPanel;
+		}
+		
+		public function set controlPanel(value:ControlPanel):void{
+			_controlPanel = value;
 		}
 		
 	}

@@ -166,7 +166,6 @@ package com.carte_du_tendre.y2010.ui{
 						}
 					}
 					
-					trace("out "+a_out.indexOf(i)+"   "+_currentSelectedNode.outNeighbours[i].gexf_id);
 					if(a_out.indexOf(i)>=0){
 						continue;
 					}
@@ -209,7 +208,6 @@ package com.carte_du_tendre.y2010.ui{
 						}
 					}
 					
-					trace("in "+a_in.indexOf(i)+"   "+_currentSelectedNode.inNeighbours[i].gexf_id);
 					if(a_in.indexOf(i)>=0){
 						continue;
 					}

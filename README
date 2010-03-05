@@ -22,7 +22,11 @@ II. RELATED LINKS
  - Gephi: http://www.gephi.org/
 
 ---
-III. HOW TO USE IT
+III. FUNCTIONALITIES
+
+
+---
+IV. HOW TO USE IT
 
 The web application file is "bin-debug/GexfWalker.swf". You have to stock it somewhere, and put the following lines in your html code to make it appear:
 
@@ -37,7 +41,7 @@ The web application file is "bin-debug/GexfWalker.swf". You have to stock it som
 Obviously, you can modify the width, height and background color parameters as you wish. It is also recommanded to add the JS script available in "bin-debug/simple_example.html" to block the page scrolling when the mouse is over GexfWalker.
  
 ---
-IV. DEV LOG
+V. DEV LOG
 
 - 3/2/2010:
     First functionnal version of GexfWalker. The start node is selected randomly, and you just can click on a neighbor to select it and see its neighbor etc...
