@@ -57,8 +57,8 @@ V. DEV LOG
 - 3/2/2010:
     First functionnal version of GexfWalker. The start node is selected randomly, and you just can click on a neighbor to select it and see its neighbor etc...
 
-- 4/2/2010:
+- 3/4/2010:
     Now, the selection uses some effects on alpha values and Event.ENTER_FRAME stuff. So, it's really functional. Moreover, with the attributes display, it starts to be useful.
 
-- 5/2/2010:
+- 3/5/2010:
     Attributes, meta data and info visualisation are working, and a random reprocess button has been added.
