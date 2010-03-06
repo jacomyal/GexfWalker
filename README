@@ -60,5 +60,5 @@ V. DEV LOG
 - 4/2/2010:
     Now, the selection uses some effects on alpha values and Event.ENTER_FRAME stuff. So, it's really functional. Moreover, with the attributes display, it starts to be useful.
 
-- 4/2/2010:
+- 5/2/2010:
     Attributes, meta data and info visualisation are working, and a random reprocess button has been added.
