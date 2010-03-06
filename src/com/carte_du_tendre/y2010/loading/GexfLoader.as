@@ -151,9 +151,9 @@ package com.carte_du_tendre.y2010.loading{
 				var meta:String = '<font face="Verdana" size="12"><b>Graph information:</b>\n';
 				for each(xmlCursor in xmlMeta){
 					if((xmlCursor.text().substr(0,7)=="http://")){
-						meta += "<p><b>"+xmlCursor.name().localName+":</b> "+"<a href='"+xmlCursor.text()+" '>"+'<font color="#444488">'+xmlCursor.text()+"</font></a><br/></p>\n";
+						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+"<a href='"+xmlCursor.text()+" '>"+'<font color="#444488">'+xmlCursor.text()+"</font></a><br/></p>\n";
 					}else{
-						meta += "<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"<br/></p>\n";
+						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"<br/></p>\n";
 					}
 					
 					meta += '</font>';

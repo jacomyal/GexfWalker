@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
 <meta lastmodifieddate="2010-03-04+18:23">
-<creator>Gephi 0.7</creator>
+<Creator>Gephi 0.7</Creator>
 </meta>
 <graph defaultedgetype="directed" idtype="string" type="static">
 <attributes class="node" mode="static">
@@ -17,7 +17,7 @@
 <attvalue for="2" value="true"/>
 </attvalues>
 <viz:size value="10.0"/>
-<viz:color b="97" g="150" r="225"/>
+<viz:color b="97" g="121" r="205"/>
 <viz:position x="282.5484" y="200.18726" z="0.0"/>
 </node>
 <node id="1" label="Webatlas">
@@ -27,7 +27,7 @@
 <attvalue for="2" value="true"/>
 </attvalues>
 <viz:size value="10.0"/>
-<viz:color b="97" g="111" r="255"/>
+<viz:color b="137" g="61" r="160"/>
 <viz:position x="-263.36157" y="140.5069" z="0.0"/>
 </node>
 <node id="2" label="RTGI">
@@ -37,7 +37,7 @@
 <attvalue for="2" value="true"/>
 </attvalues>
 <viz:size value="10.0"/>
-<viz:color b="150" g="11" r="255"/>
+<viz:color b="97" g="97" r="187"/>
 <viz:position x="-289.54297" y="-438.82275" z="0.0"/>
 </node>
 <node id="3" label="BarabasiLab">
