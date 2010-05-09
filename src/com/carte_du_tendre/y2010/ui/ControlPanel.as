@@ -102,9 +102,7 @@ package com.carte_du_tendre.y2010.ui{
 				_metaField.x = 40;
 				_metaField.y = 80;
 				_metaField.alpha = 0;
-				this.addChild(_metaField);
 			}
-			this.addChild(_infoField);
 		}
 		
 		private function resetClickHandler(e:Event):void{
@@ -113,15 +111,17 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoDownHandler(e:Event):void{
+			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
+			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_infoField.alpha==0){
 				addEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
-				addEventListener(Event.ENTER_FRAME,infoDownFrameHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 			}
 		}
 		
 		private function infoDownFrameHandler(e:Event):void{
+			addChild(_infoField);
 			if(_infoField.alpha<0.98){
 				_infoField.alpha = 1-(1-_infoField.alpha)/2;
 				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
@@ -138,14 +138,18 @@ package com.carte_du_tendre.y2010.ui{
 				(this.parent as MainElement).displayMainElement.alpha = (1-(1-(this.parent as MainElement).displayMainElement.alpha)/2)/2 + 1/2;
 			}else{
 				_infoField.alpha = 0;
+				if(this.contains(_infoField)) removeChild(_infoField);
 				(this.parent as MainElement).displayMainElement.alpha = 1;
 				removeEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
+				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
 		
 		private function metaDownHandler(e:Event):void{
+			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
+			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_metaField.alpha==0){
-				addEventListener(Event.ENTER_FRAME,metaDownFrameHandler);
 				addEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
@@ -153,6 +157,7 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function metaDownFrameHandler(e:Event):void{
+			addChild(_metaField);
 			if(_metaField.alpha<0.98){
 				_metaField.alpha = 1-(1-_metaField.alpha)/2;
 				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
@@ -169,26 +174,47 @@ package com.carte_du_tendre.y2010.ui{
 				(this.parent as MainElement).displayMainElement.alpha = (1-(1-(this.parent as MainElement).displayMainElement.alpha)/2)/2 + 1/2;
 			}else{
 				_metaField.alpha = 0;
+				if(this.contains(_metaField)) removeChild(_metaField);
 				(this.parent as MainElement).displayMainElement.alpha = 1;
 				removeEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
+				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
 		
 		private function metaUpInfoDownHandler(e:Event):void{
-			if(_metaField.alpha>0.02){
+			addChild(_infoField);
+			if((_metaField.alpha>0.02)||(_infoField.alpha<0.98)){
 				_metaField.alpha = _metaField.alpha/2;
+				_infoField.alpha = 1-(1-_infoField.alpha)/2;
+				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
 			}else{
 				_metaField.alpha = 0;
+				_infoField.alpha = 1;
+				(this.parent as MainElement).displayMainElement.alpha = 0.25;
+				removeEventListener(Event.ENTER_FRAME,infoDownFrameHandler);
+				if(this.contains(_metaField)) removeChild(_metaField);
 				removeEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
+				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
 		
 		private function infoUpMetaDownHandler(e:Event):void{
-			if(_infoField.alpha>0.02){
+			addChild(_metaField);
+			if((_infoField.alpha>0.02)||(_metaField.alpha<0.98)){
 				_infoField.alpha = _infoField.alpha/2;
+				_metaField.alpha = 1-(1-_metaField.alpha)/2;
+				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
 			}else{
 				_infoField.alpha = 0;
+				_metaField.alpha = 1;
+				if(this.contains(_infoField)) removeChild(_infoField);
+				(this.parent as MainElement).displayMainElement.alpha = 0.25;
+				removeEventListener(Event.ENTER_FRAME,metaDownFrameHandler);
 				removeEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
+				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
 

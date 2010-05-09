@@ -181,6 +181,7 @@ package com.carte_du_tendre.y2010.loading{
 			var xmlNodesAttributesValues:XMLList;
 			
 			for each(xmlCursor in xmlNodes){
+				if(!(nodesCounter%500)) trace("New node: "+nodesCounter);
 				node = new Node(nodesCounter,xmlCursor.@id,xmlCursor.@label);
 				graph.addNode(node);
 				node.setSize(xmlCursor.children().normalize().@value);
@@ -209,6 +210,7 @@ package com.carte_du_tendre.y2010.loading{
 			// ... and edges:
 			var edgesCounter:int = 0;
 			for each(xmlCursor in xmlEdges){
+				if(!(edgesCounter%500)) trace("New edge: "+edgesCounter);
 				graph.getNode(xmlCursor.@source).addOutLink(graph.getNode(xmlCursor.@target));
 				graph.getNode(xmlCursor.@target).addInLink(graph.getNode(xmlCursor.@source));
 				edgesCounter++;
