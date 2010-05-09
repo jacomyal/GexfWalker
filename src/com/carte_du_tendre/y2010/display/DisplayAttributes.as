@@ -49,10 +49,8 @@ package com.carte_du_tendre.y2010.display{
 			_currentState = [this.stage.stageWidth/2,this.stage.stageHeight/2];
 			
 			for(var key:* in newContent){
-				if((node.getAttributes().getValue(key).substr(0,7)=="http://")){
-					if((graph.getAttribute(key).toLowerCase()=="url")){
-						new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+"<a href='"+node.getAttributes().getValue(key)+" '>"+'<font color="#444488">'+node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
-					}
+				if((node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
+					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+'<a href="'+node.getAttributes().getValue(key)+'" target="_blank" >'+'<font color="#444488">'+node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
 				}else{
 					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+node.getAttributes().getValue(key)+"<br/></p>\n";
 				}

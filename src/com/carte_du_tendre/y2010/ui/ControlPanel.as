@@ -77,7 +77,7 @@ package com.carte_du_tendre.y2010.ui{
 			this.addChild(_infoButton);
 			
 			_infoField = new TextField();
-			_infoField.htmlText = '<font face="Verdana" size="12"><b>Graph information:</b>\n\t<a href= "http://github.com/jacomyal/GexfWalker#readme"><font color="#444488">GexfWalker README</font></a>\n\t<a href= "http://gexf.net/format/"><font color="#444488">GEXF file format</font></a>\n\t<a href= "http://gephi.org/"><font color="#444488">Gephi team</font></a>';
+			_infoField.htmlText = '<font face="Verdana" size="12"><b>Graph information:</b>\n\t<a href="http://github.com/jacomyal/GexfWalker#readme" target="_blank"><font color="#444488">GexfWalker README</font></a>\n\t<a href="http://gexf.net/format/" target="_blank"><font color="#444488">GEXF file format</font></a>\n\t<a href="http://gephi.org/" target="_blank"><font color="#444488">Gephi team</font></a>';
 			_infoField.autoSize = TextFieldAutoSize.LEFT;
 			_infoField.x = 40;
 			_infoField.y = 45;
@@ -114,21 +114,10 @@ package com.carte_du_tendre.y2010.ui{
 			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_infoField.alpha==0){
+				(this.parent as MainElement).displayMainElement.freezeBackGround();
 				addEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
-			}
-		}
-		
-		private function infoDownFrameHandler(e:Event):void{
-			addChild(_infoField);
-			if(_infoField.alpha<0.98){
-				_infoField.alpha = 1-(1-_infoField.alpha)/2;
-				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
-			}else{
-				_infoField.alpha = 1;
-				(this.parent as MainElement).displayMainElement.alpha = 0.25;
-				removeEventListener(Event.ENTER_FRAME,infoDownFrameHandler);
 			}
 		}
 		
@@ -140,6 +129,7 @@ package com.carte_du_tendre.y2010.ui{
 				_infoField.alpha = 0;
 				if(this.contains(_infoField)) removeChild(_infoField);
 				(this.parent as MainElement).displayMainElement.alpha = 1;
+				(this.parent as MainElement).displayMainElement.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
@@ -150,21 +140,10 @@ package com.carte_du_tendre.y2010.ui{
 			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_metaField.alpha==0){
+				(this.parent as MainElement).displayMainElement.freezeBackGround();
 				addEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
-			}
-		}
-		
-		private function metaDownFrameHandler(e:Event):void{
-			addChild(_metaField);
-			if(_metaField.alpha<0.98){
-				_metaField.alpha = 1-(1-_metaField.alpha)/2;
-				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
-			}else{
-				_metaField.alpha = 1;
-				(this.parent as MainElement).displayMainElement.alpha = 0.25;
-				removeEventListener(Event.ENTER_FRAME,metaDownFrameHandler);
 			}
 		}
 		
@@ -176,6 +155,7 @@ package com.carte_du_tendre.y2010.ui{
 				_metaField.alpha = 0;
 				if(this.contains(_metaField)) removeChild(_metaField);
 				(this.parent as MainElement).displayMainElement.alpha = 1;
+				(this.parent as MainElement).displayMainElement.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
@@ -192,7 +172,6 @@ package com.carte_du_tendre.y2010.ui{
 				_metaField.alpha = 0;
 				_infoField.alpha = 1;
 				(this.parent as MainElement).displayMainElement.alpha = 0.25;
-				removeEventListener(Event.ENTER_FRAME,infoDownFrameHandler);
 				if(this.contains(_metaField)) removeChild(_metaField);
 				removeEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
@@ -211,7 +190,6 @@ package com.carte_du_tendre.y2010.ui{
 				_metaField.alpha = 1;
 				if(this.contains(_infoField)) removeChild(_infoField);
 				(this.parent as MainElement).displayMainElement.alpha = 0.25;
-				removeEventListener(Event.ENTER_FRAME,metaDownFrameHandler);
 				removeEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
