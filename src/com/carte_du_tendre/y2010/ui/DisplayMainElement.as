@@ -46,6 +46,7 @@ package com.carte_du_tendre.y2010.ui{
 		private var _currentSelectedNode:Node;
 		private var _graph:Graph;
 		
+		private var _isReady:Boolean;
 		private var _angleDelay:Number;
 		private var _edgesContainer:Sprite;
 		private var _nodesContainer:Sprite;
@@ -65,6 +66,7 @@ package com.carte_du_tendre.y2010.ui{
 			_nodesHitAreaContainer = new Sprite();
 			
 			_labelsContainer.alpha = 0;
+			_isReady = false;
 			
 			addChild(_attributesContainer);
 			addChild(_edgesContainer);
@@ -78,10 +80,11 @@ package com.carte_du_tendre.y2010.ui{
 			
 			drawNodes();
 		}
-		
+
 		public function afterSelection():void{
 			_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
 			_currentSelectedDisplayNode = null;
+			_isReady = false;
 			addEventListener(Event.ENTER_FRAME,transitionFirstStep);
 		}
 		
@@ -267,7 +270,7 @@ package com.carte_du_tendre.y2010.ui{
 					displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 					addNodeAsChild(displayNode);
 					displayNode.moveToSlowly(temp_x0,temp_y0);
-	
+					
 					//Draw the edge as an arrow:
 					temp_x1 = (EDGES_SCALE*Math.cos(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageWidth)/2;
 					temp_y1 = (EDGES_SCALE*Math.sin(2*Math.PI*((l1-2*l3+l2+i+1)/(l1-l3+l2+a)+_angleDelay)) + stage.stageHeight)/2;
@@ -311,7 +314,7 @@ package com.carte_du_tendre.y2010.ui{
 			}else{
 				removeEventListener(Event.ENTER_FRAME,increaseAlpha);
 				var l:int = _currentDisplayedNodes.length - 1;
-
+				
 				addEventListeners();
 			}
 		}
@@ -369,6 +372,7 @@ package com.carte_du_tendre.y2010.ui{
 			var i:int;
 			
 			_labelsContainer.addChild(_currentSelectedDisplayNode.labelField);
+			_isReady = false;
 			
 			for(i=0;i<l;i++){
 				if(_currentDisplayedNodes[i].upperCircle == e.target){
@@ -454,6 +458,8 @@ package com.carte_du_tendre.y2010.ui{
 				_currentDisplayedNodes[i+1].upperCircle.addEventListener(MouseEvent.MOUSE_OUT,onMouseOutNodeHandler);
 				_currentDisplayedNodes[i+1].upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 			}
+			
+			isReady = true;
 		}
 		
 		public function removeEventListeners():void{
@@ -547,5 +553,12 @@ package com.carte_du_tendre.y2010.ui{
 			_currentSelectionDisplayAttributes = value;
 		}
 		
+		public function get isReady():Boolean{
+			return _isReady;
+		}
+		
+		public function set isReady(value:Boolean):void{
+			_isReady = value;
+		}
 	}
 }

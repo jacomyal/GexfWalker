@@ -35,6 +35,7 @@ III. FUNCTIONALITIES
  - Edges between the neighbors
  - A preloader (or more a preparser, actually)
  - Other kind of display when neighbors are too many (like some different circles)
+ - Full graph display as the other view (the following visualization is amazing, GexfWalker should offer this later: http://www.weforum.org/documents/riskbrowser2010/risks/)
 
 ---
 IV. HOW TO USE IT
@@ -50,15 +51,20 @@ The web application file is "bin-debug/GexfWalker.swf". You have to stock it som
 </object>
 
 Obviously, you can modify the width, height and background color parameters as you wish. It is also recommanded to add the JS script available in "bin-debug/simple_example.html" to block the page scrolling when the mouse is over GexfWalker.
+
+As with GexfExplorer, some parameters will be available to allow you to personalize the display/interface/whatever...
  
 ---
 V. DEV LOG
 
-- 3/2/2010:
+- 03/02/2010:
     First functionnal version of GexfWalker. The start node is selected randomly, and you just can click on a neighbor to select it and see its neighbor etc...
 
-- 3/4/2010:
+- 03/04/2010:
     Now, the selection uses some effects on alpha values and Event.ENTER_FRAME stuff. So, it's really functional. Moreover, with the attributes display, it starts to be useful.
 
-- 3/5/2010:
+- 03/05/2010:
     Attributes, meta data and info visualisation are working, and a random reprocess button has been added.
+
+- 05/10/2010:
+    I just started a refactoring. The buggs of the control panel are already fixed. Next stage, implement the other view (see Functionnalities/to be done).

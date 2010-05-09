@@ -106,8 +106,12 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function resetClickHandler(e:Event):void{
-			(this.parent as MainElement).displayMainElement.selectRandomNode();
-			(this.parent as MainElement).displayMainElement.afterSelection();
+			var dME:DisplayMainElement = (this.parent as MainElement).displayMainElement;
+			if((dME.isReady)&&(_infoField.alpha==0)&&(_metaField.alpha==0)){
+				dME.isReady = false;
+				dME.selectRandomNode();
+				dME.afterSelection();
+			}
 		}
 		
 		private function infoDownHandler(e:Event):void{
