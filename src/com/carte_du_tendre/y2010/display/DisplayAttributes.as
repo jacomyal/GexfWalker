@@ -128,7 +128,6 @@ package com.carte_du_tendre.y2010.display{
 				_attributesField.alpha = 1-(1-_attributesField.alpha)/2;
 			}else{
 				removeEventListener(Event.ENTER_FRAME,drawThirdStep);
-				(_displayNode.parent.parent as MainDisplayElement).isReady = true;
 			}
 		}
 		

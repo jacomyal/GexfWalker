@@ -212,10 +212,12 @@ package com.carte_du_tendre.y2010.loading{
 			// ... and edges:
 			var edgesCounter:int = 0;
 			for each(xmlCursor in xmlEdges){
-				if(!(edgesCounter%500)) trace("New edge: "+edgesCounter);
-				graph.getNode(xmlCursor.@source).addOutLink(graph.getNode(xmlCursor.@target));
-				graph.getNode(xmlCursor.@target).addInLink(graph.getNode(xmlCursor.@source));
-				edgesCounter++;
+				if(!(edgesCounter%100)) trace("New edge: "+edgesCounter);
+				if(xmlCursor.@source!=xmlCursor.@target){
+					graph.getNode(xmlCursor.@source).addOutLink(graph.getNode(xmlCursor.@target));
+					graph.getNode(xmlCursor.@target).addInLink(graph.getNode(xmlCursor.@source));
+					edgesCounter++;
+				}
 			}
 			
 			trace("GexfLoader.parseXMLElement: "+edgesCounter+" edges parsed.");
