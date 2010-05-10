@@ -39,12 +39,12 @@ package com.carte_du_tendre.y2010.display{
 		private var _labelField:TextField;
 		private var _upperCircle:Sprite;
 		private var _node:Node;
-		private var _goal:Array; // goal := (x_goal,y_goal)
+		private var _step:Array; // step := (x_step,y_step)
 		
 		public function DisplayNode(node:Node,new_x:Number,new_y:Number){
 			_labelField = new TextField();
 			_upperCircle = new Sprite();
-			_goal = new Array();
+			_step = new Array();
 			_node = node;
 			
 			x = new_x;
@@ -83,23 +83,6 @@ package com.carte_du_tendre.y2010.display{
 			_upperCircle.y = this.y;
 		}
 		
-		public function moveToSlowly(new_x:Number,new_y:Number):void{
-			_goal[0] = new_x;
-			_goal[1] = new_y;
-			
-			addEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
-		}
-		
-		private function slowDisplacementHandler(e:Event):void{
-			var d:Number = Math.pow(this.x-_goal[0],2)+Math.pow(this.y-_goal[1],2);
-			
-			if(d<0.5){
-				removeEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
-			}else{
-				moveTo(this.x/2 + _goal[0]/2, this.y/2 + _goal[1]/2);
-			}
-		}
-		
 		public function moveTo(new_x:Number,new_y:Number):void{
 			x = new_x;
 			y = new_y;
@@ -109,6 +92,11 @@ package com.carte_du_tendre.y2010.display{
 			
 			_labelField.x = new_x - _labelField.width/2;
 			_labelField.y = new_y - _labelField.height/2;
+		}
+		
+		public function setStep(goal_x:Number,goal_y:Number,stepsNumber:int):void{
+			step[0] = (goal_x-this.x)/stepsNumber;
+			step[1] = (goal_y-this.y)/stepsNumber;
 		}
 		
 		public function whenMouseOver():void{
@@ -190,12 +178,12 @@ package com.carte_du_tendre.y2010.display{
 			_node = value;
 		}
 		
-		public function get goal():Array{
-			return _goal;
+		public function get step():Array{
+			return _step;
 		}
 		
-		public function set goal(value:Array):void{
-			_goal = value;
+		public function set step(value:Array):void{
+			_step = value;
 		}
 	}
 }

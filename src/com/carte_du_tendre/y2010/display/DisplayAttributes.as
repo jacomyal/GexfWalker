@@ -36,7 +36,6 @@ package com.carte_du_tendre.y2010.display{
 		
 		private var _attributesField:TextField;
 		private var _displayNode:DisplayNode;
-		private var _currentState:Array;
 		private var _framesCounter:int;
 		private var _goal:Array;
 		
@@ -47,7 +46,6 @@ package com.carte_du_tendre.y2010.display{
 			
 			_framesCounter = 0;
 			container.addChild(this);
-			_currentState = [0,0];
 			_goal = [new_x-this.stage.stageWidth/2,new_y-this.stage.stageHeight/2];
 			
 			for(var key:* in newContent){
@@ -68,67 +66,23 @@ package com.carte_du_tendre.y2010.display{
 			}
 			
 			this.graphics.lineStyle(1,0x000000);
-			this.graphics.moveTo(_currentState[0],_currentState[1]);
-			_currentState[0] = _goal[0]/8 + _currentState[0]*7/8;
-			_currentState[1] = _goal[1]/8 + _currentState[1]*7/8;
-			this.graphics.moveTo(_currentState[0],_currentState[1]);
 			
 			trace("DisplayAttributes.DisplayAttributes: Launch drawing process.");
-			addEventListener(Event.ENTER_FRAME,drawFirstStep);
-		}
-
-		private function drawFirstStep(e:Event):void{
-			var d:Number = Math.pow(_goal[0]-_currentState[0],2)+Math.pow(_goal[1]-_currentState[1],2);
-			_currentState[0] = _goal[0]/2 + _currentState[0]/2;
-			_currentState[1] = _goal[1]/2 + _currentState[1]/2;
 			
-			this.graphics.lineTo(_currentState[0],_currentState[1]);
-			this.x = _displayNode.x;
-			this.y = _displayNode.y;
-			
-			if(d<10){
-				this.graphics.lineTo(_goal[0],_goal[1]);
-				removeEventListener(Event.ENTER_FRAME,drawFirstStep);
-				_attributesField.x = _currentState[0]+5;
-				_attributesField.y = _currentState[1]+5;
-				_attributesField.alpha = 0;
-				addChild(_attributesField);
-				
-				_currentState[2] = _currentState[0];
-				_currentState[3] = _currentState[1];
-				
-				addEventListener(Event.ENTER_FRAME,drawSecondStep);
-			}
+			draw();
 		}
 		
-		private function drawSecondStep(e:Event):void{
-			this.x = _displayNode.x;
-			this.y = _displayNode.y;
+		private function draw():void{
+			this.graphics.lineStyle(1,0x000000);
+			this.graphics.moveTo(0,0);
+			this.graphics.lineTo(_goal[0],_goal[1]);
+			this.graphics.lineTo(_goal[0],_goal[1]+36);
+			this.graphics.moveTo(_goal[0],_goal[1]);
+			this.graphics.lineTo(_goal[0]+36,_goal[1]);
 			
-			this.graphics.moveTo(_currentState[0],_currentState[1]);
-			_currentState[1] += 12;
-			this.graphics.lineTo(_currentState[0],_currentState[1]);
-			
-			this.graphics.moveTo(_currentState[2],_currentState[3]);
-			_currentState[2] += 12;
-			this.graphics.lineTo(_currentState[2],_currentState[3]);
-			
-			_framesCounter ++;
-			
-			if(_framesCounter==3){
-				removeEventListener(Event.ENTER_FRAME,drawSecondStep);
-				addEventListener(Event.ENTER_FRAME,drawThirdStep);
-				this.x = _displayNode.x;
-				this.y = _displayNode.y;
-			}
-		}
-		
-		private function drawThirdStep(e:Event):void{
-			if(_attributesField.alpha<0.98){
-				_attributesField.alpha = 1-(1-_attributesField.alpha)/2;
-			}else{
-				removeEventListener(Event.ENTER_FRAME,drawThirdStep);
-			}
+			_attributesField.x = _goal[0]+5;
+			_attributesField.y = _goal[1]+5;
+			addChild(_attributesField);
 		}
 		
 		public function get goal():Array{
@@ -145,14 +99,6 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set attributesField(value:TextField):void{
 			_attributesField = value;
-		}
-		
-		public function get currentState():Array{
-			return _currentState;
-		}
-		
-		public function set currentState(value:Array):void{
-			_currentState = value;
 		}
 		
 		public function get framesCounter():int{
