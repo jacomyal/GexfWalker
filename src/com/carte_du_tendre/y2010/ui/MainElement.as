@@ -23,6 +23,7 @@
 package com.carte_du_tendre.y2010.ui{
 	
 	import com.carte_du_tendre.y2010.data.Graph;
+	import com.carte_du_tendre.y2010.display.MainDisplayElement;
 	import com.carte_du_tendre.y2010.loading.GexfLoader;
 	
 	import flash.display.Sprite;
@@ -35,7 +36,7 @@ package com.carte_du_tendre.y2010.ui{
 		private var _gexfPath:String;
 		private var _gexfLoader:GexfLoader;
 		private var _controlPanel:ControlPanel;
-		private var _displayMainElement:DisplayMainElement;
+		private var _mainDisplayElement:MainDisplayElement;
 		
 		public function MainElement(s:Stage){
 
@@ -54,7 +55,8 @@ package com.carte_du_tendre.y2010.ui{
 
 		private function launchGUI(evt:Event):void{
 			trace("MainElement.launchGUI: GexfLoader.FILE_PARSED event received.");
-			_displayMainElement = new DisplayMainElement(stage,_graph);
+			_graph.center();
+			_mainDisplayElement = new MainDisplayElement(stage,_graph);
 			_controlPanel = new ControlPanel(_graph.metaData,this);
 		}
 
@@ -82,20 +84,20 @@ package com.carte_du_tendre.y2010.ui{
 			_graph = value;
 		}
 		
-		public function get displayMainElement():DisplayMainElement{
-			return _displayMainElement;
-		}
-		
-		public function set displayMainElement(value:DisplayMainElement):void{
-			_displayMainElement = value;
-		}
-		
 		public function get controlPanel():ControlPanel{
 			return _controlPanel;
 		}
 		
 		public function set controlPanel(value:ControlPanel):void{
 			_controlPanel = value;
+		}
+		
+		public function get mainDisplayElement():MainDisplayElement{
+			return _mainDisplayElement;
+		}
+		
+		public function set mainDisplayElement(value:MainDisplayElement):void{
+			_mainDisplayElement = value;
 		}
 		
 	}

@@ -22,10 +22,10 @@
 
 package com.carte_du_tendre.y2010.data{
 	
-	
-	
 	public class Node{
 		
+		private var _x:Number;
+		private var _y:Number;
 		private var _size:Number;
 		private var _color:uint;
 		private var _flex_id:Number;
@@ -204,6 +204,22 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set isHashNull(value:Boolean):void{
 			_isHashNull = value;
+		}
+		
+		public function get y():Number{
+			return _y;
+		}
+		
+		public function set y(value:Number):void{
+			_y = value;
+		}
+		
+		public function get x():Number{
+			return _x;
+		}
+		
+		public function set x(value:Number):void{
+			_x = value;
 		}
 		
 	}

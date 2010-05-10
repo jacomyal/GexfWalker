@@ -22,6 +22,8 @@
 
 package com.carte_du_tendre.y2010.ui{
 	
+	import com.carte_du_tendre.y2010.display.MainDisplayElement;
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -54,7 +56,7 @@ package com.carte_du_tendre.y2010.ui{
 				y = 13;
 			}
 			this.addChild(searchInstruction);
-				
+			
 			_resetButton = new resetbutton();
 			with(_resetButton){
 				width = 25;
@@ -106,11 +108,10 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function resetClickHandler(e:Event):void{
-			var dME:DisplayMainElement = (this.parent as MainElement).displayMainElement;
+			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			if((dME.isReady)&&(_infoField.alpha==0)&&(_metaField.alpha==0)){
 				dME.isReady = false;
 				dME.selectRandomNode();
-				dME.afterSelection();
 			}
 		}
 		
@@ -118,7 +119,7 @@ package com.carte_du_tendre.y2010.ui{
 			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_infoField.alpha==0){
-				(this.parent as MainElement).displayMainElement.freezeBackGround();
+				(this.parent as MainElement).mainDisplayElement.freezeBackGround();
 				addEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
@@ -126,14 +127,16 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoUpFrameHandler(e:Event):void{
+			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
+			
 			if(_infoField.alpha>0.02){
 				_infoField.alpha = _infoField.alpha/2;
-				(this.parent as MainElement).displayMainElement.alpha = (1-(1-(this.parent as MainElement).displayMainElement.alpha)/2)/2 + 1/2;
+				dME.alpha = (1-(1-dME.alpha)/2)/2 + 1/2;
 			}else{
 				_infoField.alpha = 0;
 				if(this.contains(_infoField)) removeChild(_infoField);
-				(this.parent as MainElement).displayMainElement.alpha = 1;
-				(this.parent as MainElement).displayMainElement.unfreezeBackGround();
+				dME.alpha = 1;
+				dME.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
@@ -144,7 +147,7 @@ package com.carte_du_tendre.y2010.ui{
 			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_metaField.alpha==0){
-				(this.parent as MainElement).displayMainElement.freezeBackGround();
+				(this.parent as MainElement).mainDisplayElement.freezeBackGround();
 				addEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 			}else{
 				addEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
@@ -152,14 +155,16 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function metaUpFrameHandler(e:Event):void{
+			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
+			
 			if(_metaField.alpha>0.02){
 				_metaField.alpha = _metaField.alpha/2;
-				(this.parent as MainElement).displayMainElement.alpha = (1-(1-(this.parent as MainElement).displayMainElement.alpha)/2)/2 + 1/2;
+				dME.alpha = (1-(1-dME.alpha)/2)/2 + 1/2;
 			}else{
 				_metaField.alpha = 0;
 				if(this.contains(_metaField)) removeChild(_metaField);
-				(this.parent as MainElement).displayMainElement.alpha = 1;
-				(this.parent as MainElement).displayMainElement.unfreezeBackGround();
+				dME.alpha = 1;
+				dME.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
@@ -167,15 +172,17 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function metaUpInfoDownHandler(e:Event):void{
+			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
+			
 			addChild(_infoField);
 			if((_metaField.alpha>0.02)||(_infoField.alpha<0.98)){
 				_metaField.alpha = _metaField.alpha/2;
 				_infoField.alpha = 1-(1-_infoField.alpha)/2;
-				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
+				dME.alpha = (dME.alpha-1/4)/2 + 1/4;
 			}else{
 				_metaField.alpha = 0;
 				_infoField.alpha = 1;
-				(this.parent as MainElement).displayMainElement.alpha = 0.25;
+				dME.alpha = 0.25;
 				if(this.contains(_metaField)) removeChild(_metaField);
 				removeEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
@@ -184,42 +191,44 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoUpMetaDownHandler(e:Event):void{
+			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
+			
 			addChild(_metaField);
 			if((_infoField.alpha>0.02)||(_metaField.alpha<0.98)){
 				_infoField.alpha = _infoField.alpha/2;
 				_metaField.alpha = 1-(1-_metaField.alpha)/2;
-				(this.parent as MainElement).displayMainElement.alpha = ((this.parent as MainElement).displayMainElement.alpha-1/4)/2 + 1/4;
+				dME.alpha = (dME.alpha-1/4)/2 + 1/4;
 			}else{
 				_infoField.alpha = 0;
 				_metaField.alpha = 1;
 				if(this.contains(_infoField)) removeChild(_infoField);
-				(this.parent as MainElement).displayMainElement.alpha = 0.25;
+				dME.alpha = 0.25;
 				removeEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
-
+		
 		public function get resetButton():resetbutton{
 			return _resetButton;
 		}
-
+		
 		public function set resetButton(value:resetbutton):void{
 			_resetButton = value;
 		}
-
+		
 		public function get metaButton():metabutton{
 			return _metaButton;
 		}
-
+		
 		public function set metaButton(value:metabutton):void{
 			_metaButton = value;
 		}
-
+		
 		public function get infoButton():infobutton{
 			return _infoButton;
 		}
-
+		
 		public function set infoButton(value:infobutton):void{
 			_infoButton = value;
 		}
@@ -239,6 +248,6 @@ package com.carte_du_tendre.y2010.ui{
 		public function set infoField(value:TextField):void{
 			_infoField = value;
 		}
-
+		
 	}
 }

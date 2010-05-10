@@ -184,6 +184,8 @@ package com.carte_du_tendre.y2010.loading{
 				if(!(nodesCounter%500)) trace("New node: "+nodesCounter);
 				node = new Node(nodesCounter,xmlCursor.@id,xmlCursor.@label);
 				graph.addNode(node);
+				node.x = new Number(xmlCursor.children().normalize().@x);
+				node.y = -(new Number(xmlCursor.children().normalize().@y));
 				node.setSize(xmlCursor.children().normalize().@value);
 				node.setColor((xmlCursor.children().normalize().@b).toString(),(xmlCursor.children().normalize().@g).toString(),(xmlCursor.children().normalize().@r).toString());
 				nodesCounter++;

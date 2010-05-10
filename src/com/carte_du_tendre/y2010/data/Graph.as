@@ -56,6 +56,33 @@ package com.carte_du_tendre.y2010.data{
 			return res;
 		}
 		
+		public function center():void{
+			var xMin:Number = _nodes[0].x;
+			var xMax:Number = _nodes[0].x;
+			var yMin:Number = _nodes[0].y;
+			var yMax:Number = _nodes[0].y;
+			var ratio:Number;
+			
+			for (var i:Number = 1;i<_nodes.length;i++){
+				if(_nodes[i].x < xMin)
+					xMin = _nodes[i].x;
+				if(_nodes[i].x > xMax)
+					xMax = _nodes[i].x;
+				if(_nodes[i].y < yMin)
+					yMin = _nodes[i].y;
+				if(_nodes[i].y > yMax)
+					yMax = _nodes[i].y;
+			}
+			
+			var xCenter:Number = (xMax + xMin)/2;
+			var yCenter:Number = (yMax + yMin)/2;
+			
+			for (i = 0;i<_nodes.length;i++){
+				_nodes[i].x = _nodes[i].x+xCenter;
+				_nodes[i].y = _nodes[i].y+yCenter;
+			}
+		}
+		
 		/**
 		 * Returns key of parameter attribute.
 		 * 
@@ -110,43 +137,35 @@ package com.carte_du_tendre.y2010.data{
 			_nodes = value;
 		}
 		
-		public function get attributes():HashMap
-		{
+		public function get attributes():HashMap{
 			return _attributes;
 		}
 		
-		public function set attributes(value:HashMap):void
-		{
+		public function set attributes(value:HashMap):void{
 			_attributes = value;
 		}
 		
-		public function get metaData():String
-		{
+		public function get metaData():String{
 			return _metaData;
 		}
 		
-		public function set metaData(value:String):void
-		{
+		public function set metaData(value:String):void{
 			_metaData = value;
 		}
 		
-		public function get isMetaDataHashNull():Boolean
-		{
+		public function get isMetaDataHashNull():Boolean{
 			return _isMetaDataHashNull;
 		}
 		
-		public function set isMetaDataHashNull(value:Boolean):void
-		{
+		public function set isMetaDataHashNull(value:Boolean):void{
 			_isMetaDataHashNull = value;
 		}
 		
-		public function get isAttributesHashNull():Boolean
-		{
+		public function get isAttributesHashNull():Boolean{
 			return _isAttributesHashNull;
 		}
 		
-		public function set isAttributesHashNull(value:Boolean):void
-		{
+		public function set isAttributesHashNull(value:Boolean):void{
 			_isAttributesHashNull = value;
 		}
 	}

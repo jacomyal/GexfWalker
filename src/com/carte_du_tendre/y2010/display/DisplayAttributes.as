@@ -35,24 +35,26 @@ package com.carte_du_tendre.y2010.display{
 	public class DisplayAttributes extends Sprite{
 		
 		private var _attributesField:TextField;
+		private var _displayNode:DisplayNode;
 		private var _currentState:Array;
 		private var _framesCounter:int;
 		private var _goal:Array;
 		
-		public function DisplayAttributes(node:Node,graph:Graph,container:DisplayObjectContainer,new_x:Number,new_y:Number){
+		public function DisplayAttributes(new_displayNode:DisplayNode,graph:Graph,container:DisplayObjectContainer,new_x:Number,new_y:Number){
+			_displayNode = new_displayNode;
 			var new_text:String = '<font face="Verdana" size="12"><b>Attributes:</b>\n';
-			var newContent:Dictionary = node.getAttributes().getMap();
+			var newContent:Dictionary = _displayNode.node.getAttributes().getMap();
 			
-			_goal = [new_x,new_y];
 			_framesCounter = 0;
 			container.addChild(this);
-			_currentState = [this.stage.stageWidth/2,this.stage.stageHeight/2];
+			_currentState = [0,0];
+			_goal = [new_x-this.stage.stageWidth/2,new_y-this.stage.stageHeight/2];
 			
 			for(var key:* in newContent){
-				if((node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
-					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+'<a href="'+node.getAttributes().getValue(key)+'" target="_blank" >'+'<font color="#444488">'+node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
+				if((_displayNode.node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
+					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+'<a href="'+_displayNode.node.getAttributes().getValue(key)+'" target="_blank" >'+'<font color="#444488">'+_displayNode.node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
 				}else{
-					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+node.getAttributes().getValue(key)+"<br/></p>\n";
+					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+_displayNode.node.getAttributes().getValue(key)+"<br/></p>\n";
 				}
 			}
 			
@@ -77,12 +79,14 @@ package com.carte_du_tendre.y2010.display{
 
 		private function drawFirstStep(e:Event):void{
 			var d:Number = Math.pow(_goal[0]-_currentState[0],2)+Math.pow(_goal[1]-_currentState[1],2);
-			_currentState[0] = _goal[0]/4 + _currentState[0]*3/4;
-			_currentState[1] = _goal[1]/4 + _currentState[1]*3/4;
+			_currentState[0] = _goal[0]/2 + _currentState[0]/2;
+			_currentState[1] = _goal[1]/2 + _currentState[1]/2;
 			
 			this.graphics.lineTo(_currentState[0],_currentState[1]);
+			this.x = _displayNode.x;
+			this.y = _displayNode.y;
 			
-			if(d<5){
+			if(d<10){
 				this.graphics.lineTo(_goal[0],_goal[1]);
 				removeEventListener(Event.ENTER_FRAME,drawFirstStep);
 				_attributesField.x = _currentState[0]+5;
@@ -98,19 +102,24 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		private function drawSecondStep(e:Event):void{
+			this.x = _displayNode.x;
+			this.y = _displayNode.y;
+			
 			this.graphics.moveTo(_currentState[0],_currentState[1]);
-			_currentState[1] += 8;
+			_currentState[1] += 12;
 			this.graphics.lineTo(_currentState[0],_currentState[1]);
 			
 			this.graphics.moveTo(_currentState[2],_currentState[3]);
-			_currentState[2] += 8;
+			_currentState[2] += 12;
 			this.graphics.lineTo(_currentState[2],_currentState[3]);
 			
 			_framesCounter ++;
 			
-			if(_framesCounter==4){
+			if(_framesCounter==3){
 				removeEventListener(Event.ENTER_FRAME,drawSecondStep);
 				addEventListener(Event.ENTER_FRAME,drawThirdStep);
+				this.x = _displayNode.x;
+				this.y = _displayNode.y;
 			}
 		}
 		
@@ -119,6 +128,7 @@ package com.carte_du_tendre.y2010.display{
 				_attributesField.alpha = 1-(1-_attributesField.alpha)/2;
 			}else{
 				removeEventListener(Event.ENTER_FRAME,drawThirdStep);
+				(_displayNode.parent.parent as MainDisplayElement).isReady = true;
 			}
 		}
 		
@@ -152,6 +162,14 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set framesCounter(value:int):void{
 			_framesCounter = value;
+		}
+		
+		public function get displayNode():DisplayNode{
+			return _displayNode;
+		}
+		
+		public function set displayNode(value:DisplayNode):void{
+			_displayNode = value;
 		}
 	}
 }
