@@ -34,12 +34,13 @@ package com.carte_du_tendre.y2010.display{
 	public class DisplayNode extends Sprite{
 		
 		public static const NODES_SCALE:Number = 0.7;
-		public static const NODES_SCALE_LOCAL:Number = 20;
+		public static const NODES_SCALE_LOCAL:Number = 15;
 		
 		private var _labelField:TextField;
 		private var _upperCircle:Sprite;
-		private var _node:Node;
+		private var _size:Number;
 		private var _step:Array; // step := (x_step,y_step)
+		private var _node:Node;
 		
 		public function DisplayNode(node:Node,new_x:Number,new_y:Number){
 			_labelField = new TextField();
@@ -49,14 +50,15 @@ package com.carte_du_tendre.y2010.display{
 			
 			x = new_x;
 			y = new_y;
+			_size = NODES_SCALE*_node.size;
 			
 			this.hitArea = _upperCircle;
 			
 			draw();
 		}
 
-		private function draw():void{
-			var format:TextFormat = new TextFormat("Verdana",12*NODES_SCALE*_node.size/10);
+		public function draw():void{
+			var format:TextFormat = new TextFormat("Verdana",12*_size/10);
 			var circleHitArea:Sprite = new Sprite;
 			
 			with(_labelField){
@@ -69,14 +71,16 @@ package com.carte_du_tendre.y2010.display{
 			_labelField.y = this.y - _labelField.height/2;
 			
 			with(this.graphics){
+				clear();
 				beginFill(_node.color,1);
-				drawCircle(0,0,NODES_SCALE*_node.size);
+				drawCircle(0,0,_size);
 				endFill();
 			}
 			
 			with(_upperCircle.graphics){
+				clear();
 				beginFill(_node.color,0);
-				drawCircle(0,0,NODES_SCALE*_node.size);
+				drawCircle(0,0,_size);
 				endFill();
 			}
 			_upperCircle.x = this.x;
@@ -102,9 +106,9 @@ package com.carte_du_tendre.y2010.display{
 		public function whenMouseOver():void{
 			with(this.graphics){
 				clear();
-				lineStyle(NODES_SCALE*_node.size/4,brightenColor(_node.color,40));
+				lineStyle(_size/4,brightenColor(_node.color,40));
 				beginFill(_node.color,1);
-				drawCircle(0,0,NODES_SCALE*_node.size);
+				drawCircle(0,0,_size);
 				endFill();
 			}
 		}
@@ -113,7 +117,7 @@ package com.carte_du_tendre.y2010.display{
 			with(this.graphics){
 				clear();
 				beginFill(_node.color,1);
-				drawCircle(0,0,NODES_SCALE*_node.size);
+				drawCircle(0,0,_size);
 				endFill();
 			}
 		}
@@ -184,6 +188,14 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set step(value:Array):void{
 			_step = value;
+		}
+		
+		public function get size():Number{
+			return _size;
+		}
+		
+		public function set size(value:Number):void{
+			_size = value;
 		}
 	}
 }

@@ -109,8 +109,7 @@ package com.carte_du_tendre.y2010.ui{
 		
 		private function resetClickHandler(e:Event):void{
 			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			if((dME.isReady)&&(_infoField.alpha==0)&&(_metaField.alpha==0)){
-				dME.isReady = false;
+			if((_infoField.alpha==0)&&(_metaField.alpha==0)){
 				dME.selectRandomNode();
 			}
 		}
