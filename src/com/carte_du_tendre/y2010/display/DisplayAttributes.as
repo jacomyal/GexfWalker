@@ -26,71 +26,124 @@ package com.carte_du_tendre.y2010.display{
 	import com.carte_du_tendre.y2010.data.Node;
 	
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.utils.Dictionary;
 	
 	public class DisplayAttributes extends Sprite{
 		
+		public static const TEXTFIELD_WIDTH:Number = 200;
+		
 		private var _attributesField:TextField;
 		private var _displayNode:DisplayNode;
-		private var _framesCounter:int;
-		private var _goal:Array;
+		private var _horizontalSlider:Sprite;
+		private var _horizontalSliderHitArea:Sprite;
+		private var _main:MainDisplayElement;
 		
-		public function DisplayAttributes(new_displayNode:DisplayNode,graph:Graph,container:DisplayObjectContainer,new_x:Number,new_y:Number){
+		public function DisplayAttributes(new_displayNode:DisplayNode,graph:Graph,new_main:MainDisplayElement,newWidth:Number){
 			_displayNode = new_displayNode;
+			_main = new_main;
+			_main.attributesContainer.addChild(this);
+			
+			// Set HTML Text:
+			var text:String = setHtmlText(graph);
+			
+			// Set TextField:
+			_attributesField = new TextField();
+			_attributesField.htmlText = text;
+			//_attributesField.autoSize = TextFieldAutoSize.LEFT;
+			_attributesField.wordWrap = true;
+			_attributesField.selectable = true;
+			_attributesField.x = 10;
+			_attributesField.y = 10;
+			_attributesField.width = newWidth;
+			_attributesField.height = stage.stageHeight-20;
+			this.addChild(_attributesField);
+			
+			// Set slider hit area:
+			_horizontalSliderHitArea = new Sprite();
+			_horizontalSliderHitArea.graphics.beginFill(0x000000,0);
+			_horizontalSliderHitArea.graphics.drawRect(-5,5,10,stage.stageHeight-10);
+			_horizontalSliderHitArea.graphics.endFill();
+			
+			// Set slider:
+			_horizontalSlider = new Sprite();
+			
+			this.addChild(_horizontalSlider);
+			this.addChild(_horizontalSliderHitArea);
+			
+			_horizontalSlider.graphics.lineStyle(1,0x000000,1);
+			_horizontalSlider.graphics.moveTo(0,10);
+			_horizontalSlider.graphics.lineTo(0,stage.stageHeight-10);
+			_horizontalSlider.hitArea = _horizontalSliderHitArea;
+			
+			this.x = stage.stageWidth-newWidth-20;
+			this.y = 0;
+			
+			this.graphics.clear();
+			this.graphics.beginFill(0xFFFFFF,1);
+			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageWidth);
+			this.graphics.endFill();
+			
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OVER,over);
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OUT,out);
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_DOWN,down);
+			stage.addEventListener(MouseEvent.MOUSE_UP,drop);
+			
+			_main.x = -(stage.stageWidth-this.x)/2;
+		}
+
+		private function down(e:MouseEvent):void{
+			var rect:Rectangle = new Rectangle(stage.stageWidth-TEXTFIELD_WIDTH*2-20,0,TEXTFIELD_WIDTH*1.5,0);
+			this.startDrag(false,rect);
+			addEventListener(Event.ENTER_FRAME,whileDragging);
+		}
+		
+		private function drop(e:MouseEvent):void{
+			this.stopDrag();
+			removeEventListener(Event.ENTER_FRAME,whileDragging);
+			_main.attributesAreaWidth = _main.stage.stageWidth-this.x;
+			trace("prout");
+		}
+		
+		private function whileDragging(e:Event):void{
+			_attributesField.width = stage.stageWidth-this.x;
+			_main.x = -(stage.stageWidth-this.x)/2;
+			
+			this.graphics.clear();
+			this.graphics.beginFill(0xFFFFFF,1);
+			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageWidth);
+			this.graphics.endFill();
+		}
+		
+		private function over(e:MouseEvent):void{
+		}
+		
+		private function out(e:MouseEvent):void{
+		}
+		
+		private function setHtmlText(graph:Graph):String{
 			var new_text:String = '<font face="Verdana" size="12"><b>Attributes:</b>\n';
 			var newContent:Dictionary = _displayNode.node.getAttributes().getMap();
 			
-			_framesCounter = 0;
-			container.addChild(this);
-			_goal = [new_x-this.stage.stageWidth/2,new_y-this.stage.stageHeight/2];
-			
 			for(var key:* in newContent){
-				if((_displayNode.node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
-					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+'<a href="'+_displayNode.node.getAttributes().getValue(key)+'" target="_blank" >'+'<font color="#444488">'+_displayNode.node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
-				}else{
-					new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+_displayNode.node.getAttributes().getValue(key)+"<br/></p>\n";
+				if(graph.getAttribute(key)!=null){
+					if((_displayNode.node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){
+						new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+'<a href="'+_displayNode.node.getAttributes().getValue(key)+'" target="_blank" >'+'<font color="#444488">'+_displayNode.node.getAttributes().getValue(key)+"</font></a><br/></p>\n";
+					}else{
+						new_text += "<p><b>"+graph.getAttribute(key)+":</b> "+_displayNode.node.getAttributes().getValue(key)+"<br/></p>\n";
+					}
 				}
 			}
 			
 			new_text += "</font>";
 			
-			_attributesField = new TextField();
-			with(_attributesField){
-				htmlText = new_text;
-				autoSize = TextFieldAutoSize.LEFT;
-				selectable = true;
-			}
-			
-			this.graphics.lineStyle(1,0x000000);
-			
-			trace("DisplayAttributes.DisplayAttributes: Launch drawing process.");
-			
-			draw();
-		}
-		
-		private function draw():void{
-			this.graphics.lineStyle(1,0x000000);
-			this.graphics.moveTo(0,0);
-			this.graphics.lineTo(_goal[0],_goal[1]);
-			this.graphics.lineTo(_goal[0],_goal[1]+36);
-			this.graphics.moveTo(_goal[0],_goal[1]);
-			this.graphics.lineTo(_goal[0]+36,_goal[1]);
-			
-			_attributesField.x = _goal[0]+5;
-			_attributesField.y = _goal[1]+5;
-			addChild(_attributesField);
-		}
-		
-		public function get goal():Array{
-			return _goal;
-		}
-
-		public function set goal(value:Array):void{
-			_goal = value;
+			return(new_text);
 		}
 		
 		public function get attributesField():TextField{
@@ -101,20 +154,36 @@ package com.carte_du_tendre.y2010.display{
 			_attributesField = value;
 		}
 		
-		public function get framesCounter():int{
-			return _framesCounter;
-		}
-		
-		public function set framesCounter(value:int):void{
-			_framesCounter = value;
-		}
-		
 		public function get displayNode():DisplayNode{
 			return _displayNode;
 		}
 		
 		public function set displayNode(value:DisplayNode):void{
 			_displayNode = value;
+		}
+		
+		public function get horizontalSlider():Sprite{
+			return _horizontalSlider;
+		}
+		
+		public function set horizontalSlider(value:Sprite):void{
+			_horizontalSlider = value;
+		}
+		
+		public function get horizontalSliderHitArea():Sprite{
+			return _horizontalSliderHitArea;
+		}
+		
+		public function set horizontalSliderHitArea(value:Sprite):void{
+			_horizontalSliderHitArea = value;
+		}
+		
+		public function get main():MainDisplayElement{
+			return _main;
+		}
+		
+		public function set main(value:MainDisplayElement):void{
+			_main = value;
 		}
 	}
 }

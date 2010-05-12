@@ -40,6 +40,7 @@ package com.carte_du_tendre.y2010.display{
 	public class MainDisplayElement extends Sprite{
 		
 		public static const EDGES_SCALE:Number = 180;
+		public static const MAX_SCALE:Number = 30;
 		public static const STEPS:Number = 8;
 		
 		private var _currentSelectionDisplayAttributes:DisplayAttributes;
@@ -52,6 +53,9 @@ package com.carte_du_tendre.y2010.display{
 		private var _graph:Graph;
 		
 		private var _localView_edgesToDraw:Array;
+		private var _attributesAreaWidth:Number;
+		private var _sceneXCenter:Number;
+		private var _sceneYCenter:Number;
 		
 		private var _moveStep:Array;
 		private var _isReady:Boolean;
@@ -76,16 +80,20 @@ package com.carte_du_tendre.y2010.display{
 			_nodesContainer = new Sprite();
 			_labelsContainer = new Sprite();
 			_nodesHitAreaContainer = new Sprite();
+			_attributesAreaWidth = DisplayAttributes.TEXTFIELD_WIDTH;
 			
 			_isReady = false;
 			_currentSelectionDisplayAttributes = null;
 			_currentDisplayedMainNode = null;
 			
-			addChild(_attributesContainer);
+			_sceneXCenter = stage.stageWidth/2;
+			_sceneYCenter = stage.stageHeight/2;
+			
 			addChild(_edgesContainer);
 			addChild(_nodesContainer);
 			addChild(_labelsContainer);
 			addChild(_nodesHitAreaContainer);
+			parent.addChild(_attributesContainer);
 			
 			_style = new ArrowStyle();
 			_style.headLength = 10;
@@ -145,27 +153,24 @@ package com.carte_du_tendre.y2010.display{
 			var displayNode:DisplayNode;
 			
 			_currentDisplayedNodes = new Vector.<DisplayNode>();
-			setLocalExploration(true);
 			
 			// Selected node:
 			_currentDisplayedMainNode.setStep(stage.stageWidth/2,stage.stageHeight/2,STEPS);
 			
 			//Attributes of the selected node:
-			var a:int = 0;
 			if((_graph.isAttributesHashNull!=true)&&(_currentDisplayedMainNode.node.isHashNull!=true)){
-				new_x = (EDGES_SCALE+DisplayNode.NODES_SCALE)*Math.cos(2*Math.PI*_angleDelay) + stage.stageWidth/2;
-				new_y = (EDGES_SCALE+DisplayNode.NODES_SCALE)*Math.sin(2*Math.PI*_angleDelay) + stage.stageHeight/2;
 				if(_attributesContainer.numChildren>=1) _attributesContainer.removeChildAt(0);
 				_attributesContainer.alpha = 1;
-				_currentSelectionDisplayAttributes = new DisplayAttributes(_currentDisplayedMainNode,_graph,_attributesContainer,new_x,new_y);
+				_currentSelectionDisplayAttributes = new DisplayAttributes(_currentDisplayedMainNode,_graph,this,_attributesAreaWidth-20);
 				_currentSelectionDisplayAttributes.alpha = 0;
-				a = 1;
+			}else{
+				_currentSelectionDisplayAttributes = null;
 			}
 			
 			// Already displayed nodes:
 			for each(displayNode in _constantDisplayNodes){
-				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2+a)+_angleDelay)) + stage.stageWidth/2;
-				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2+a)+_angleDelay)) + stage.stageHeight/2;
+				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
+				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
 				
 				displayNode.setStep(new_x,new_y,STEPS);
 				_currentDisplayedNodes.push(displayNode);
@@ -185,8 +190,8 @@ package com.carte_du_tendre.y2010.display{
 				displayNode = new DisplayNode(node,stage.stageWidth/2,stage.stageHeight/2);
 				_currentDisplayedNodes.push(displayNode);
 				
-				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2+a)+_angleDelay)) + stage.stageWidth/2;
-				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2+a)+_angleDelay)) + stage.stageHeight/2;
+				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
+				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
 				
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
@@ -195,6 +200,7 @@ package com.carte_du_tendre.y2010.display{
 				index++;
 			}
 			
+			setLocalExploration(true);
 			localView_processDisplayNodesScaling();
 			localView_transitionLauncher();
 			localView_addEventListeners();
@@ -293,10 +299,18 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		private function setLocalExploration(slowly:Boolean):void{
-			if(slowly){
-				moveGraphSceneSlowly(0,0,1);
+			if(_currentSelectionDisplayAttributes!=null){
+				if(slowly){
+					moveGraphSceneSlowly(-_attributesAreaWidth/2,0,1);
+				}else{
+					moveGraphScene(-_attributesAreaWidth/2,0,1);
+				}
 			}else{
-				moveGraphScene(0,0,1);
+				if(slowly){
+					moveGraphSceneSlowly(0,0,1);
+				}else{
+					moveGraphScene(0,0,1);
+				}
 			}
 		}
 		
@@ -545,8 +559,8 @@ package com.carte_du_tendre.y2010.display{
 				// Attributes:
 				if(_currentSelectionDisplayAttributes!=null){
 					_currentSelectionDisplayAttributes.alpha += 1/STEPS;
-					_currentSelectionDisplayAttributes.x = _currentDisplayedMainNode.x;
-					_currentSelectionDisplayAttributes.y = _currentDisplayedMainNode.y;
+					/*_currentSelectionDisplayAttributes.x = _currentDisplayedMainNode.x;
+					_currentSelectionDisplayAttributes.y = _currentDisplayedMainNode.y;*/
 				}
 				
 				// Neighbours and edges:
@@ -662,15 +676,14 @@ package com.carte_du_tendre.y2010.display{
 				y0 = _currentDisplayedMainNode.y;
 				size0 = _currentDisplayedMainNode.size;
 				
-				trace(displayNode.node.label+", "+_localView_edgesToDraw[i][0]+", "+i.toString());
 				distance = Math.sqrt(Math.pow(displayNode.x-x0,2)+Math.pow(displayNode.y-y0,2));
-				if(distance<=1) continue;
+				if(distance<=(Math.max(size0,displayNode.size)+10)) continue;
 				
 				xNeighbour = displayNode.x*(distance-displayNode.size)/distance + x0*displayNode.size/distance;
 				yNeighbour = displayNode.y*(distance-displayNode.size)/distance + y0*displayNode.size/distance;
 				
-				xCenter = displayNode.x*size0/distance + x0*(distance-displayNode.size)/distance;
-				yCenter = displayNode.y*size0/distance + y0*(distance-displayNode.size)/distance;
+				xCenter = displayNode.x*size0/distance + x0*(distance-size0)/distance;
+				yCenter = displayNode.y*size0/distance + y0*(distance-size0)/distance;
 				
 				if(_localView_edgesToDraw[i][0]=="mutual"){
 					xMiddle = (x0+displayNode.x)/2;
@@ -869,6 +882,30 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set localView_edgesToDraw(value:Array):void{
 			_localView_edgesToDraw = value;
+		}
+		
+		public function get attributesAreaWidth():Number{
+			return _attributesAreaWidth;
+		}
+		
+		public function set attributesAreaWidth(value:Number):void{
+			_attributesAreaWidth = value;
+		}
+		
+		public function get sceneYCenter():Number{
+			return _sceneYCenter;
+		}
+		
+		public function set sceneYCenter(value:Number):void{
+			_sceneYCenter = value;
+		}
+		
+		public function get sceneXCenter():Number{
+			return _sceneXCenter;
+		}
+		
+		public function set sceneXCenter(value:Number):void{
+			_sceneXCenter = value;
 		}
 	}
 }

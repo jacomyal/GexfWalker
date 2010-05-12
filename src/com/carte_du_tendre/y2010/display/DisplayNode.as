@@ -58,7 +58,7 @@ package com.carte_du_tendre.y2010.display{
 		}
 
 		public function draw():void{
-			var format:TextFormat = new TextFormat("Verdana",12*_size/10);
+			var format:TextFormat = new TextFormat("Verdana",12*_size/10,brightenColor(_node.color,15));
 			var circleHitArea:Sprite = new Sprite;
 			
 			with(_labelField){
