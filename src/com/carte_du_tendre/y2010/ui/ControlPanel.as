@@ -385,7 +385,9 @@ package com.carte_du_tendre.y2010.ui{
 			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			var node:Node = dME.graph.nodes[_nodesBox.selectedItem.data];
 			
-			dME.selectNode(node);
+			if((_infoField.alpha==0)&&(_metaField.alpha==0)&&(dME.isReady==true)){
+				dME.selectNode(node);
+			}
 		}
 		
 		private function nodesBoxOpen(e:Event):void{
