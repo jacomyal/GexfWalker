@@ -37,7 +37,7 @@ package com.carte_du_tendre.y2010.display{
 	
 	public class DisplayAttributes extends Sprite{
 		
-		public static const TEXTFIELD_WIDTH:Number = 10;
+		public static const TEXTFIELD_WIDTH:Number = 15;
 		
 		private var _attributesField:TextField;
 		private var _displayNode:DisplayNode;
@@ -62,9 +62,11 @@ package com.carte_du_tendre.y2010.display{
 			_attributesField.mouseWheelEnabled = true;
 			_attributesField.x = 10;
 			_attributesField.y = 10;
-			_attributesField.width = newWidth;
+			_attributesField.width = Math.abs(newWidth);
 			_attributesField.height = stage.stageHeight-20;
 			this.addChild(_attributesField);
+			if(TEXTFIELD_WIDTH<=50) _attributesField.alpha = 0;
+			
 			
 			// Set slider hit area:
 			_horizontalSliderHitArea = new Sprite();
@@ -116,7 +118,7 @@ package com.carte_du_tendre.y2010.display{
 		}
 
 		private function down(e:MouseEvent):void{
-			var rect:Rectangle = new Rectangle(45,0,stage.stageWidth-55,0);
+			var rect:Rectangle = new Rectangle(45,0,stage.stageWidth-60,0);
 			this.startDrag(false,rect);
 			addEventListener(Event.ENTER_FRAME,whileDragging);
 		}

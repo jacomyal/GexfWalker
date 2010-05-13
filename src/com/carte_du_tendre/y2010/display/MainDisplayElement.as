@@ -352,6 +352,8 @@ package com.carte_du_tendre.y2010.display{
 			_moveStep[1] = new_y;
 			_moveStep[2] = new_ratio;
 			
+			stage.removeEventListener(MouseEvent.MOUSE_DOWN,graphView_drag);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,graphView_drop);
 			addEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
 		}
 		
@@ -361,6 +363,10 @@ package com.carte_du_tendre.y2010.display{
 			if(d2<1){
 				moveGraphScene(_moveStep[0], _moveStep[1], _moveStep[2]);
 				removeEventListener(Event.ENTER_FRAME,slowDisplacementHandler);
+				if(_isGraphView==true){
+					stage.addEventListener(MouseEvent.MOUSE_DOWN,graphView_drag);
+					stage.addEventListener(MouseEvent.MOUSE_UP,graphView_drop);
+				}
 			}else{
 				moveGraphScene(this.x/2 + _moveStep[0]/2, this.y/2 + _moveStep[1]/2, this.scaleX/2 + _moveStep[2]/2);
 			}
