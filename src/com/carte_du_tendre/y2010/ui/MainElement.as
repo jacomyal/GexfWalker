@@ -47,7 +47,7 @@ package com.carte_du_tendre.y2010.ui{
 			else _gexfPath = root.loaderInfo.parameters["gexfPath"];
 			
 			_graph = new Graph();
-			_gexfLoader = new GexfLoader(_graph,_gexfPath);
+			_gexfLoader = new GexfLoader(this);
 			
 			trace("MainElement.MainElement: Open file at "+_gexfPath);
 			_gexfLoader.addEventListener(GexfLoader.FILE_PARSED,launchGUI);
@@ -57,7 +57,7 @@ package com.carte_du_tendre.y2010.ui{
 		private function launchGUI(evt:Event):void{
 			trace("MainElement.launchGUI: GexfLoader.FILE_PARSED event received.");
 			_graph.center();
-			_mainDisplayElement = new MainDisplayElement(stage,_graph);
+			_mainDisplayElement = new MainDisplayElement(this,_graph);
 			_controlPanel = new ControlPanel(_graph.metaData,this);
 		}
 

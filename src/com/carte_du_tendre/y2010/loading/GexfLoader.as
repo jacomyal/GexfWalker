@@ -24,7 +24,9 @@ package com.carte_du_tendre.y2010.loading{
 	
 	import com.carte_du_tendre.y2010.data.Graph;
 	import com.carte_du_tendre.y2010.data.Node;
+	import com.carte_du_tendre.y2010.ui.MainElement;
 	
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
@@ -34,6 +36,9 @@ package com.carte_du_tendre.y2010.loading{
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	/**
 	 * Parses the GEXF file to enter into the memory everything about the graph, nodes and edges.
@@ -48,16 +53,24 @@ package com.carte_du_tendre.y2010.loading{
 		
 		private var _gexfPath:String;
 		private var _graph:Graph;
-		
+		private var _preLoaderTextField:TextField;
 		private var _fileLoader:URLLoader;
 		private var _fileRequest:URLRequest;
 		
-		public function GexfLoader(newGraph:Graph,path:String){
-			_graph = newGraph;
-			_gexfPath = path;
+		public function GexfLoader(new_main:MainElement){
+			_graph = new_main.graph;
+			_gexfPath = new_main.gexfPath;
 			
+			_preLoaderTextField = new TextField();
+			_preLoaderTextField.text = "parsing process started\n";
+			_preLoaderTextField.setTextFormat(new TextFormat("Verdana",30,0x6B141C,true));
+			_preLoaderTextField.autoSize = TextFieldAutoSize.LEFT;
+			_preLoaderTextField.x = 10;
+			_preLoaderTextField.y = new_main.stage.stageHeight - _preLoaderTextField.height - 10;
+			
+			new_main.addChild(_preLoaderTextField);
 		}
-		
+
 		public function openFile():void{
 			_fileRequest = new URLRequest(_gexfPath);
 			_fileLoader = new URLLoader();
@@ -151,13 +164,12 @@ package com.carte_du_tendre.y2010.loading{
 				var meta:String = '<font face="Verdana" size="12"><b>Graph information:</b>\n';
 				for each(xmlCursor in xmlMeta){
 					if((xmlCursor.text().substr(0,7)=="http://")){
-						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+"<a href='"+xmlCursor.text()+" '>"+'<font color="#444488">'+xmlCursor.text()+"</font></a><br/></p>\n";
+						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+"<a href='"+xmlCursor.text()+" '>"+'<font color="#444488">'+xmlCursor.text()+"</font></a></p>\n";
 					}else{
-						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"<br/></p>\n";
+						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"</p>\n";
 					}
-					
-					meta += '</font>';
 				}
+				meta += '</font>';
 				
 				_graph.metaData = meta;
 			}
@@ -224,6 +236,8 @@ package com.carte_du_tendre.y2010.loading{
 			
 			// Finally, we just send an event to let MainElement start the GUI:
 			trace("GexfLoader.parseXMLElement: File totally parsed, sending FILE_PARSED event.");
+			
+			_preLoaderTextField.parent.removeChild(_preLoaderTextField);
 			dispatchEvent(new Event(FILE_PARSED));
 		}
 		
@@ -257,6 +271,14 @@ package com.carte_du_tendre.y2010.loading{
 		
 		public function set gexfPath(value:String):void{
 			_gexfPath = value;
+		}
+		
+		public function get preLoaderTextField():TextField{
+			return _preLoaderTextField;
+		}
+		
+		public function set preLoaderTextField(value:TextField):void{
+			_preLoaderTextField = value;
 		}
 		
 	}

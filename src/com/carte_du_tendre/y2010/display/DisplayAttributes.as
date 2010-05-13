@@ -37,7 +37,7 @@ package com.carte_du_tendre.y2010.display{
 	
 	public class DisplayAttributes extends Sprite{
 		
-		public static const TEXTFIELD_WIDTH:Number = 200;
+		public static const TEXTFIELD_WIDTH:Number = 10;
 		
 		private var _attributesField:TextField;
 		private var _displayNode:DisplayNode;
@@ -59,6 +59,7 @@ package com.carte_du_tendre.y2010.display{
 			//_attributesField.autoSize = TextFieldAutoSize.LEFT;
 			_attributesField.wordWrap = true;
 			_attributesField.selectable = true;
+			_attributesField.mouseWheelEnabled = true;
 			_attributesField.x = 10;
 			_attributesField.y = 10;
 			_attributesField.width = newWidth;
@@ -80,7 +81,22 @@ package com.carte_du_tendre.y2010.display{
 			_horizontalSlider.graphics.lineStyle(1,0x000000,1);
 			_horizontalSlider.graphics.moveTo(0,10);
 			_horizontalSlider.graphics.lineTo(0,stage.stageHeight-10);
+			
+			_horizontalSlider.graphics.lineStyle(1,0x888888,0);
+			_horizontalSlider.graphics.beginFill(0x888888,1);
+			_horizontalSlider.graphics.moveTo(-2,stage.stageHeight-10);
+			_horizontalSlider.graphics.lineTo(-7.5,stage.stageHeight-14.5);
+			_horizontalSlider.graphics.lineTo(-2,stage.stageHeight-19);
+			_horizontalSlider.graphics.lineTo(-2,stage.stageHeight-10);
+			_horizontalSlider.graphics.endFill();
+			
+			_horizontalSlider.graphics.beginFill(0x888888,1);
+			_horizontalSlider.graphics.moveTo(3,stage.stageHeight-10);
+			_horizontalSlider.graphics.lineTo(3,stage.stageHeight-19);
+			_horizontalSlider.graphics.lineTo(7.5,stage.stageHeight-14.5);
+			_horizontalSlider.graphics.lineTo(3,stage.stageHeight-10);
 			_horizontalSlider.hitArea = _horizontalSliderHitArea;
+			_horizontalSlider.graphics.endFill();
 			
 			this.x = stage.stageWidth-newWidth-20;
 			this.y = 0;
@@ -100,7 +116,7 @@ package com.carte_du_tendre.y2010.display{
 		}
 
 		private function down(e:MouseEvent):void{
-			var rect:Rectangle = new Rectangle(stage.stageWidth-TEXTFIELD_WIDTH*2-20,0,TEXTFIELD_WIDTH*1.5,0);
+			var rect:Rectangle = new Rectangle(45,0,stage.stageWidth-55,0);
 			this.startDrag(false,rect);
 			addEventListener(Event.ENTER_FRAME,whileDragging);
 		}
@@ -109,12 +125,14 @@ package com.carte_du_tendre.y2010.display{
 			this.stopDrag();
 			removeEventListener(Event.ENTER_FRAME,whileDragging);
 			_main.attributesAreaWidth = _main.stage.stageWidth-this.x;
-			trace("prout");
 		}
 		
 		private function whileDragging(e:Event):void{
 			_attributesField.width = stage.stageWidth-this.x-20;
 			_main.x = -(stage.stageWidth-this.x)/2;
+			
+			if(_attributesField.width<=50) _attributesField.alpha = 0;
+			else  _attributesField.alpha = 1;
 			
 			this.graphics.clear();
 			this.graphics.beginFill(0xFFFFFF,1);
@@ -129,9 +147,17 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		private function setHtmlText(graph:Graph):String{
-			var new_text:String = '<font face="Verdana" size="12"><b>Attributes:</b>\n';
+			var new_text:String = '<font face="Verdana" size="12"><b>Node information:</b>\n';
 			var newContent:Dictionary = _displayNode.node.getAttributes().getMap();
 			
+			// Add label:
+			if(_displayNode.node.label=="http://"){
+				new_text += "<p><b>Label:</b> "+'<a href="'+_displayNode.node.label+'" target="_blank" >'+'<font color="#444488">'+_displayNode.node.label+"</font></a><br/></p>\n";
+			}else{
+				new_text += "<p><b>Label:</b> "+_displayNode.node.label+"<br/></p>\n";
+			}
+			
+			// Add attributes:
 			for(var key:* in newContent){
 				if(graph.getAttribute(key)!=null){
 					if((_displayNode.node.getAttributes().getValue(key).substr(0,7)=="http://")||(graph.getAttribute(key).toLowerCase()=="url")){

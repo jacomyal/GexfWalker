@@ -33,7 +33,7 @@ package com.carte_du_tendre.y2010.display{
 	
 	public class DisplayNode extends Sprite{
 		
-		public static const NODES_SCALE:Number = 0.7;
+		public static const NODES_SCALE:Number = 1;
 		public static const NODES_SCALE_LOCAL:Number = 15;
 		
 		private var _labelField:TextField;
