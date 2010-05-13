@@ -130,10 +130,10 @@ package com.carte_du_tendre.y2010.ui{
 			var displayNode:DisplayNode;
 			
 			var style:ArrowStyle = new ArrowStyle();
-			style.headLength = 10;
-			style.headWidth = 10;
+			style.headLength = 5;
+			style.headWidth = 5;
 			style.shaftPosition = 0;
-			style.shaftThickness = 4;
+			style.shaftThickness = 3;
 			style.edgeControlPosition = 0.5;
 			style.edgeControlSize = 0.5;
 			

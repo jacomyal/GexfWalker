@@ -33,6 +33,7 @@ package com.carte_du_tendre.y2010.display{
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	
 	import flashx.textLayout.formats.Float;
@@ -40,7 +41,7 @@ package com.carte_du_tendre.y2010.display{
 	public class MainDisplayElement extends Sprite{
 		
 		public static const EDGES_SCALE:Number = 180;
-		public static const MAX_SCALE:Number = 30;
+		public static const MAX_SCALE:Number = 50;
 		public static const STEPS:Number = 8;
 		
 		private var _currentSelectionDisplayAttributes:DisplayAttributes;
@@ -52,10 +53,12 @@ package com.carte_du_tendre.y2010.display{
 		private var _selectedNode:Node;
 		private var _graph:Graph;
 		
+		private var _initialGraphSpatialState:Array; //[top_left_x,top_left_y,bottom_right_x,bottom_right_y,scale]
 		private var _localView_edgesToDraw:Array;
 		private var _attributesAreaWidth:Number;
 		private var _sceneXCenter:Number;
 		private var _sceneYCenter:Number;
+		private var _historic:Array;
 		
 		private var _moveStep:Array;
 		private var _isReady:Boolean;
@@ -83,8 +86,9 @@ package com.carte_du_tendre.y2010.display{
 			_attributesAreaWidth = DisplayAttributes.TEXTFIELD_WIDTH;
 			
 			_isReady = false;
-			_currentSelectionDisplayAttributes = null;
 			_currentDisplayedMainNode = null;
+			_currentSelectionDisplayAttributes = null;
+			_initialGraphSpatialState = [-500,-500,500,500,1];
 			
 			_sceneXCenter = stage.stageWidth/2;
 			_sceneYCenter = stage.stageHeight/2;
@@ -113,7 +117,8 @@ package com.carte_du_tendre.y2010.display{
 		private function drawGraph():void{
 			var node:Node;
 			var displayNode:DisplayNode;
-
+			
+			_isReady = false;
 			_isGraphView = true;
 			_currentSelectionDisplayAttributes = null;
 			_edgesContainer.graphics.clear();
@@ -137,6 +142,10 @@ package com.carte_du_tendre.y2010.display{
 			graphView_addEventListeners();
 			graphView_transitionLauncher();
 			processScaling();
+			
+			stage.addEventListener(MouseEvent.MOUSE_WHEEL,graphView_zoomScene);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN,graphView_drag);
+			stage.addEventListener(MouseEvent.MOUSE_UP,graphView_drop);
 		}
 		
 		private function drawLocalView():void{
@@ -151,6 +160,13 @@ package com.carte_du_tendre.y2010.display{
 			
 			var node:Node;
 			var displayNode:DisplayNode;
+			
+			var crownsNumber:int = 1+Math.floor((DisplayNode.NODES_SCALE_LOCAL*2*l2)/(1*Math.PI*EDGES_SCALE));
+			var diameter:Number;
+			
+			stage.removeEventListener(MouseEvent.MOUSE_WHEEL,graphView_zoomScene);
+			stage.removeEventListener(MouseEvent.MOUSE_DOWN,graphView_drag);
+			stage.removeEventListener(MouseEvent.MOUSE_UP,graphView_drop);
 			
 			_currentDisplayedNodes = new Vector.<DisplayNode>();
 			
@@ -169,8 +185,10 @@ package com.carte_du_tendre.y2010.display{
 			
 			// Already displayed nodes:
 			for each(displayNode in _constantDisplayNodes){
-				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
-				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
+				diameter = EDGES_SCALE+(index%crownsNumber)*1.5*DisplayNode.NODES_SCALE_LOCAL;
+				
+				new_x = diameter*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
+				new_y = diameter*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
 				
 				displayNode.setStep(new_x,new_y,STEPS);
 				_currentDisplayedNodes.push(displayNode);
@@ -187,11 +205,13 @@ package com.carte_du_tendre.y2010.display{
 				
 				if(isAlreadyDrawn) continue;
 				
+				diameter = EDGES_SCALE+(index%crownsNumber)*1.5*DisplayNode.NODES_SCALE_LOCAL;
+				
 				displayNode = new DisplayNode(node,stage.stageWidth/2,stage.stageHeight/2);
 				_currentDisplayedNodes.push(displayNode);
 				
-				new_x = EDGES_SCALE*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
-				new_y = EDGES_SCALE*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
+				new_x = diameter*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
+				new_y = diameter*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
 				
 				displayNode.moveTo(stage.stageWidth/2,stage.stageHeight/2);
 				addNodeAsChild(displayNode);
@@ -231,6 +251,10 @@ package com.carte_du_tendre.y2010.display{
 			var ySize:Number = yMax - yMin;
 			
 			ratio = Math.min(stage.stageWidth/(xSize),stage.stageHeight/(ySize))*0.9;
+			
+			_initialGraphSpatialState = [stage.stageWidth/2-xCenter*ratio,stage.stageHeight/2-yCenter*ratio,
+										 stage.stageWidth/2-xCenter*ratio+stage.stageWidth/ratio,
+										 stage.stageHeight/2-yCenter*ratio+stage.stageHeight/ratio,ratio];
 			
 			moveGraphSceneSlowly(stage.stageWidth/2-xCenter*ratio,stage.stageHeight/2-yCenter*ratio,ratio);
 		}
@@ -352,6 +376,18 @@ package com.carte_du_tendre.y2010.display{
 			_nodesHitAreaContainer.removeChild(displayNode.upperCircle);
 		}
 		
+		private function addNodeAsTopChild(displayNode:DisplayNode):void{
+			this.addChild(displayNode);
+			this.addChild(displayNode.labelField);
+			this.addChild(displayNode.upperCircle);
+		}
+		
+		private function removeNodeAsTopChild(displayNode:DisplayNode):void{
+			this.removeChild(displayNode);
+			this.removeChild(displayNode.labelField);
+			this.removeChild(displayNode.upperCircle);
+		}
+		
 		private function removeDisplayedNodes():void{
 			var l:int;
 			var i:int;
@@ -401,6 +437,8 @@ package com.carte_du_tendre.y2010.display{
 		private function onMouseOverNodeHandler(e:MouseEvent):void{
 			for each(var displayNode:DisplayNode in _currentDisplayedNodes){
 				if(displayNode.upperCircle == (e.target as Sprite)){
+					removeNodeAsChild(displayNode);
+					addNodeAsTopChild(displayNode);
 					displayNode.whenMouseOver();
 					break;
 				}
@@ -410,6 +448,8 @@ package com.carte_du_tendre.y2010.display{
 		private function onMouseOutNodeHandler(e:MouseEvent):void{
 			for each(var displayNode:DisplayNode in _currentDisplayedNodes){
 				if(displayNode.upperCircle == (e.target as Sprite)){
+					removeNodeAsTopChild(displayNode);
+					addNodeAsChild(displayNode);
 					displayNode.whenMouseOut();
 					break;
 				}
@@ -425,10 +465,10 @@ package com.carte_du_tendre.y2010.display{
 		
 		private function afterSelection():void{
 			_isReady = false;
+			_isGraphView = false;
 			graphView_removeEventListeners();
 			localView_removeEventListeners();
 			setNextDisplayedNodes()
-			_isGraphView = false;
 		}
 		
 		private function whenClickANeighbour(e:MouseEvent):void{
@@ -437,8 +477,6 @@ package com.carte_du_tendre.y2010.display{
 			var i:int;
 			
 			if(_isReady==true){
-				_isReady = false;
-				
 				for(i=0;i<l;i++){
 					if(_currentDisplayedNodes[i].upperCircle == e.target){
 						node = _currentDisplayedNodes[i].node;
@@ -454,8 +492,7 @@ package com.carte_du_tendre.y2010.display{
 			var l:int = _graph.nodes.length;
 			var index:int = Math.floor(Math.random()*l);
 			
-			if(_isReady){
-				_isReady = false;
+			if(_isReady==true){
 				_selectedNode = _graph.nodes[index];
 				afterSelection();
 			}
@@ -463,12 +500,18 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function freezeBackGround():void{
 			this.graphView_removeEventListeners();
-			if(_currentSelectionDisplayAttributes!=null) this._currentSelectionDisplayAttributes.attributesField.selectable=false;
+			if(_currentSelectionDisplayAttributes!=null){
+				this._currentSelectionDisplayAttributes.attributesField.selectable=false;
+				_currentSelectionDisplayAttributes.removeEventListeners();
+			}
 		}
 		
 		public function unfreezeBackGround():void{
 			this.graphView_addEventListeners();
-			if(_currentSelectionDisplayAttributes!=null) this._currentSelectionDisplayAttributes.attributesField.selectable=true;
+			if(_currentSelectionDisplayAttributes!=null){
+				this._currentSelectionDisplayAttributes.attributesField.selectable=true;
+				_currentSelectionDisplayAttributes.addEventListeners();
+			}
 		}
 		
 		private function graphView_addEventListeners():void{
@@ -478,8 +521,6 @@ package com.carte_du_tendre.y2010.display{
 				_currentDisplayedNodes[i].upperCircle.addEventListener(MouseEvent.MOUSE_OUT,onMouseOutNodeHandler);
 				_currentDisplayedNodes[i].upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 			}
-			
-			isReady = true;
 		}
 		
 		private function graphView_removeEventListeners():void{
@@ -521,6 +562,44 @@ package com.carte_du_tendre.y2010.display{
 			}
 		}
 		
+		private function graphView_zoomScene(evt:MouseEvent):void{
+			var new_scale:Number;
+			var new_x:Number;
+			var new_y:Number;
+			var a:Array = _initialGraphSpatialState;
+			
+			if (evt.delta>=0){
+				new_scale = Math.min(a[4]*MAX_SCALE,this.scaleX*1.2);
+				new_x = evt.stageX+(this.x-evt.stageX)*new_scale/this.scaleX;
+				new_y = evt.stageY+(this.y-evt.stageY)*new_scale/this.scaleY;
+			}else{
+				new_scale = Math.max(a[4],this.scaleX*5/6);
+				new_x = evt.stageX+(this.x-evt.stageX)*new_scale/this.scaleX;
+				new_y = evt.stageY+(this.y-evt.stageY)*new_scale/this.scaleY;
+			}
+			
+			new_x = Math.min(a[2]-stage.stageWidth/new_scale,new_x);
+			new_x = Math.max(a[0],new_x);
+			new_y = Math.min(a[3]-stage.stageHeight/new_scale,new_y);
+			new_y = Math.max(a[1],new_y);
+			
+			moveGraphScene(new_x,new_y,new_scale);
+		}
+		
+		private function graphView_drag(evt:MouseEvent):void{
+			var a:Array = _initialGraphSpatialState;
+			var rect:Rectangle = new Rectangle(a[0]/a[4]*this.scaleX,
+											   a[1]/a[4]*this.scaleY,
+											   10000,10000);
+											   //a[2]-stage.stageWidth/a[4]-a[0],
+											   //a[3]-stage.stageHeight/a[4]-a[1]);
+			//this.startDrag(false,rect);
+		}
+		
+		private function graphView_drop(evt:MouseEvent):void{
+			this.stopDrag();
+		}
+		
 		private function localView_addEventListeners():void{
 			var l:int = _currentDisplayedNodes.length;
 			for(var i:int=0;i<l;i++){
@@ -528,8 +607,6 @@ package com.carte_du_tendre.y2010.display{
 				_currentDisplayedNodes[i].upperCircle.addEventListener(MouseEvent.MOUSE_OUT,onMouseOutNodeHandler);
 				_currentDisplayedNodes[i].upperCircle.addEventListener(MouseEvent.CLICK,whenClickANeighbour);
 			}
-			
-			isReady = true;
 		}
 		
 		private function localView_removeEventListeners():void{
@@ -542,6 +619,7 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		private function localView_transitionLauncher():void{
+			_isReady = false;
 			_framesNumber = 0;
 			localView_setEdgesToDisplay();
 			addEventListener(Event.ENTER_FRAME,localView_transition);
@@ -559,8 +637,6 @@ package com.carte_du_tendre.y2010.display{
 				// Attributes:
 				if(_currentSelectionDisplayAttributes!=null){
 					_currentSelectionDisplayAttributes.alpha += 1/STEPS;
-					/*_currentSelectionDisplayAttributes.x = _currentDisplayedMainNode.x;
-					_currentSelectionDisplayAttributes.y = _currentDisplayedMainNode.y;*/
 				}
 				
 				// Neighbours and edges:
@@ -906,6 +982,22 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set sceneXCenter(value:Number):void{
 			_sceneXCenter = value;
+		}
+		
+		public function get initialGraphSpatialState():Array{
+			return _initialGraphSpatialState;
+		}
+		
+		public function set initialGraphSpatialState(value:Array):void{
+			_initialGraphSpatialState = value;
+		}
+		
+		public function get historic():Array{
+			return _historic;
+		}
+		
+		public function set historic(value:Array):void{
+			_historic = value;
 		}
 	}
 }

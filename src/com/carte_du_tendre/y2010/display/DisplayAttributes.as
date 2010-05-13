@@ -85,9 +85,10 @@ package com.carte_du_tendre.y2010.display{
 			this.x = stage.stageWidth-newWidth-20;
 			this.y = 0;
 			
+			// Draw white backGround
 			this.graphics.clear();
 			this.graphics.beginFill(0xFFFFFF,1);
-			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageWidth);
+			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageHeight);
 			this.graphics.endFill();
 			
 			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OVER,over);
@@ -112,12 +113,12 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		private function whileDragging(e:Event):void{
-			_attributesField.width = stage.stageWidth-this.x;
+			_attributesField.width = stage.stageWidth-this.x-20;
 			_main.x = -(stage.stageWidth-this.x)/2;
 			
 			this.graphics.clear();
 			this.graphics.beginFill(0xFFFFFF,1);
-			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageWidth);
+			this.graphics.drawRect(0,0,_attributesField.width+20,stage.stageHeight);
 			this.graphics.endFill();
 		}
 		
@@ -144,6 +145,20 @@ package com.carte_du_tendre.y2010.display{
 			new_text += "</font>";
 			
 			return(new_text);
+		}
+		
+		public function removeEventListeners():void{
+			_horizontalSliderHitArea.removeEventListener(MouseEvent.MOUSE_OVER,over);
+			_horizontalSliderHitArea.removeEventListener(MouseEvent.MOUSE_OUT,out);
+			_horizontalSliderHitArea.removeEventListener(MouseEvent.MOUSE_DOWN,down);
+			stage.addEventListener(MouseEvent.MOUSE_UP,drop);
+		}
+		
+		public function addEventListeners():void{
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OVER,over);
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OUT,out);
+			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_DOWN,down);
+			stage.addEventListener(MouseEvent.MOUSE_UP,drop);
 		}
 		
 		public function get attributesField():TextField{

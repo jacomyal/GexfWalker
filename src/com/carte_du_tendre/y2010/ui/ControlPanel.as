@@ -131,10 +131,12 @@ package com.carte_du_tendre.y2010.ui{
 			if(_infoField.alpha>0.02){
 				_infoField.alpha = _infoField.alpha/2;
 				dME.alpha = (1-(1-dME.alpha)/2)/2 + 1/2;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = (1-(1-dME.currentSelectionDisplayAttributes.alpha)/2)/2 + 1/2;
 			}else{
 				_infoField.alpha = 0;
 				if(this.contains(_infoField)) removeChild(_infoField);
 				dME.alpha = 1;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = 1;
 				dME.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
@@ -159,10 +161,12 @@ package com.carte_du_tendre.y2010.ui{
 			if(_metaField.alpha>0.02){
 				_metaField.alpha = _metaField.alpha/2;
 				dME.alpha = (1-(1-dME.alpha)/2)/2 + 1/2;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = (1-(1-dME.currentSelectionDisplayAttributes.alpha)/2)/2 + 1/2;
 			}else{
 				_metaField.alpha = 0;
 				if(this.contains(_metaField)) removeChild(_metaField);
 				dME.alpha = 1;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = 1;
 				dME.unfreezeBackGround();
 				removeEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
@@ -178,10 +182,12 @@ package com.carte_du_tendre.y2010.ui{
 				_metaField.alpha = _metaField.alpha/2;
 				_infoField.alpha = 1-(1-_infoField.alpha)/2;
 				dME.alpha = (dME.alpha-1/4)/2 + 1/4;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = (dME.currentSelectionDisplayAttributes.alpha-1/4)/2 + 1/4;
 			}else{
 				_metaField.alpha = 0;
 				_infoField.alpha = 1;
 				dME.alpha = 0.25;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = 0.25;
 				if(this.contains(_metaField)) removeChild(_metaField);
 				removeEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
@@ -197,11 +203,13 @@ package com.carte_du_tendre.y2010.ui{
 				_infoField.alpha = _infoField.alpha/2;
 				_metaField.alpha = 1-(1-_metaField.alpha)/2;
 				dME.alpha = (dME.alpha-1/4)/2 + 1/4;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = (dME.currentSelectionDisplayAttributes.alpha-1/4)/2 + 1/4;
 			}else{
 				_infoField.alpha = 0;
 				_metaField.alpha = 1;
 				if(this.contains(_infoField)) removeChild(_infoField);
 				dME.alpha = 0.25;
+				if(dME.currentSelectionDisplayAttributes!=null) dME.currentSelectionDisplayAttributes.alpha = 0.25;
 				removeEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
 				metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);

@@ -104,13 +104,18 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		public function whenMouseOver():void{
-			with(this.graphics){
+			/*with(this.graphics){
 				clear();
 				lineStyle(_size/4,brightenColor(_node.color,40));
 				beginFill(_node.color,1);
 				drawCircle(0,0,_size);
 				endFill();
-			}
+			}*/
+			
+			this.graphics.clear();
+			this.graphics.beginFill(brightenColor(_node.color,85),1);
+			this.graphics.drawRoundRect(-_labelField.width/2,-_labelField.height/2,_labelField.width,_labelField.height,10,10);
+			this.graphics.endFill();
 		}
 			
 		public function whenMouseOut():void{
