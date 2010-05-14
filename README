@@ -68,3 +68,6 @@ V. DEV LOG
 
 - 05/10/2010:
     I just started a refactoring. The buggs of the control panel are already fixed. Next stage, implement the other view (see Functionnalities/to be done).
+
+- 05/14/2010:
+    Refactoring done
