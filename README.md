@@ -3,8 +3,6 @@
 - **author**: Alexis Jacomy, *alexis <dot> jacomy <at> gmail <dot> com*
 - **project**: La Carte du Tendre du Web / The Web Tenderness Map
 
-![](./globalView_screenShot.png "Screenshot - Global view") ![](./localView_screenShot.png "Screenshot - Local view")
-
 * * * *
 
 ##I. Introduction
