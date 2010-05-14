@@ -65,7 +65,7 @@ package com.carte_du_tendre.y2010.display{
 			_attributesField.width = Math.abs(newWidth);
 			_attributesField.height = stage.stageHeight-20;
 			this.addChild(_attributesField);
-			if(TEXTFIELD_WIDTH<=50) _attributesField.alpha = 0;
+			if(_attributesField.width<=50) _attributesField.alpha = 0;
 			
 			
 			// Set slider hit area:

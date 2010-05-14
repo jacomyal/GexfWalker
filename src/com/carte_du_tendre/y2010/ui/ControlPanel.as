@@ -110,15 +110,16 @@ package com.carte_du_tendre.y2010.ui{
 				'<b>Global view:</b>\n\t' +
 				'- Zoom with mouse wheel\n\t' +
 				'- Drag and drop with clicking\n\t' +
-				'- Click on a node to see its neighbours\n' +
+				'- Click on a node to see its neighbours\n\t' +
 				'- Use the comboBox in the bottom of the screen to select\n\t' +
-				'  a node\n\t' +
+				'  a node\n' +
 				'<b>Local view:</b>\n\t' +
 				'- Click on a neighbour to explore the network\n\t' +
 				'- If a bar appears on the right side of the screen, move it\n\t' +
 				'  to see more informations about the current central node\n\t' +
 				'- Use the comboBox in the bottom of the screen to select\n\t' +
-				'  a neighbour</font>';
+				'  a neighbour\n\n' +
+				'<b>Enjoy the exploration!</b></font>';
 			_infoField.autoSize = TextFieldAutoSize.LEFT;
 			_infoField.x = 40;
 			_infoField.y = 10;
@@ -174,6 +175,7 @@ package com.carte_du_tendre.y2010.ui{
 			_nodesBox.y = stage.stageHeight-30;
 			_nodesBox.width = 190;
 			_nodesBox.rowCount = 20;
+			_nodesBox.editable = false;
 			addChild(_nodesBox);
 			
 			dME.addEventListener(MainDisplayElement.NODE_SELECTED,fillComboBox);
@@ -225,13 +227,17 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoDownHandler(e:Event):void{
-			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
+			stage.addEventListener(MouseEvent.CLICK,infoDownHandler);
+			stage.removeEventListener(MouseEvent.CLICK,metaDownHandler);
+			infoButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_metaButton!=null) metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_infoField.alpha==0){
 				freeze();
 				addEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
+				if(contains(_nodesBox)) removeChild(_nodesBox);
 			}else{
 				addEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
+				addChild(_nodesBox);
 			}
 		}
 		
@@ -250,18 +256,24 @@ package com.carte_du_tendre.y2010.ui{
 				unfreeze();
 				removeEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				stage.removeEventListener(MouseEvent.CLICK,infoDownHandler);
+				stage.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 				if(_metaButton!=null) metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
 		
 		private function metaDownHandler(e:Event):void{
+			stage.addEventListener(MouseEvent.CLICK,metaDownHandler);
+			stage.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			infoButton.removeEventListener(MouseEvent.CLICK,infoDownHandler);
 			if(_metaButton!=null) metaButton.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 			if(_metaField.alpha==0){
 				freeze();
 				addEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
+				if(contains(_nodesBox)) removeChild(_nodesBox);
 			}else{
 				addEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
+				addChild(_nodesBox);
 			}
 		}
 		
@@ -280,6 +292,8 @@ package com.carte_du_tendre.y2010.ui{
 				unfreeze();
 				removeEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
 				infoButton.addEventListener(MouseEvent.CLICK,infoDownHandler);
+				stage.removeEventListener(MouseEvent.CLICK,infoDownHandler);
+				stage.removeEventListener(MouseEvent.CLICK,metaDownHandler);
 				if(_metaButton!=null) metaButton.addEventListener(MouseEvent.CLICK,metaDownHandler);
 			}
 		}
