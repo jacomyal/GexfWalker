@@ -26,6 +26,7 @@ package com.carte_du_tendre.y2010.display{
 	import com.carte_du_tendre.y2010.data.Node;
 	import com.dncompute.graphics.ArrowStyle;
 	import com.dncompute.graphics.GraphicsUtil;
+	import com.zavoo.svg.SvgPaths;
 	
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
@@ -35,6 +36,8 @@ package com.carte_du_tendre.y2010.display{
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	import flash.text.TextField;
 	
 	import flashx.textLayout.formats.Float;
@@ -61,6 +64,7 @@ package com.carte_du_tendre.y2010.display{
 		private var _attributesAreaWidth:Number;
 		private var _sceneXCenter:Number;
 		private var _sceneYCenter:Number;
+		private var _svgPaths:SvgPaths;
 		private var _historic:Array;
 		
 		private var _moveStep:Array;
@@ -72,6 +76,7 @@ package com.carte_du_tendre.y2010.display{
 		private var _nodesContainer:Sprite;
 		private var _labelsContainer:Sprite;
 		private var _attributesContainer:Sprite;
+		private var _backgroundContainer:Sprite;
 		private var _nodesHitAreaContainer:Sprite;
 		
 		public function MainDisplayElement(new_parent:DisplayObjectContainer,newGraph:Graph){
@@ -81,6 +86,7 @@ package com.carte_du_tendre.y2010.display{
 			_moveStep = new Array();
 			_angleDelay = 1/8.5;
 			
+			_backgroundContainer = new Sprite();
 			_attributesContainer = new Sprite();
 			_edgesContainer = new Sprite();
 			_nodesContainer = new Sprite();
@@ -96,6 +102,7 @@ package com.carte_du_tendre.y2010.display{
 			_sceneXCenter = stage.stageWidth/2;
 			_sceneYCenter = stage.stageHeight/2;
 			
+			addChild(_backgroundContainer);
 			addChild(_edgesContainer);
 			addChild(_nodesContainer);
 			addChild(_labelsContainer);
@@ -112,6 +119,18 @@ package com.carte_du_tendre.y2010.display{
 			
 			trace("MainDisplayElement.MainDisplayElement: GUI initiated.");
 			
+			// Check if there is a background to display:
+			if(root.loaderInfo.parameters["svgPath"]==undefined){
+				_svgPaths = null
+			}else{
+				var backgroundPath:String = root.loaderInfo.parameters["svgPath"];
+				graphView_backgroundInit(backgroundPath);
+				_backgroundContainer.x = _graph.backgroundX;
+				_backgroundContainer.y = _graph.backgroundY;
+				_backgroundContainer.scaleX = _graph.backgroundXRatio;
+				_backgroundContainer.scaleY = _graph.backgroundYRatio;
+			}
+			
 			drawGraph();
 		}
 
@@ -125,6 +144,8 @@ package com.carte_du_tendre.y2010.display{
 			_currentSelectionDisplayAttributes = null;
 			_edgesContainer.graphics.clear();
 			removeDisplayedNodes();
+			
+			addChildAt(_backgroundContainer,0);
 			
 			if(_currentDisplayedMainNode!=null){
 				_currentDisplayedMainNode = null;
@@ -467,6 +488,7 @@ package com.carte_du_tendre.y2010.display{
 		private function afterSelection():void{
 			_isReady = false;
 			_isGraphView = false;
+			if(contains(_backgroundContainer)) removeChild(_backgroundContainer);
 			graphView_removeEventListeners();
 			localView_removeEventListeners();
 			
@@ -630,6 +652,20 @@ package com.carte_du_tendre.y2010.display{
 		private function graphView_drop(evt:MouseEvent):void{
 			this.stopDrag();
 		}
+		
+		public function graphView_backgroundInit(path:String):void{
+			var loader:URLLoader = new URLLoader();
+			var request:URLRequest = new URLRequest(path);
+			loader.load(request);
+			loader.addEventListener(Event.COMPLETE, graphView_onSvgLoadComplete);	
+		}
+		
+		private function graphView_onSvgLoadComplete(event:Event):void {
+			var loader:URLLoader = URLLoader(event.target);
+			_svgPaths = new SvgPaths(loader.data);		    
+			
+			_svgPaths.drawToGraphics(_backgroundContainer.graphics, 1, 10, 10);
+		}		
 		
 		private function localView_addEventListeners():void{
 			var l:int = _currentDisplayedNodes.length;
@@ -1030,6 +1066,22 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set historic(value:Array):void{
 			_historic = value;
+		}
+		
+		public function get svgPaths():SvgPaths{
+			return _svgPaths;
+		}
+		
+		public function set svgPaths(value:SvgPaths):void{
+			_svgPaths = value;
+		}
+		
+		public function get backgroundContainer():Sprite{
+			return _backgroundContainer;
+		}
+		
+		public function set backgroundContainer(value:Sprite):void{
+			_backgroundContainer = value;
 		}
 	}
 }

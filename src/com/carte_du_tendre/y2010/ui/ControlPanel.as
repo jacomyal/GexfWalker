@@ -392,7 +392,7 @@ package com.carte_du_tendre.y2010.ui{
 				_nodesBox.addItem({label:displayNode.node.label, data:displayNode.node.flex_id});
 			}
 			
-			_nodesBox.sortItemsOn("label");
+			if(_nodesBox.length>0) _nodesBox.sortItemsOn("label");
 		}
 		
 		private function newNodeSelected(e:Event):void{

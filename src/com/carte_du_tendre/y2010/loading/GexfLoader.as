@@ -124,6 +124,7 @@ package com.carte_du_tendre.y2010.loading{
 			var xmlRoot:XMLList = xml.elements();
 			var xmlMeta:XMLList;
 			var xmlGraph:XMLList;
+			var xmlGraphAttributes:XMLList;
 			var xmlNodes:XMLList;
 			var xmlEdges:XMLList;
 			var xmlNodesAttributes:XMLList;
@@ -139,8 +140,27 @@ package com.carte_du_tendre.y2010.loading{
 				}else if(xmlRoot[i].name().localName=='graph'){
 					trace("GexfLoader.parseXMLElement: Graph found.");
 					xmlGraph = xmlRoot[i].children();
+					xmlGraphAttributes = xmlRoot[i].attributes();
 				}
 			}
+			
+			// Parse graph attributes for the background:
+			for(i=0;i<xmlGraphAttributes.length();i++){
+				if(xmlGraphAttributes[i].name().localName=='backgroundx'){
+					_graph.backgroundX = new Number(xmlGraphAttributes[i].valueOf());
+				}else if(xmlGraphAttributes[i].name().localName=='backgroundy'){
+					_graph.backgroundY = -(new Number(xmlGraphAttributes[i].valueOf()));
+				}else if(xmlGraphAttributes[i].name().localName=='backgroundxratio'){
+					_graph.backgroundXRatio = new Number(xmlGraphAttributes[i].valueOf());
+				}else if(xmlGraphAttributes[i].name().localName=='backgroundyratio'){
+					_graph.backgroundYRatio = new Number(xmlGraphAttributes[i].valueOf());
+				}
+			}
+			
+			if(_graph.backgroundXRatio==undefined) _graph.backgroundXRatio = 1;
+			if(_graph.backgroundYRatio==undefined) _graph.backgroundYRatio = 1;
+			if(_graph.backgroundX==undefined) _graph.backgroundX = 0;
+			if(_graph.backgroundY==undefined) _graph.backgroundY = 0;
 			
 			// Parse at depth:=2:
 			for(i=0;i<xmlGraph.length();i++){

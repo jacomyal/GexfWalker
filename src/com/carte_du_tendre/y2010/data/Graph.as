@@ -27,6 +27,10 @@ package com.carte_du_tendre.y2010.data{
 		private var _nodes:Vector.<Node>;
 		private var _attributes:HashMap;
 		private var _metaData:String;
+		private var _backgroundX:Number;
+		private var _backgroundY:Number;
+		private var _backgroundXRatio:Number;
+		private var _backgroundYRatio:Number;
 		
 		private var _isAttributesHashNull:Boolean;
 		private var _isMetaDataHashNull:Boolean;
@@ -38,6 +42,11 @@ package com.carte_du_tendre.y2010.data{
 			_metaData = "";
 			_isAttributesHashNull = true;
 			_isMetaDataHashNull = true;
+			
+			_backgroundXRatio = undefined;
+			_backgroundYRatio = undefined;
+			_backgroundX = undefined;
+			_backgroundY = undefined;
 		}
 
 		public function getNode(nodeGexfId:String):Node{
@@ -167,6 +176,38 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set isAttributesHashNull(value:Boolean):void{
 			_isAttributesHashNull = value;
+		}
+		
+		public function get backgroundYRatio():Number{
+			return _backgroundYRatio;
+		}
+		
+		public function set backgroundYRatio(value:Number):void{
+			_backgroundYRatio = value;
+		}
+		
+		public function get backgroundXRatio():Number{
+			return _backgroundXRatio;
+		}
+		
+		public function set backgroundXRatio(value:Number):void{
+			_backgroundXRatio = value;
+		}
+		
+		public function get backgroundY():Number{
+			return _backgroundY;
+		}
+		
+		public function set backgroundY(value:Number):void{
+			_backgroundY = value;
+		}
+		
+		public function get backgroundX():Number{
+			return _backgroundX;
+		}
+		
+		public function set backgroundX(value:Number):void{
+			_backgroundX = value;
 		}
 	}
 }
