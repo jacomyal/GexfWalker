@@ -46,7 +46,6 @@ package com.carte_du_tendre.y2010.display{
 		
 		public static const NODE_SELECTED:String= "New node selected";
 		public static const GRAPH_VIEW:String = "Graph view";
-		public static const EDGES_SCALE:Number = 180;
 		public static const MAX_SCALE:Number = 50;
 		public static const STEPS:Number = 12;
 		
@@ -65,8 +64,9 @@ package com.carte_du_tendre.y2010.display{
 		private var _sceneXCenter:Number;
 		private var _sceneYCenter:Number;
 		private var _svgPaths:SvgPaths;
+		private var _edgesScale:Number;
 		private var _historic:Array;
-		
+	
 		private var _moveStep:Array;
 		private var _isReady:Boolean;
 		private var _framesNumber:int;
@@ -98,6 +98,7 @@ package com.carte_du_tendre.y2010.display{
 			_currentDisplayedMainNode = null;
 			_currentSelectionDisplayAttributes = null;
 			_initialGraphSpatialState = [-500,-500,500,500,1];
+			_edgesScale = Math.min(stage.stageWidth/3-20,stage.stageHeight/3-20);
 			
 			_sceneXCenter = stage.stageWidth/2;
 			_sceneYCenter = stage.stageHeight/2;
@@ -184,7 +185,7 @@ package com.carte_du_tendre.y2010.display{
 			var node:Node;
 			var displayNode:DisplayNode;
 			
-			var crownsNumber:int = 1+Math.floor((DisplayNode.NODES_SCALE_LOCAL*2*l2)/(1*Math.PI*EDGES_SCALE));
+			var crownsNumber:int = 1+Math.floor((DisplayNode.NODES_SCALE_LOCAL*2*l2)/(1*Math.PI*_edgesScale));
 			var diameter:Number;
 			
 			stage.removeEventListener(MouseEvent.MOUSE_WHEEL,graphView_zoomScene);
@@ -208,7 +209,7 @@ package com.carte_du_tendre.y2010.display{
 			
 			// Already displayed nodes:
 			for each(displayNode in _constantDisplayNodes){
-				diameter = EDGES_SCALE+(index%crownsNumber-(crownsNumber-1)/2)*3.5*DisplayNode.NODES_SCALE_LOCAL;
+				diameter = _edgesScale+(index%crownsNumber-(crownsNumber-1)/2)*3.5*DisplayNode.NODES_SCALE_LOCAL;
 				
 				new_x = diameter*Math.cos(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageWidth/2;
 				new_y = diameter*Math.sin(2*Math.PI*((index+1)/(l2)+_angleDelay)) + stage.stageHeight/2;
@@ -228,7 +229,7 @@ package com.carte_du_tendre.y2010.display{
 				
 				if(isAlreadyDrawn) continue;
 				
-				diameter = EDGES_SCALE+(index%crownsNumber-(crownsNumber-1)/2)*3.5*DisplayNode.NODES_SCALE_LOCAL;
+				diameter = _edgesScale+(index%crownsNumber-(crownsNumber-1)/2)*3.5*DisplayNode.NODES_SCALE_LOCAL;
 				
 				displayNode = new DisplayNode(node,stage.stageWidth/2,stage.stageHeight/2);
 				_currentDisplayedNodes.push(displayNode);
@@ -536,9 +537,10 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		public function freezeBackGround():void{
-			this.graphView_removeEventListeners();
-			if(_isGraphView==true){
-				
+			if(_isGraphView){
+				this.graphView_removeEventListeners();
+			}else{
+				this.localView_removeEventListeners();
 			}
 			
 			if(_currentSelectionDisplayAttributes!=null){
@@ -548,7 +550,12 @@ package com.carte_du_tendre.y2010.display{
 		}
 		
 		public function unfreezeBackGround():void{
-			this.graphView_addEventListeners();
+			if(_isGraphView){
+				this.graphView_addEventListeners();
+			}else{
+				this.localView_addEventListeners();
+			}
+			
 			if(_currentSelectionDisplayAttributes!=null){
 				this._currentSelectionDisplayAttributes.attributesField.selectable=true;
 				_currentSelectionDisplayAttributes.addEventListeners();
@@ -1082,6 +1089,14 @@ package com.carte_du_tendre.y2010.display{
 		
 		public function set backgroundContainer(value:Sprite):void{
 			_backgroundContainer = value;
+		}
+		
+		public function get edgesScale():Number{
+			return _edgesScale;
+		}
+		
+		public function set edgesScale(value:Number):void{
+			_edgesScale = value;
 		}
 	}
 }
