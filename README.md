@@ -1,9 +1,7 @@
 #**GexfWalker** - *What happens after Gephi?*
 
-- **author**: Alexis Jacomy, *alexis <dot> jacomy <at> gmail <dot> com*
+- **author**: Alexis Jacomy, *alexis dot jacomy at gmail dot com*
 - **project**: La Carte du Tendre du Web / The Web Tenderness Map
-
-* * * *
 
 ##I. Introduction
 
@@ -15,7 +13,7 @@ If many applications are already available to explore and visualize graphs (as G
 
 Here are some interesting links relatively to this tool.
 
-- [Web Tenderness Map](http://carte-du-tendre.com/) (not surrently working)
+- [Web Tenderness Map](http://carte-du-tendre.com/) (not currently working)
 - [GexfExplorer](http://github.com/jacomyal/GexfExplorer)
 - [GexfWalker](http://github.com/jacomyal/GexfWalker)
 - [GEXF Format](http://gexf.net/format/)
@@ -28,18 +26,18 @@ Currently, GexfWalker allows the user to:
 - Explore the global layout of the graph (the global view)
 - Explore the relations related the nodes (the local view)
 - In local view:
- - Visualize the attributes of the current selected node
- - Click on a neighbour of the current selected node to select it
- - In case of too many neighbours, choose the neighbour to select with a combo box (bottom left on the screen)
+  - Visualize the attributes of the current selected node
+  - Click on a neighbour of the current selected node to select it
+  - In case of too many neighbours, choose the neighbour to select with a combo box (bottom left on the screen)
 - In global view:
- - Click on a node to select it into the local view
- - Select a node in the bottom left combo box to pass to the local view
- - Zoom with the mouse wheel
- - Drag and drop the graph with the mouse
+  - Click on a node to select it into the local view
+  - Select a node in the bottom left combo box to pass to the local view
+  - Zoom with the mouse wheel
+  - Drag and drop the graph with the mouse
 - And even more:
- - Meta data visualisation
- - Hypertext links automatically recognized in meta data and attributes
- - The SVG background of your choice (comming soon)
+  - Meta data visualisation
+  - Hypertext links automatically recognized in meta data and attributes
+  - The SVG background of your choice (comming soon)
 
 ##III. How to try it
 
@@ -65,4 +63,4 @@ Finally, your webpage will allow users to explore the graph of your choice.
 
 * * * *
 
-For any question (bugs, ideas of new features, etc...), send me an e-mail, but **check first if there isn't already an answer on the related [wiki](http://wiki.github.com/jacomyal/GexfWalker/) or on the related thread on the forum of Gephi**
+For any question (bugs, ideas of new features, etc...), send me an e-mail, but **check first if there isn't already an answer on the related [wiki](http://wiki.github.com/jacomyal/GexfWalker/) or on [the related thread on the forum of Gephi](http://forum.gephi.org/viewforum.php?f=14&sid=7e2338295bc017436f82b787d14091b4)**
