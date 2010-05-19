@@ -87,8 +87,8 @@ package com.carte_du_tendre.y2010.data{
 			var yCenter:Number = (yMax + yMin)/2;
 			
 			for (i = 0;i<_nodes.length;i++){
-				_nodes[i].x = _nodes[i].x+xCenter;
-				_nodes[i].y = _nodes[i].y+yCenter;
+				_nodes[i].x = _nodes[i].x-xCenter;
+				_nodes[i].y = _nodes[i].y-yCenter;
 			}
 		}
 		

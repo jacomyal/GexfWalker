@@ -235,7 +235,7 @@ package com.carte_du_tendre.y2010.ui{
 				freeze();
 				addEventListener(Event.ENTER_FRAME,metaUpInfoDownHandler);
 				if(contains(_nodesBox)) removeChild(_nodesBox);
-			}else{
+			}else if(_infoField.alpha==1){
 				addEventListener(Event.ENTER_FRAME,infoUpFrameHandler);
 				addChild(_nodesBox);
 			}
@@ -271,7 +271,7 @@ package com.carte_du_tendre.y2010.ui{
 				freeze();
 				addEventListener(Event.ENTER_FRAME,infoUpMetaDownHandler);
 				if(contains(_nodesBox)) removeChild(_nodesBox);
-			}else{
+			}else if(_metaField.alpha==1){
 				addEventListener(Event.ENTER_FRAME,metaUpFrameHandler);
 				addChild(_nodesBox);
 			}
@@ -300,8 +300,8 @@ package com.carte_du_tendre.y2010.ui{
 		
 		private function metaUpInfoDownHandler(e:Event):void{
 			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			addChild(_infoField);
+			
 			if((_metaField.alpha>0.02)||(_infoField.alpha<0.98)){
 				_metaField.alpha = _metaField.alpha/2;
 				_infoField.alpha = 1-(1-_infoField.alpha)/2;

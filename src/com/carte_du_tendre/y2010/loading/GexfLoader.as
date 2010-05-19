@@ -144,6 +144,11 @@ package com.carte_du_tendre.y2010.loading{
 				}
 			}
 			
+			_graph.backgroundXRatio = 1;
+			_graph.backgroundYRatio = 1;
+			_graph.backgroundX = 0;
+			_graph.backgroundY = 0;
+			
 			// Parse graph attributes for the background:
 			for(i=0;i<xmlGraphAttributes.length();i++){
 				if(xmlGraphAttributes[i].name().localName=='backgroundx'){
@@ -156,11 +161,6 @@ package com.carte_du_tendre.y2010.loading{
 					_graph.backgroundYRatio = new Number(xmlGraphAttributes[i].valueOf());
 				}
 			}
-			
-			if(_graph.backgroundXRatio==undefined) _graph.backgroundXRatio = 1;
-			if(_graph.backgroundYRatio==undefined) _graph.backgroundYRatio = 1;
-			if(_graph.backgroundX==undefined) _graph.backgroundX = 0;
-			if(_graph.backgroundY==undefined) _graph.backgroundY = 0;
 			
 			// Parse at depth:=2:
 			for(i=0;i<xmlGraph.length();i++){
