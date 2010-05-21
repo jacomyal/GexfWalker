@@ -13,7 +13,7 @@ If many applications are already available to explore and visualize graphs (as G
 
 Here are some interesting links relatively to this tool.
 
-- [Web Tenderness Map](http://carte-du-tendre.com/) (not currently working)
+- [Web Tenderness Map](http://carte-du-tendre.com/)
 - [GexfExplorer](http://github.com/jacomyal/GexfExplorer)
 - [GexfWalker](http://github.com/jacomyal/GexfWalker)
 - [GEXF Format](http://gexf.net/format/)
@@ -49,7 +49,7 @@ You need first to have installed on your computer the Adobe Flash Player (if you
 
 ##IV. How to install it on your website
 
-You need first to have a spatialised GEXF-formated graph from the open-source software [Gephi](http://www.gephi.org/). Then:
+You need first to have a spatialised GEXF-formated graph from the open-source software [Gephi](http://www.gephi.org/) (see the tutorials [here](http://www.gephi.org/users)). Then:
 
 1. Download the last stable version in the [Downloads](http://github.com/jacomyal/GexfWalker/downloads) section of this GitHub homepage.
 2. Host somewhere on your website the file **GexfWalker_sample/GexfWalker.swf** and **your GEXF file**.
