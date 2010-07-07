@@ -704,7 +704,12 @@ package com.carte_du_tendre.y2010.display{
 				removeEventListener(Event.ENTER_FRAME,localView_transition);
 				_isReady = true;
 				dispatchEvent(new Event(NODE_SELECTED));
-				localView_drawEdges();
+				
+				if(_graph.defaultEdgeType=='directed'){
+					localView_drawEdgesAsArrows();
+				}else{
+					localView_drawEdgesAsUndirected();
+				}
 			}else{
 				// Currently selected node:
 				_currentDisplayedMainNode.moveTo(_currentDisplayedMainNode.x+_currentDisplayedMainNode.step[0],_currentDisplayedMainNode.y+_currentDisplayedMainNode.step[1]);
@@ -721,7 +726,11 @@ package com.carte_du_tendre.y2010.display{
 					displayNode.moveTo(displayNode.x+displayNode.step[0],displayNode.y+displayNode.step[1]);
 				}
 				
-				localView_drawEdges()
+				if(_graph.defaultEdgeType=='directed'){
+					localView_drawEdgesAsArrows();
+				}else{
+					localView_drawEdgesAsUndirected();
+				}
 				
 				_framesNumber++;
 			}
@@ -802,7 +811,62 @@ package com.carte_du_tendre.y2010.display{
 			}
 		}
 		
-		private function localView_drawEdges():void{
+		private function localView_drawEdgesAsUndirected():void{
+			var displayNode:DisplayNode;
+			
+			var l:int = _localView_edgesToDraw.length;
+			var i:int;
+			
+			var distance:Number;
+			var x0:Number;
+			var y0:Number;
+			var size0:Number;
+			var xNeighbour:Number;
+			var yNeighbour:Number;
+			var xCenter:Number;
+			var yCenter:Number;
+			var xMiddle:Number;
+			var yMiddle:Number;
+			
+			_edgesContainer.graphics.clear();
+			
+			for(i=0;i<l;i++){
+				displayNode = _localView_edgesToDraw[i][1];
+				x0 = _currentDisplayedMainNode.x;
+				y0 = _currentDisplayedMainNode.y;
+				size0 = _currentDisplayedMainNode.size;
+				
+				distance = Math.sqrt(Math.pow(displayNode.x-x0,2)+Math.pow(displayNode.y-y0,2));
+				if(distance<=(Math.max(size0,displayNode.size)+10)) continue;
+				
+				xNeighbour = displayNode.x*(distance-displayNode.size)/distance + x0*displayNode.size/distance;
+				yNeighbour = displayNode.y*(distance-displayNode.size)/distance + y0*displayNode.size/distance;
+				
+				xCenter = displayNode.x*size0/distance + x0*(distance-size0)/distance;
+				yCenter = displayNode.y*size0/distance + y0*(distance-size0)/distance;
+				
+				xMiddle = (x0+displayNode.x)/2;
+				yMiddle = (y0+displayNode.y)/2;
+				
+				_edgesContainer.graphics.lineStyle(_style.shaftThickness+1,_currentDisplayedMainNode.node.color);
+				_edgesContainer.graphics.beginFill(_currentDisplayedMainNode.node.color);
+				
+				_edgesContainer.graphics.moveTo(xMiddle,yMiddle);
+				_edgesContainer.graphics.lineTo(xCenter,yCenter);
+				
+				_edgesContainer.graphics.endFill();
+				
+				_edgesContainer.graphics.lineStyle(_style.shaftThickness+1,displayNode.node.color);
+				_edgesContainer.graphics.beginFill(displayNode.node.color);
+				
+				_edgesContainer.graphics.moveTo(xMiddle,yMiddle);
+				_edgesContainer.graphics.lineTo(xNeighbour,yNeighbour);
+				
+				_edgesContainer.graphics.endFill();
+			}
+		}
+		
+		private function localView_drawEdgesAsArrows():void{
 			var displayNode:DisplayNode;
 			
 			var l:int = _localView_edgesToDraw.length;

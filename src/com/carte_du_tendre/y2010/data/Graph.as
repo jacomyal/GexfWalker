@@ -26,6 +26,7 @@ package com.carte_du_tendre.y2010.data{
 		
 		private var _nodes:Vector.<Node>;
 		private var _attributes:HashMap;
+		private var _defaultEdgeType:String;
 		private var _metaData:String;
 		private var _backgroundX:Number;
 		private var _backgroundY:Number;
@@ -47,6 +48,8 @@ package com.carte_du_tendre.y2010.data{
 			_backgroundYRatio = undefined;
 			_backgroundX = undefined;
 			_backgroundY = undefined;
+			
+			_defaultEdgeType = 'directed';
 		}
 
 		public function getNode(nodeGexfId:String):Node{
@@ -208,6 +211,14 @@ package com.carte_du_tendre.y2010.data{
 		
 		public function set backgroundX(value:Number):void{
 			_backgroundX = value;
+		}
+		
+		public function get defaultEdgeType():String{
+			return _defaultEdgeType;
+		}
+		
+		public function set defaultEdgeType(value:String):void{
+			_defaultEdgeType = value;
 		}
 	}
 }

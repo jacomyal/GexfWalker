@@ -159,6 +159,8 @@ package com.carte_du_tendre.y2010.loading{
 					_graph.backgroundXRatio = new Number(xmlGraphAttributes[i].valueOf());
 				}else if(xmlGraphAttributes[i].name().localName=='backgroundyratio'){
 					_graph.backgroundYRatio = new Number(xmlGraphAttributes[i].valueOf());
+				}else if(xmlGraphAttributes[i].name().localName=='defaultedgetype'){
+					_graph.defaultEdgeType = xmlGraphAttributes[i].valueOf();
 				}
 			}
 			
