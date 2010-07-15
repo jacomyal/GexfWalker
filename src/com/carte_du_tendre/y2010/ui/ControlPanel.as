@@ -45,6 +45,7 @@ package com.carte_du_tendre.y2010.ui{
 		private var _metaButton:metabutton;
 		private var _resetButton:resetbutton;
 		private var _nodesBox:ComboBox;
+		private var _mainDisplayElement:MainDisplayElement;
 		
 		private var _resetOverField:TextField;
 		private var _infoOverField:TextField;
@@ -53,9 +54,10 @@ package com.carte_du_tendre.y2010.ui{
 		private var _infoField:TextField;
 		private var _metaField:TextField;
 		
-		public function ControlPanel(newMeta:String,s:DisplayObjectContainer){
+		public function ControlPanel(newMeta:String,m:MainElement){
 			
-			s.addChild(this);
+			m.addChild(this);
+			_mainDisplayElement = m.mainDisplayElement;
 			
 			// Reset button and text field:
 			var searchInstruction:TextField = new TextField();
@@ -169,7 +171,6 @@ package com.carte_du_tendre.y2010.ui{
 			}
 			
 			// ComboBox
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			_nodesBox = new ComboBox();
 			_nodesBox.x = 10;
 			_nodesBox.y = stage.stageHeight-30;
@@ -186,7 +187,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 
 		private function resetClickHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			if((_infoField.alpha==0)&&(_metaField.alpha==0)&&(dME.isReady==true)){
 				if(dME.isGraphView==true){
 					dME.selectRandomNode();
@@ -199,8 +199,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function resetOverHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			if(dME.isGraphView==true) _resetOverField.htmlText = '<font face="Verdana" size="12" color="#333333">( select a random node )</font>';
 			else _resetOverField.htmlText = '<font face="Verdana" size="12" color="#333333">( back to global view )</font>';
 		}
@@ -242,8 +240,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoUpFrameHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			if(_infoField.alpha>0.02){
 				_infoField.alpha = _infoField.alpha/2;
 				dME.alpha = (dME.alpha+1)/2;
@@ -278,8 +274,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function metaUpFrameHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			if(_metaField.alpha>0.02){
 				_metaField.alpha = _metaField.alpha/2;
 				dME.alpha = (dME.alpha+1)/2;
@@ -299,7 +293,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function metaUpInfoDownHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			addChild(_infoField);
 			
 			if((_metaField.alpha>0.02)||(_infoField.alpha<0.98)){
@@ -320,8 +313,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function infoUpMetaDownHandler(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			addChild(_metaField);
 			if((_infoField.alpha>0.02)||(_metaField.alpha<0.98)){
 				_infoField.alpha = _infoField.alpha/2;
@@ -341,8 +332,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function freeze():void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			dME.freezeBackGround();
 			
 			_resetButton.removeEventListener(MouseEvent.MOUSE_OVER,resetOverHandler);
@@ -361,8 +350,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function unfreeze():void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			dME.unfreezeBackGround();
 			
 			_resetButton.addEventListener(MouseEvent.MOUSE_OVER,resetOverHandler);
@@ -379,8 +366,7 @@ package com.carte_du_tendre.y2010.ui{
 		
 		private function fillComboBox(e:Event):void{
 			var displayNode:DisplayNode;
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
+
 			var l:int = _nodesBox.length;
 			var i:int;
 			
@@ -396,7 +382,6 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function newNodeSelected(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
 			var node:Node = dME.graph.nodes[_nodesBox.selectedItem.data];
 			
 			if((_infoField.alpha==0)&&(_metaField.alpha==0)&&(dME.isReady==true)){
@@ -405,16 +390,12 @@ package com.carte_du_tendre.y2010.ui{
 		}
 		
 		private function nodesBoxOpen(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			if(dME.isGraphView==true){
 				stage.removeEventListener(MouseEvent.MOUSE_WHEEL,dME.graphView_zoomScene);
 			}
 		}
 		
 		private function nodesBoxClose(e:Event):void{
-			var dME:MainDisplayElement = (this.parent as MainElement).mainDisplayElement;
-			
 			if(dME.isGraphView==true){
 				stage.addEventListener(MouseEvent.MOUSE_WHEEL,dME.graphView_zoomScene);
 			}
@@ -490,6 +471,14 @@ package com.carte_du_tendre.y2010.ui{
 		
 		public function set nodesBox(value:ComboBox):void{
 			_nodesBox = value;
+		}
+		
+		public function get dME():MainDisplayElement{
+			return _mainDisplayElement;
+		}
+		
+		public function set dME(value:MainDisplayElement):void{
+			_mainDisplayElement = value;
 		}
 		
 	}
