@@ -105,7 +105,8 @@ package com.carte_du_tendre.y2010.ui{
 			
 			_infoField = new TextField();
 			_infoField.htmlText = '<font face="Verdana" size="12"><b>GexfWalker information:</b>\n\t' +
-				'<a href="http://github.com/jacomyal/GexfWalker#readme" target="_blank"><font color="#444488">GexfWalker README</font></a>\n\t' +
+				'<a href="http://github.com/jacomyal/GexfWalker#readme" target="_blank">' +
+				'<font color="#444488">GexfWalker README</font></a>\n\t' +
 				'<a href="http://gexf.net/format/" target="_blank"><font color="#444488">GEXF file format</font></a>\n\t' +
 				'<a href="http://gephi.org/" target="_blank"><font color="#444488">Gephi team</font></a>\n\n' +
 				'<font face="Verdana" size="12">' +

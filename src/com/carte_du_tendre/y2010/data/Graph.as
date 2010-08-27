@@ -68,6 +68,22 @@ package com.carte_du_tendre.y2010.data{
 			return res;
 		}
 		
+		public function getNodeByLabel(nodeLabel:String):Node{
+			var i:int = 0;
+			var l:int = nodes.length;
+			var res:Node = null;
+			
+			while(i<l){
+				if(nodes[i].label==nodeLabel){
+					res = nodes[i];
+					break;
+				}
+				i++;
+			}
+			
+			return res;
+		}
+		
 		public function center():void{
 			var xMin:Number = _nodes[0].x;
 			var xMax:Number = _nodes[0].x;

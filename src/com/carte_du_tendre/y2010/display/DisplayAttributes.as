@@ -113,8 +113,6 @@ package com.carte_du_tendre.y2010.display{
 			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_OUT,out);
 			_horizontalSliderHitArea.addEventListener(MouseEvent.MOUSE_DOWN,down);
 			stage.addEventListener(MouseEvent.MOUSE_UP,drop);
-			
-			_main.x = -(stage.stageWidth-this.x)/2;
 		}
 
 		private function down(e:MouseEvent):void{

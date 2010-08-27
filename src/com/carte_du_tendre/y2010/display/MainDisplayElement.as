@@ -92,9 +92,15 @@ package com.carte_du_tendre.y2010.display{
 			_nodesContainer = new Sprite();
 			_labelsContainer = new Sprite();
 			_nodesHitAreaContainer = new Sprite();
-			_attributesAreaWidth = DisplayAttributes.TEXTFIELD_WIDTH;
+			
+			if(stage.root.loaderInfo.parameters["displayAttributes"]=="true"){
+				_attributesAreaWidth = stage.stageWidth/4;
+			}else{
+				_attributesAreaWidth = DisplayAttributes.TEXTFIELD_WIDTH;
+			}
 			
 			_isReady = false;
+			_currentDisplayedNodes = new Vector.<DisplayNode>();
 			_currentDisplayedMainNode = null;
 			_currentSelectionDisplayAttributes = null;
 			_initialGraphSpatialState = [-500,-500,500,500,1];
@@ -121,10 +127,10 @@ package com.carte_du_tendre.y2010.display{
 			trace("MainDisplayElement.MainDisplayElement: GUI initiated.");
 			
 			// Check if there is a background to display:
-			if(root.loaderInfo.parameters["svgPath"]==undefined){
-				_svgPaths = null
+			if(stage.root.loaderInfo.parameters["svgPath"]==undefined){
+				_svgPaths = null;
 			}else{
-				var backgroundPath:String = root.loaderInfo.parameters["svgPath"];
+				var backgroundPath:String = stage.root.loaderInfo.parameters["svgPath"];
 				graphView_backgroundInit(backgroundPath);
 				_backgroundContainer.x = _graph.backgroundX;
 				_backgroundContainer.y = _graph.backgroundY;
@@ -132,7 +138,25 @@ package com.carte_du_tendre.y2010.display{
 				_backgroundContainer.scaleY = _graph.backgroundYRatio;
 			}
 			
-			drawGraph();
+			if(stage.root.loaderInfo.parameters["startId"]==undefined){
+				drawGraph();
+			}else{
+				if(_graph.getNode(stage.root.loaderInfo.parameters["startId"])!=null){
+					_selectedNode = _graph.getNode(stage.root.loaderInfo.parameters["startId"]);
+					afterSelection();
+				}else{
+					if(stage.root.loaderInfo.parameters["startLabel"]==undefined){
+						drawGraph();
+					}else{
+						if(_graph.getNodeByLabel(stage.root.loaderInfo.parameters["startLabel"])!=null){
+							_selectedNode = _graph.getNodeByLabel(stage.root.loaderInfo.parameters["startLabel"]);
+							afterSelection();
+						}else{
+							drawGraph();
+						}
+					}
+				}
+			}
 		}
 
 		public function drawGraph():void{
