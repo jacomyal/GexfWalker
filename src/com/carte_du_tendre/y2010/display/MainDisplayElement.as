@@ -39,6 +39,8 @@ package com.carte_du_tendre.y2010.display{
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	import flashx.textLayout.formats.Float;
 	
@@ -280,16 +282,34 @@ package com.carte_du_tendre.y2010.display{
 			var yMin:Number = _graph.nodes[0].y;
 			var yMax:Number = _graph.nodes[0].y;
 			var ratio:Number;
+			var labelField:TextField = new TextField();
 			
-			for (var i:Number = 1;i<_graph.nodes.length;i++){
-				if(_graph.nodes[i].x < xMin)
-					xMin = _graph.nodes[i].x;
-				if(_graph.nodes[i].x > xMax)
-					xMax = _graph.nodes[i].x;
-				if(_graph.nodes[i].y < yMin)
-					yMin = _graph.nodes[i].y;
-				if(_graph.nodes[i].y > yMax)
-					yMax = _graph.nodes[i].y;
+			for (var i:Number = 0;i<_graph.nodes.length;i++){
+				if(_graph.nodes[i].x-_graph.nodes[i].size < xMin)
+					xMin = _graph.nodes[i].x-_graph.nodes[i].size;
+				if(_graph.nodes[i].x+_graph.nodes[i].size > xMax)
+					xMax = _graph.nodes[i].x+_graph.nodes[i].size;
+				if(_graph.nodes[i].y-_graph.nodes[i].size < yMin)
+					yMin = _graph.nodes[i].y-_graph.nodes[i].size;
+				if(_graph.nodes[i].y+_graph.nodes[i].size > yMax)
+					yMax = _graph.nodes[i].y+_graph.nodes[i].size;
+				
+				var format:TextFormat = new TextFormat("Verdana",12*_graph.nodes[i].size/10);
+				
+				with(labelField){
+					text = _graph.nodes[i].label;
+					autoSize = TextFieldAutoSize.CENTER;
+					setTextFormat(format);
+				}
+				
+				if(_graph.nodes[i].x-labelField.width/2 < xMin)
+					xMin = _graph.nodes[i].x-labelField.width/2;
+				if(_graph.nodes[i].x+labelField.width/2 > xMax)
+					xMax = _graph.nodes[i].x+labelField.width/2;
+				if(_graph.nodes[i].y-labelField.height/2 < yMin)
+					yMin = _graph.nodes[i].y-labelField.height/2;
+				if(_graph.nodes[i].y+labelField.height/2 > yMax)
+					yMax = _graph.nodes[i].y+labelField.height/2;
 			}
 			
 			var xCenter:Number = (xMax + xMin)/2;
