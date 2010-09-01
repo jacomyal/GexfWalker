@@ -13,6 +13,7 @@ If many applications are already available to explore and visualize graphs (as G
 
 Here are some interesting links relatively to this tool.
 
+- [of Nodes and Edges](http://ofnodesandedges.com/)
 - [Web Tenderness Map](http://carte-du-tendre.com/)
 - [GexfExplorer](http://github.com/jacomyal/GexfExplorer)
 - [GexfWalker](http://github.com/jacomyal/GexfWalker)
@@ -28,7 +29,7 @@ Currently, GexfWalker allows the user to:
 - In local view:
   - Visualize the attributes of the current selected node
   - Click on a neighbour of the current selected node to select it
-  - In case of too many neighbours, choose the neighbour to select with a combo box (bottom left on the screen)
+  - In case of too many neighbours and labels overlapping, choose the neighbour to select with a combo box (bottom left on the screen)
 - In global view:
   - Click on a node to select it into the local view
   - Select a node in the bottom left combo box to pass to the local view
@@ -37,7 +38,7 @@ Currently, GexfWalker allows the user to:
 - And even more:
   - Meta data visualisation
   - Hypertext links automatically recognized in meta data and attributes
-  - The SVG background of your choice (comming soon)
+  - The SVG background of your choice (see use case at [OfNodesAndEdges.com](http://ofnodesandedges.com/display-geocoded-graphs-with-gexfwalker/))
 
 ##III. How to try it
 
