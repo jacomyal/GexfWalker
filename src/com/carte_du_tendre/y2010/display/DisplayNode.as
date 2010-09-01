@@ -24,6 +24,8 @@ package com.carte_du_tendre.y2010.display{
 	
 	import com.carte_du_tendre.y2010.data.Node;
 	
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -63,26 +65,51 @@ package com.carte_du_tendre.y2010.display{
 			
 			with(_labelField){
 				text = _node.label;
-				autoSize = TextFieldAutoSize.CENTER;
 				selectable = false;
 				setTextFormat(format);
+				autoSize = TextFieldAutoSize.CENTER;
 			}
 			_labelField.x = this.x - _labelField.width/2;
 			_labelField.y = this.y - _labelField.height/2;
 			
-			with(this.graphics){
-				clear();
-				beginFill(_node.color,1);
-				drawCircle(0,0,_size);
-				endFill();
+			this.graphics.clear();
+			this.graphics.beginFill(_node.color,1);
+			this.graphics.lineStyle(0,0,0);
+			switch(_node.type.toLowerCase()){
+				case "square":
+					this.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					break;
+				case "hexagon":
+					drawPoly(_node.size,6,0,0,this.graphics);
+					break;
+				case "triangle":
+					drawPoly(_node.size,3,0,0,this.graphics);
+					break;
+				default:
+					this.graphics.drawCircle(0,0,_size);
+					break;
 			}
+			this.graphics.endFill();
 			
-			with(_upperCircle.graphics){
-				clear();
-				beginFill(_node.color,0);
-				drawCircle(0,0,_size);
-				endFill();
+			_upperCircle.graphics.clear();
+			_upperCircle.graphics.beginFill(_node.color,0);
+			_upperCircle.graphics.lineStyle(0,0,0);
+			switch(_node.type.toLowerCase()){
+				case "square":
+					_upperCircle.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					break;
+				case "hexagon":
+					drawPoly(_node.size,6,0,0,_upperCircle.graphics);
+					break;
+				case "triangle":
+					drawPoly(_node.size,3,0,0,_upperCircle.graphics);
+					break;
+				default:
+					_upperCircle.graphics.drawCircle(0,0,_size);
+					break;
 			}
+			_upperCircle.graphics.endFill();
+			
 			_upperCircle.x = this.x;
 			_upperCircle.y = this.y;
 		}
@@ -119,12 +146,24 @@ package com.carte_du_tendre.y2010.display{
 		}
 			
 		public function whenMouseOut():void{
-			with(this.graphics){
-				clear();
-				beginFill(_node.color,1);
-				drawCircle(0,0,_size);
-				endFill();
+			this.graphics.clear();
+			this.graphics.beginFill(_node.color,1);
+			this.graphics.lineStyle(0,0,0);
+			switch(_node.type.toLowerCase()){
+				case "square":
+					this.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					break;
+				case "hexagon":
+					drawPoly(_node.size,6,0,0,this.graphics);
+					break;
+				case "triangle":
+					drawPoly(_node.size,3,0,0,this.graphics);
+					break;
+				default:
+					this.graphics.drawCircle(0,0,_size);
+					break;
 			}
+			this.graphics.endFill();
 		}
 		
 		/**
@@ -161,6 +200,34 @@ package com.carte_du_tendre.y2010.display{
 			}
 			
 			return (redOffset<<16|greenOffset<<8|blueOffset);
+		}
+		
+		private function drawPoly(r:int,seg:int,cx:Number,cy:Number,container:Graphics):void{
+			var poly_id:int = 0;
+			var coords:Array = new Array();
+			var ratio:Number = 360/seg;
+			var top:Number= cy-r;
+			
+			for(var i:int=0;i<=360;i+=ratio){
+				var px:Number=cx+Math.sin(radians(i))*r;
+				var py:Number=top+(r-Math.cos(radians(i))*r);
+				coords[poly_id]=new Array(px,py);
+				
+				if(poly_id>=1){
+					container.lineTo(coords[poly_id][0],coords[poly_id][1]);
+				}else{
+					container.moveTo(coords[poly_id][0],coords[poly_id][1]);
+				}
+				
+				poly_id++;
+			}
+			
+			poly_id=0;
+		}
+		
+		//degrees2radians
+		private function radians(n:Number):Number{
+			return(Math.PI/180*n);
 		}
 		
 		public function get upperCircle():Sprite{

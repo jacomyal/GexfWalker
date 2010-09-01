@@ -28,6 +28,7 @@ package com.carte_du_tendre.y2010.data{
 		private var _y:Number;
 		private var _size:Number;
 		private var _color:uint;
+		private var _type:String;
 		private var _flex_id:Number;
 		private var _gexf_id:String;
 		private var _label:String;
@@ -41,6 +42,7 @@ package com.carte_du_tendre.y2010.data{
 			_flex_id = newFlexId;
 			_gexf_id = newGexfId;
 			_label = newLabel;
+			_type = "ellipse";
 			
 			_outNeighbours = new Vector.<Node>();
 			_inNeighbours = new Vector.<Node>();
@@ -222,5 +224,12 @@ package com.carte_du_tendre.y2010.data{
 			_x = value;
 		}
 		
+		public function get type():String{
+			return _type;
+		}
+		
+		public function set type(value:String):void{
+			_type = value;
+		}
 	}
 }

@@ -21,6 +21,7 @@
 */
 
 package com.carte_du_tendre.y2010.data{
+	import flash.display.Stage;
 	
 	public class Graph{
 		
@@ -82,6 +83,25 @@ package com.carte_du_tendre.y2010.data{
 			}
 			
 			return res;
+		}
+		
+		public function resize(stage:Stage):void{
+			var sizeMin:Number = _nodes[0].size;
+			var sizeMax:Number = _nodes[0].size;
+			
+			for (var i:Number = 1;i<_nodes.length;i++){
+				if(_nodes[i].size < sizeMin)
+					sizeMin = _nodes[i].size;
+				if(_nodes[i].size > sizeMax)
+					sizeMax = _nodes[i].size;
+			}
+			
+			var a:Number = (Math.min(stage.stageWidth,stage.stageHeight)/2/Math.sqrt(_nodes.length))/(sizeMax-sizeMin+0.001);
+			var b:Number = Math.min(stage.stageWidth,stage.stageHeight)/4/Math.sqrt(_nodes.length)*5/2-a*sizeMax;
+			
+			for (i = 0;i<_nodes.length;i++){
+				_nodes[i].setSize(a*_nodes[i].size+b);
+			}
 		}
 		
 		public function center():void{

@@ -239,6 +239,12 @@ package com.carte_du_tendre.y2010.loading{
 						}
 					}
 				}
+
+				for(var key:* in node.attributes.getMap()){
+					if(_graph.getAttribute(key).toLowerCase()=="type"){
+						node.type = node.attributes.getValue(key)
+					}
+				}
 			}
 			
 			trace("GexfLoader.parseXMLElement: "+nodesCounter+" nodes parsed.");

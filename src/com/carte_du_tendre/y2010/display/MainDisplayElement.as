@@ -128,6 +128,11 @@ package com.carte_du_tendre.y2010.display{
 			
 			trace("MainDisplayElement.MainDisplayElement: GUI initiated.");
 			
+			// Check if resizing is asked:
+			if(stage.root.loaderInfo.parameters["resize"]=="true"){
+				_graph.resize(stage);
+			}
+			
 			// Check if there is a background to display:
 			if(stage.root.loaderInfo.parameters["svgPath"]==undefined){
 				_svgPaths = null;
@@ -672,11 +677,11 @@ package com.carte_du_tendre.y2010.display{
 			var a:Array = _initialGraphSpatialState;
 			
 			if (evt.delta>=0){
-				new_scale = Math.min(a[4]*MAX_SCALE,this.scaleX*1.5);
+				new_scale = Math.min(a[4]*MAX_SCALE,this.scaleX*3);
 				new_x = evt.stageX+(this.x-evt.stageX)*new_scale/this.scaleX;
 				new_y = evt.stageY+(this.y-evt.stageY)*new_scale/this.scaleY;
 			}else{
-				new_scale = Math.max(a[4]/2,this.scaleX*2/3);
+				new_scale = Math.max(a[4]/2,this.scaleX/3);
 				new_x = evt.stageX+(this.x-evt.stageX)*new_scale/this.scaleX;
 				new_y = evt.stageY+(this.y-evt.stageY)*new_scale/this.scaleY;
 			}
