@@ -77,13 +77,13 @@ package com.carte_du_tendre.y2010.display{
 			this.graphics.lineStyle(0,0,0);
 			switch(_node.type.toLowerCase()){
 				case "square":
-					this.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					this.graphics.drawRect(-Math.sqrt(2)*_size,-Math.sqrt(2)*_size,_size,_size);
 					break;
 				case "hexagon":
-					drawPoly(_node.size,6,0,0,this.graphics);
+					drawPoly(_size,6,0,0,this.graphics);
 					break;
 				case "triangle":
-					drawPoly(_node.size,3,0,0,this.graphics);
+					drawPoly(_size,3,0,0,this.graphics);
 					break;
 				default:
 					this.graphics.drawCircle(0,0,_size);
@@ -96,13 +96,13 @@ package com.carte_du_tendre.y2010.display{
 			_upperCircle.graphics.lineStyle(0,0,0);
 			switch(_node.type.toLowerCase()){
 				case "square":
-					_upperCircle.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					_upperCircle.graphics.drawRect(-Math.sqrt(2)*_size,-Math.sqrt(2)*_size,_size,_size);
 					break;
 				case "hexagon":
-					drawPoly(_node.size,6,0,0,_upperCircle.graphics);
+					drawPoly(_size,6,0,0,_upperCircle.graphics);
 					break;
 				case "triangle":
-					drawPoly(_node.size,3,0,0,_upperCircle.graphics);
+					drawPoly(_size,3,0,0,_upperCircle.graphics);
 					break;
 				default:
 					_upperCircle.graphics.drawCircle(0,0,_size);
@@ -151,13 +151,13 @@ package com.carte_du_tendre.y2010.display{
 			this.graphics.lineStyle(0,0,0);
 			switch(_node.type.toLowerCase()){
 				case "square":
-					this.graphics.drawRect(-Math.sqrt(2)*_node.size,-Math.sqrt(2)*_node.size,_node.size,_node.size);
+					this.graphics.drawRect(-Math.sqrt(2)*_size,-Math.sqrt(2)*_size,_size,_size);
 					break;
 				case "hexagon":
-					drawPoly(_node.size,6,0,0,this.graphics);
+					drawPoly(_size,6,0,0,this.graphics);
 					break;
 				case "triangle":
-					drawPoly(_node.size,3,0,0,this.graphics);
+					drawPoly(_size,3,0,0,this.graphics);
 					break;
 				default:
 					this.graphics.drawCircle(0,0,_size);
@@ -206,11 +206,10 @@ package com.carte_du_tendre.y2010.display{
 			var poly_id:int = 0;
 			var coords:Array = new Array();
 			var ratio:Number = 360/seg;
-			var top:Number= cy-r;
 			
 			for(var i:int=0;i<=360;i+=ratio){
 				var px:Number=cx+Math.sin(radians(i))*r;
-				var py:Number=top+(r-Math.cos(radians(i))*r);
+				var py:Number=cy+Math.cos(radians(i))*r;
 				coords[poly_id]=new Array(px,py);
 				
 				if(poly_id>=1){
