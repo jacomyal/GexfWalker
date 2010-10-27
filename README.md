@@ -5,7 +5,7 @@
 
 ##I. Introduction
 
-This open source web widget is developped as part of the **Web Tenderness Map project**. This project aims to represent the current tenderness map as a websites network.
+This open source web widget is developped as part of the **Web Tenderness Map project**. This project aims to represent the current tenderness map as a websites network. GexfWalker is diffused under the **MIT license**.
 
 If many applications are already available to explore and visualize graphs (as Gephi, GUESS, Pajek, etc...), there is not a lot of ways to experience **on the Web** a **local** and **global** navigation of these graphs (the best examples I know are the noticeable [Moritz Stefaner's Relation Browser](http://moritz.stefaner.eu/projects/relation-browser/) and the really good [MindPlayer](http://thisislike.com/mindplayer) of [ThisIsLike.com](http://thisislike.com/) for the local view). This tool is particularly developped for the Gephi and GEXF users community. It is all about GEXF, and is supposed to work with **any graph spatialised from Gephi and exported as a GEXF file**.
 
