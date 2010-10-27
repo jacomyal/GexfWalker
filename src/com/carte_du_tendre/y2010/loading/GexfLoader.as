@@ -185,7 +185,7 @@ package com.carte_du_tendre.y2010.loading{
 			if(xmlMeta!=null){
 				var meta:String = '<font face="Verdana" size="12"><b>Graph information:</b>\n';
 				for each(xmlCursor in xmlMeta){
-					if((xmlCursor.text().substr(0,7)=="http://")){
+					if((xmlCursor.text().length()>7)&&(xmlCursor.text().substr(0,7)=="http://")){
 						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+'<a href="'+xmlCursor.text()+'"  target="_blank">'+'<font color="#444488">'+xmlCursor.text()+"</font></a></p>\n";
 					}else{
 						meta += "\t<p><b>"+xmlCursor.name().localName+":</b> "+xmlCursor.text()+"</p>\n";
