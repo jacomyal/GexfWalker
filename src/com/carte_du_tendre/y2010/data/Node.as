@@ -48,6 +48,8 @@ package com.carte_du_tendre.y2010.data{
 			_inNeighbours = new Vector.<Node>();
 			
 			_isHashNull = true;
+			
+			_color = 0x888888;
 		}
 
 		public function addInLink(node:Node):void{

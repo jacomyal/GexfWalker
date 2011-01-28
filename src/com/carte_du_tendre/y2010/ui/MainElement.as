@@ -43,7 +43,7 @@ package com.carte_du_tendre.y2010.ui{
 			s.addChild(this);
 			//stage.frameRate = 100;
 			
-			if(root.loaderInfo.parameters["gexfPath"]==undefined) _gexfPath = "./standard_graph.gexf";
+			if(root.loaderInfo.parameters["gexfPath"]==undefined) _gexfPath = "./les_miserables.gexf";
 			else _gexfPath = root.loaderInfo.parameters["gexfPath"];
 			
 			_graph = new Graph();

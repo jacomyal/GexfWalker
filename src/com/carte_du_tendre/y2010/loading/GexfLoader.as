@@ -230,19 +230,21 @@ package com.carte_du_tendre.y2010.loading{
 					}
 				}
 				
-				for each(xmlSubCursor in xmlNodesAttributesValues){
-					if(xmlSubCursor.name().localName=='attvalue'){
-						if((xmlSubCursor.attribute("for")!=undefined)&&(xmlSubCursor.@value!=undefined)){
-							node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
-						}else if((xmlSubCursor.@id!=undefined)&&(xmlSubCursor.@value!=undefined)){
-							node.setAttribute(xmlSubCursor.@id,xmlSubCursor.@value);
+				if(xmlNodesAttributesValues!=null){
+					for each(xmlSubCursor in xmlNodesAttributesValues){
+						if(xmlSubCursor.name().localName=='attvalue'){
+							if((xmlSubCursor.attribute("for")!=undefined)&&(xmlSubCursor.@value!=undefined)){
+								node.setAttribute(xmlSubCursor.attribute("for"),xmlSubCursor.@value);
+							}else if((xmlSubCursor.@id!=undefined)&&(xmlSubCursor.@value!=undefined)){
+								node.setAttribute(xmlSubCursor.@id,xmlSubCursor.@value);
+							}
 						}
 					}
-				}
-
-				for(var key:* in node.attributes.getMap()){
-					if(_graph.getAttribute(key).toLowerCase()=="type"){
-						node.type = node.attributes.getValue(key)
+	
+					for(var key:* in node.attributes.getMap()){
+						if(_graph.getAttribute(key).toLowerCase()=="type"){
+							node.type = node.attributes.getValue(key)
+						}
 					}
 				}
 			}
